@@ -1,5 +1,6 @@
 
 import Exercice from './ClasseExercice.js'
+import * as outils from './outils.js'
 
 
 /**
@@ -16,7 +17,7 @@ export default function Ajouter9() {
     this.nb_cols_corr = 2;
   
     this.nouvelle_version = function (numero_de_l_exercice) {
-      this.bouton_aide = modal_texte_court(
+      this.bouton_aide = outils.modal_texte_court(
         numero_de_l_exercice,
         "Ajouter 9 revient à ajouter 10 et à soustraire 1."
       );
@@ -28,7 +29,7 @@ export default function Ajouter9() {
         i < this.nb_questions && cpt < 50;
   
       ) {
-        a = randint(0, 9) * 10 + randint(1, 9);
+        a = outils.randint(0, 9) * 10 + outils.randint(1, 9);
         texte = `$${a}+9$`;
         texte_corr = `$${a}+9=${a + 9}$`;
   
@@ -40,7 +41,7 @@ export default function Ajouter9() {
         }
         cpt++;
       }
-      liste_de_question_to_contenu(this);
+      outils.liste_de_question_to_contenu(this);
     };
     //this.besoin_formulaire_numerique = ['Niveau de difficulté',3];
   }
