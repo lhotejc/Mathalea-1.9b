@@ -1,6 +1,6 @@
 import Exercice from './ClasseExercice.js'
-import * as outils from './outils.js'
-
+import {liste_de_question_to_contenu, modal_texte_court} from '../modules/outils.js'
+import {randint, choice, tex_nombre, creer_couples} from '../modules/outils.js'
 
 /**
  * Tables de multiplications classiques, à trou ou un mélange des deux.
@@ -32,7 +32,7 @@ export default function Tables_de_multiplications(tables_par_defaut = "2-3-4-5-6
     } else {
       tables = this.sup.split("-"); // Sinon on crée un tableau à partir des valeurs séparées par des -
     }
-    let couples = outils.creer_couples(
+    let couples = creer_couples(
       tables,
       [2, 3, 4, 5, 6, 7, 8, 9, 10],
       this.nb_questions
@@ -46,20 +46,20 @@ export default function Tables_de_multiplications(tables_par_defaut = "2-3-4-5-6
       } else if (this.sup2 == 2) {
         type_de_questions = "a_trous";
       } else {
-        type_de_questions = outils.choice(["classique", "a_trous"]);
+        type_de_questions = choice(["classique", "a_trous"]);
       }
       if (type_de_questions == "classique") {
         // classique
-        if (outils.choice([true, false])) {
-          texte = `$ ${outils.tex_nombre(a)} \\times ${outils.tex_nombre(b)} = \\dotfill$`;
-          texte_corr = `$ ${outils.tex_nombre(a)} \\times ${outils.tex_nombre(
+        if (choice([true, false])) {
+          texte = `$ ${tex_nombre(a)} \\times ${tex_nombre(b)} = \\dotfill$`;
+          texte_corr = `$ ${tex_nombre(a)} \\times ${tex_nombre(
             b
-          )} = ${outils.tex_nombre(a * b)}$`;
+          )} = ${tex_nombre(a * b)}$`;
         } else {
-          texte = `$ ${outils.tex_nombre(b)} \\times ${outils.tex_nombre(a)} = \\dotfill$`;
-          texte_corr = `$ ${outils.tex_nombre(b)} \\times ${outils.tex_nombre(
+          texte = `$ ${tex_nombre(b)} \\times ${tex_nombre(a)} = \\dotfill$`;
+          texte_corr = `$ ${tex_nombre(b)} \\times ${tex_nombre(
             a
-          )} = ${outils.tex_nombre(a * b)}$`;
+          )} = ${tex_nombre(a * b)}$`;
         }
       } else {
         // a trous
@@ -82,7 +82,7 @@ export default function Tables_de_multiplications(tables_par_defaut = "2-3-4-5-6
       this.liste_questions.push(texte);
       this.liste_corrections.push(texte_corr);
     }
-    outils.liste_de_question_to_contenu(this);
+    liste_de_question_to_contenu(this);
   };
   this.besoin_formulaire_texte = [
     "Choix des tables",

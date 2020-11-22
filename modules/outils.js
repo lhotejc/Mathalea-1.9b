@@ -602,7 +602,7 @@ export function  filtreDictionnaire(dict,sub) {
 * @Auteur Rémi Angot
 */
 export function  combinaison_listes(liste,taille_minimale){
-	l = shuffle(liste);
+	let l = shuffle(liste);
 	while (l.length<taille_minimale){
 		l = l.concat(shuffle(liste))
 	}
