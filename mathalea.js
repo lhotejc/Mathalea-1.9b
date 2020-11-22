@@ -32,7 +32,10 @@ import { getUrlVars } from "./modules/getUrlVars.js";
                 length: 4,
                 startsWithLowerCase: false,
             });
+            // Saisi le numéro de série dans le formulaire
+            document.getElementById('form_serie').value = mathalea.graine
         }
+        // Contrôle l'aléatoire grâce à SeedRandom
         Math.seedrandom(mathalea.graine);
         // ajout des paramètres des exercices dans l'URL
         (function gestionURL(){
@@ -80,13 +83,40 @@ import { getUrlVars } from "./modules/getUrlVars.js";
         // Ajoute le contenu dans les div #exercices et #corrections
         document.getElementById("exercices").innerHTML = "";
         document.getElementById("corrections").innerHTML = "";
-        for (let i = 0, id; i < liste_des_exercices.length; i++) {
-            try {
-                listeObjetsExercice[i].nouvelle_version();
-            } catch (error) {}
-            document.getElementById("exercices").innerHTML += listeObjetsExercice[i].contenu;
-            document.getElementById("corrections").innerHTML += listeObjetsExercice[i].contenu_correction;
-        }
+
+        let code1 = '', code2 = '';
+        if (liste_des_exercices.length > 0) {
+            for (let i = 0; i < liste_des_exercices.length; i++) {
+                listeObjetsExercice[i].id = liste_des_exercices[i]
+                try {
+                    listeObjetsExercice[i].nouvelle_version(i);
+                } catch (error) {
+                    
+                }
+                code1 += `<h3 class="ui dividing header">Exercice ${(i + 1)} − ${listeObjetsExercice[i].id}</h3>`;
+                if (listeObjetsExercice[i].bouton_aide) {
+                    code1 += `<div id=aide${i}> ${listeObjetsExercice[i].bouton_aide}</div>`;
+                }
+                code1 += listeObjetsExercice[i].contenu;
+                if (listeObjetsExercice[i].type_exercice == "MG32") {
+                    code1 += `<div id="MG32div${i}" class="MG32"></div>`;
+                }
+                code2 += `<h3 class="ui dividing header">Exercice ${i + 1}</h3>`;
+                code2 += listeObjetsExercice[i].contenu_correction;
+                if (listeObjetsExercice[i].type_exercice == "MG32" && listeObjetsExercice[i].MG32codeBase64corr)
+                    { code2 += `<div id="MG32divcorr${i}" class="MG32"></div>`}
+            }
+            code1 = `<ol>\n${code1}\n</ol>`;
+            code2 = `<ol>\n${code2}\n</ol>`;
+                $("#message_liste_exercice_vide").hide();
+                $("#cache").dimmer("hide");
+            } else {
+                $("#message_liste_exercice_vide").show(); // Message au dessus de la liste des exercices
+                $("#cache").dimmer("show"); // Cache au dessus du code LaTeX
+            }
+
+            $("#exercices").html(code1);
+            $("#corrections").html(code2);
         // KaTeX
         renderMathInElement(document.body, {
             delimiters: [
