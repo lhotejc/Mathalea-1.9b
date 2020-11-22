@@ -1,13 +1,5 @@
 import { strRandom } from "./modules/outils.js";
-
-// Initialisation de la page
-window.addEventListener("DOMContentLoaded", () => {
-    $(".ui.dropdown").dropdown(); // Pour le menu des exercices
-    $(".ui.accordion").accordion("refresh");
-    $(".ui.checkbox").checkbox();
-    // Gestion du bouton de copie
-    $(".ui.button.toggle").state(); // initialise le bouton
-});
+import { getUrlVars } from "./modules/getUrlVars.js";
 
 (function () {
     // IIFE principal
@@ -35,13 +27,57 @@ window.addEventListener("DOMContentLoaded", () => {
         // Fixe la graine pour les fonctions aléatoires
         if (!mathalea.graine) {
             mathalea.graine = strRandom({
-            includeUpperCase: true,
-            includeNumbers: true,
-            length: 4,
-            startsWithLowerCase: false
+                includeUpperCase: true,
+                includeNumbers: true,
+                length: 4,
+                startsWithLowerCase: false,
             });
         }
-        Math.seedrandom(mathalea.graine)
+        Math.seedrandom(mathalea.graine);
+        // ajout des paramètres des exercices dans l'URL
+        (function gestionURL(){
+            if (liste_des_exercices.length>0) {
+                let fin_de_l_URL = ""
+                if (sortie_html) {
+                    fin_de_l_URL+="exercice.html"	
+                }
+                if (listeObjetsExercice[0].sup2){
+                    fin_de_l_URL +=`?ex=${liste_des_exercices[0]},nb_questions=${listeObjetsExercice[0].nb_questions},sup=${listeObjetsExercice[0].sup},sup2=${listeObjetsExercice[0].sup2}`	
+                } else{
+                    if (listeObjetsExercice[0].sup){
+                        fin_de_l_URL +=`?ex=${liste_des_exercices[0]},nb_questions=${listeObjetsExercice[0].nb_questions},sup=${listeObjetsExercice[0].sup}`	
+                    } else{
+                        fin_de_l_URL +=`?ex=${liste_des_exercices[0]},nb_questions=${listeObjetsExercice[0].nb_questions}`
+                    }
+                }
+                if (listeObjetsExercice[0].sup3){
+                    fin_de_l_URL += `,sup3=${listeObjetsExercice[0].sup3}`
+                }
+                for (var i = 1; i < liste_des_exercices.length; i++) {
+                    if (listeObjetsExercice[i].sup2){
+                        fin_de_l_URL +=`&ex=${liste_des_exercices[i]},nb_questions=${listeObjetsExercice[i].nb_questions},sup=${listeObjetsExercice[i].sup},sup2=${listeObjetsExercice[i].sup2}`	
+                    } else{
+                        if (listeObjetsExercice[i].sup){
+                            fin_de_l_URL +=`&ex=${liste_des_exercices[i]},nb_questions=${listeObjetsExercice[i].nb_questions},sup=${listeObjetsExercice[i].sup}`	
+                        } else{
+                            fin_de_l_URL +=`&ex=${liste_des_exercices[i]},nb_questions=${listeObjetsExercice[i].nb_questions}`
+                        }
+                    }
+                    if (listeObjetsExercice[i].sup3){
+                        fin_de_l_URL += `,sup3=${listeObjetsExercice[i].sup3}`
+                    }
+                }
+                fin_de_l_URL +=`&serie=${mathalea.graine}`
+                window.history.pushState("","",fin_de_l_URL);
+                let url = window.location.href.split('&serie')[0]; //met l'URL dans le bouton de copie de l'URL sans garder le numéro de la série
+                new Clipboard('.url', {text: function() {
+                return url;
+                }
+                });
+            }
+        })();
+        
+        // Ajoute le contenu dans les div #exercices et #corrections
         document.getElementById("exercices").innerHTML = "";
         document.getElementById("corrections").innerHTML = "";
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
@@ -69,6 +105,14 @@ window.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    /**
+     * Fonction à lancer une fois que la liste des exercices a été mise à jour.
+     * Elle va importer les différents exercices depuis ./exercices/id.js et remplir listeObjetsExercice.
+     * Une fois que tout est importé, elle créé les formulaires pour les paramètres des exercices.
+     * Ensuite, elle regarde dans l'URL si il y a des paramètres à récupérer et à saisir dans le formulaire.
+     * Enfin, elle délègue à mise_a_jour du code l'affichage
+     * 
+     */
     function mise_a_jour_de_la_liste_des_exercices() {
         let promises = [];
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
@@ -88,11 +132,31 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         Promise.all(promises)
             .then(() => {
-                mise_a_jour_du_code();
+                parametres_exercice(listeObjetsExercice);
             })
             .then(() => {
-                parametres_exercice(listeObjetsExercice);
-            });
+                // Récupère les paramètres passés dans l'URL
+                let urlVars = getUrlVars();
+                for (var i = 0; i < urlVars.length; i++) {
+                    // récupère les éventuels paramètres dans l'URL
+                    if (urlVars[i]["nb_questions"] && listeObjetsExercice[i].nb_questions_modifiable) {
+                        listeObjetsExercice[i].nb_questions = urlVars[i]["nb_questions"];
+                        form_nb_questions[i].value = listeObjetsExercice[i].nb_questions;
+                    }
+                    if (urlVars[i]["sup"]) {
+                        listeObjetsExercice[i].sup = urlVars[i]["sup"];
+                    }
+                    if (urlVars[i]["sup2"]) {
+                        listeObjetsExercice[i].sup2 = urlVars[i]["sup2"];
+                    }
+                    if (urlVars[i]["sup3"]) {
+                        listeObjetsExercice[i].sup3 = urlVars[i]["sup3"];
+                    }
+                }
+            })
+            .then(() => {
+                mise_a_jour_du_code();
+            })
     }
 
     // Gestion des paramètres
@@ -114,10 +178,10 @@ window.addEventListener("DOMContentLoaded", () => {
     let sortie_html = true;
     function parametres_exercice(exercice) {
         /* Pour l'exercice i, on rajoute un formulaire avec 5 inputs : 
-nombre de questions, nombre de colonnes,nombre de colonnes dans le corrigé,
-espacement et espacement dans le corrigé.
-Les réponses modifient les caractéristiques de l'exercice puis le code LaTeX est mis à jour
-*/
+        nombre de questions, nombre de colonnes,nombre de colonnes dans le corrigé,
+        espacement et espacement dans le corrigé.
+        Les réponses modifient les caractéristiques de l'exercice puis le code LaTeX est mis à jour
+        */
         div_parametres_generaux.innerHTML = ""; // Vide le div parametres_generaux
         if (exercice.length > 0) {
             div_parametres_generaux.innerHTML += '<div class="ui hidden divider"></div>';
@@ -630,4 +694,33 @@ Les réponses modifient les caractéristiques de l'exercice puis le code LaTeX e
             }
         }
     }
+
+
+// Initialisation de la page
+window.addEventListener("DOMContentLoaded", () => {
+    $(".ui.dropdown").dropdown(); // Pour le menu des exercices
+    $(".ui.accordion").accordion("refresh");
+    $(".ui.checkbox").checkbox();
+    // Gestion du bouton de copie
+    $(".ui.button.toggle").state(); // initialise le bouton
+
+    // Récupère la graine pour l'aléatoire dans l'URL
+	let params = (new URL(document.location)).searchParams;
+	let serie = params.get('serie');
+	if (serie) {
+		mathalea.graine = serie;
+    }
+    let urlVars = getUrlVars();
+	if (urlVars.length > 0) {
+		for (let i = 0; i < urlVars.length; i++) {
+			liste_des_exercices.push(urlVars[i]["id"])
+        }
+    form_choix_des_exercices.value = liste_des_exercices.join(',')
+    mise_a_jour_de_la_liste_des_exercices();
+    }
+});
+
+
+
+    
 })();
