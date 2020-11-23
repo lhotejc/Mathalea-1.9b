@@ -1,6 +1,6 @@
-import Exercice from './ClasseExercice.js'
-import {liste_de_question_to_contenu, modal_texte_court} from '../modules/outils.js'
-import {randint, choice, tex_nombre, creer_couples} from '../modules/outils.js'
+import Exercice from '../ClasseExercice.js'
+import {liste_de_question_to_contenu, modal_texte_court} from '/modules/outils.js'
+import {randint, choice, tex_nombre, creer_couples} from '/modules/outils.js'
 
 /**
  * Tables de multiplications classiques, à trou ou un mélange des deux.

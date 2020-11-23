@@ -1,5 +1,5 @@
-import { choice, combinaison_listes, liste_de_question_to_contenu, randint, tex_nombre } from "../modules/outils.js";
-import Exercice from './ClasseExercice.js';
+import { choice, combinaison_listes, liste_de_question_to_contenu, randint, tex_nombre } from "/modules/outils.js";
+import Exercice from '../ClasseExercice.js';
 
 
 /**

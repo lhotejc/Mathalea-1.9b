@@ -1,7 +1,7 @@
 
-import Exercice from './ClasseExercice.js'
-import {liste_de_question_to_contenu, modal_texte_court} from '../modules/outils.js'
-import {randint} from '../modules/outils.js'
+import Exercice from '../ClasseExercice.js'
+import {liste_de_question_to_contenu, modal_texte_court} from '/modules/outils.js'
+import {randint} from '/modules/outils.js'
 
 
 /**

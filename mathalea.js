@@ -1,11 +1,17 @@
 import { strRandom } from "./modules/outils.js";
 import { getUrlVars } from "./modules/getUrlVars.js";
+import { menuDesExercicesDisponibles } from "./modules/menuDesExercicesDisponibles.js";
+window.mathalea = {}; // Objets pour les variables globales
+window.mathalea.dictionnaireDesExercices = {"6CM01":{"url":"./exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6C10":{"url":"./exercices/6e/6C10.js","titre":"Ajouter 9"},"6D10":{"url":"./exercices/6e/6D10.js","titre":"Convertir des durées"},"5D10":{"url":"./exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"./exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"./exercices/5e/5CM01.js","titre":"Tables de multiplications"},};
+        // Ce dictionnaire est généré avec le script list.py
 
 (function () {
     // IIFE principal
     let listeObjetsExercice = []; // Liste des objets listeObjetsExercices
     let liste_des_exercices = []; // Liste des identifiants des exercices
     let mathalea = {};
+
+    menuDesExercicesDisponibles()
 
     // Mise à jour du formulaire de la liste des exercices
     let form_choix_des_exercices = document.getElementById("choix_des_exercices");
@@ -84,7 +90,7 @@ import { getUrlVars } from "./modules/getUrlVars.js";
         document.getElementById("exercices").innerHTML = "";
         document.getElementById("corrections").innerHTML = "";
 
-        let code1 = '', code2 = '';
+        let contenuDesExercices = '', contenuDesCorrections = '';
         if (liste_des_exercices.length > 0) {
             for (let i = 0; i < liste_des_exercices.length; i++) {
                 listeObjetsExercice[i].id = liste_des_exercices[i]
@@ -93,21 +99,21 @@ import { getUrlVars } from "./modules/getUrlVars.js";
                 } catch (error) {
                     
                 }
-                code1 += `<h3 class="ui dividing header">Exercice ${(i + 1)} − ${listeObjetsExercice[i].id}</h3>`;
+                contenuDesExercices += `<h3 class="ui dividing header">Exercice ${(i + 1)} − ${listeObjetsExercice[i].id}</h3>`;
                 if (listeObjetsExercice[i].bouton_aide) {
-                    code1 += `<div id=aide${i}> ${listeObjetsExercice[i].bouton_aide}</div>`;
+                    contenuDesExercices += `<div id=aide${i}> ${listeObjetsExercice[i].bouton_aide}</div>`;
                 }
-                code1 += listeObjetsExercice[i].contenu;
+                contenuDesExercices += listeObjetsExercice[i].contenu;
                 if (listeObjetsExercice[i].type_exercice == "MG32") {
-                    code1 += `<div id="MG32div${i}" class="MG32"></div>`;
+                    contenuDesExercices += `<div id="MG32div${i}" class="MG32"></div>`;
                 }
-                code2 += `<h3 class="ui dividing header">Exercice ${i + 1}</h3>`;
-                code2 += listeObjetsExercice[i].contenu_correction;
+                contenuDesCorrections += `<h3 class="ui dividing header">Exercice ${i + 1}</h3>`;
+                contenuDesCorrections += listeObjetsExercice[i].contenu_correction;
                 if (listeObjetsExercice[i].type_exercice == "MG32" && listeObjetsExercice[i].MG32codeBase64corr)
-                    { code2 += `<div id="MG32divcorr${i}" class="MG32"></div>`}
+                    { contenuDesCorrections += `<div id="MG32divcorr${i}" class="MG32"></div>`}
             }
-            code1 = `<ol>\n${code1}\n</ol>`;
-            code2 = `<ol>\n${code2}\n</ol>`;
+            contenuDesExercices = `<ol>\n${contenuDesExercices}\n</ol>`;
+            contenuDesCorrections = `<ol>\n${contenuDesCorrections}\n</ol>`;
                 $("#message_liste_exercice_vide").hide();
                 $("#cache").dimmer("hide");
             } else {
@@ -115,8 +121,8 @@ import { getUrlVars } from "./modules/getUrlVars.js";
                 $("#cache").dimmer("show"); // Cache au dessus du code LaTeX
             }
 
-            $("#exercices").html(code1);
-            $("#corrections").html(code2);
+            document.getElementById('exercices').innerHTML = contenuDesExercices;
+            document.getElementById('corrections').innerHTML = contenuDesCorrections;
         // KaTeX
         renderMathInElement(document.body, {
             delimiters: [
@@ -148,7 +154,7 @@ import { getUrlVars } from "./modules/getUrlVars.js";
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
             id = liste_des_exercices[i];
             promises.push(
-                import(`./exercices/${id}.js`)
+                import(window.mathalea.dictionnaireDesExercices[id]['url'])
                     .catch(() => {
                         console.log(`Exercice ${id} non disponible.`);
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
@@ -204,7 +210,6 @@ import { getUrlVars } from "./modules/getUrlVars.js";
         form_sup2 = [],
         form_sup3 = []; // Création de tableaux qui recevront les éléments HTML de chaque formulaires
 
-    let URL_de_depart_complexe = false; // Si l'utilisateur a entré une URL avec des paramètres, on ne la modifie pas
     let sortie_html = true;
     function parametres_exercice(exercice) {
         /* Pour l'exercice i, on rajoute un formulaire avec 5 inputs : 
