@@ -31,7 +31,7 @@ export default function Ajouter9() {
   
       ) {
         a = randint(0, 9) * 10 + randint(1, 9);
-        texte = `$${a}+9$`;
+        texte = `$${a}+9$`
         texte_corr = `$${a}+9=${a + 9}$`;
   
         if (this.liste_questions.indexOf(texte) == -1) {

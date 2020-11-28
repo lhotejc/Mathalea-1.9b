@@ -1,14 +1,9 @@
 import { tridictionnaire, filtreDictionnaire }  from "./outils.js" ;
-
-window.mathalea = {}; // Objets pour les variables globales
-window.mathalea.dictionnaireDesExercices = {"6CM01":{"url":"./exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6C10":{"url":"./exercices/6e/6C10.js","titre":"Ajouter 9"},"6D10":{"url":"./exercices/6e/6D10.js","titre":"Convertir des durées"},"5D10":{"url":"./exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"./exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"./exercices/5e/5CM01.js","titre":"Tables de multiplications"},};
-
-let liste_des_exercices_disponibles = window.mathalea.dictionnaireDesExercices
+let dictionnaireDesExercices = {"6N30":{"url":"./exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6CM01":{"url":"./exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N11":{"url":"./exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"6N30-1":{"url":"./exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6N21":{"url":"./exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6C10":{"url":"./exercices/6e/6C10.js","titre":"Ajouter 9"},"6D101":{"url":"./exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6C101":{"url":"./exercices/6e/6C101.js","titre":"Tables de multiplications"},"6D10":{"url":"./exercices/6e/6D10.js","titre":"Convertir des durées"},"6D11":{"url":"./exercices/6e/6D11.js","titre":"Additionner des durées"},"CM000":{"url":"./exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6D12":{"url":"./exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6N11-2":{"url":"./exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"5D10":{"url":"./exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"./exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"./exercices/5e/5CM01.js","titre":"Tables de multiplications"},};export {dictionnaireDesExercices}
 
 export function menuDesExercicesDisponibles(){
     // Trie par ordre alphabétique les exercices disponibles
-    liste_des_exercices_disponibles = tridictionnaire(liste_des_exercices_disponibles);
-
+    let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
     // Détermine le nombre d'exercices par niveaux
     let nombre_d_exercices_disponibles_c3 = 0;
     let nombre_d_exercices_disponibles_6 = 0;
@@ -22,7 +17,7 @@ export function menuDesExercicesDisponibles(){
     let nombre_d_exercices_disponibles_prof = 0;
     let nombre_d_exercices_disponibles_PE = 0;
     let nombre_d_exercices_disponibles_beta = 0;
-    for (var id in liste_des_exercices_disponibles) {
+    for (let id in liste_des_exercices_disponibles) {
       if (id[0] == "c" && id[1] == "3") {
         nombre_d_exercices_disponibles_c3 += 1;
       }

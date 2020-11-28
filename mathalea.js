@@ -1,9 +1,7 @@
 import { strRandom } from "./modules/outils.js";
 import { getUrlVars } from "./modules/getUrlVars.js";
-import { menuDesExercicesDisponibles } from "./modules/menuDesExercicesDisponibles.js";
-window.mathalea = {}; // Objets pour les variables globales
-window.mathalea.dictionnaireDesExercices = {"6CM01":{"url":"./exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6C10":{"url":"./exercices/6e/6C10.js","titre":"Ajouter 9"},"6D10":{"url":"./exercices/6e/6D10.js","titre":"Convertir des durées"},"5D10":{"url":"./exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"./exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"./exercices/5e/5CM01.js","titre":"Tables de multiplications"},};
-        // Ce dictionnaire est généré avec le script list.py
+import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules/menuDesExercicesDisponibles.js";
+
 
 (function () {
     // IIFE principal
@@ -97,7 +95,8 @@ window.mathalea.dictionnaireDesExercices = {"6CM01":{"url":"./exercices/6e/6CM01
                 try {
                     listeObjetsExercice[i].nouvelle_version(i);
                 } catch (error) {
-                    
+                    console.log(listeObjetsExercice[i])
+                    console.log(error)
                 }
                 contenuDesExercices += `<h3 class="ui dividing header">Exercice ${(i + 1)} − ${listeObjetsExercice[i].id}</h3>`;
                 if (listeObjetsExercice[i].bouton_aide) {
@@ -153,10 +152,16 @@ window.mathalea.dictionnaireDesExercices = {"6CM01":{"url":"./exercices/6e/6CM01
         let promises = [];
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
             id = liste_des_exercices[i];
+            let url;
+            try {
+                url = dictionnaireDesExercices[id]['url']
+            } catch (error) {
+                console.log(`Exercice ${id} non disponible`);
+            }
             promises.push(
-                import(window.mathalea.dictionnaireDesExercices[id]['url'])
+                import(url)
                     .catch(() => {
-                        console.log(`Exercice ${id} non disponible.`);
+                        console.log(url)
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
                     })
                     .then((module) => {
@@ -738,6 +743,39 @@ window.addEventListener("DOMContentLoaded", () => {
     $(".ui.checkbox").checkbox();
     // Gestion du bouton de copie
     $(".ui.button.toggle").state(); // initialise le bouton
+
+    // Gestion du bouton « Nouvelles données »
+    let btn_mise_a_jour_code = document.getElementById('btn_mise_a_jour_code');
+    btn_mise_a_jour_code.addEventListener('click', nouvelles_donnees);
+    function nouvelles_donnees() {
+        mathalea.graine = strRandom({
+          includeUpperCase: true,
+          includeNumbers: true,
+          length: 4,
+          startsWithLowerCase: false
+        });
+        form_serie.value = mathalea.graine; // mise à jour du formulaire
+        mise_a_jour_du_code();
+    }
+
+    // Gestion du bouton de zoom
+		let taille = parseInt($("#affichage_exercices").css("font-size"));
+		$( "#btn_zoom_plus").click(function() {
+			taille*=1.2;
+			$("#affichage_exercices").css("font-size", `${taille}px`);
+			$("#affichage_exercices").find('h3').css("font-size", `${taille}px`);
+			$("#affichage_exercices").find('h4').css("font-size", `${taille}px`);
+		});
+		$( "#btn_zoom_moins").click(function() {
+            console.log(parseInt(taille))
+			if (parseInt(taille)>14) {
+				taille*=.8;
+			}
+            $("#affichage_exercices").css("font-size", `${taille}px`);
+            $("#affichage_exercices").find('h3').css("font-size", `${taille}px`);
+			$("#affichage_exercices").find('h4').css("font-size", `${taille}px`);
+		});
+
 
     // Récupère la graine pour l'aléatoire dans l'URL
 	let params = (new URL(document.location)).searchParams;

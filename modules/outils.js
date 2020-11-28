@@ -2726,7 +2726,7 @@ export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,po
 			SVG_tracer_flecheH(mon_svg,750,50)
 			// Nombres visibles
 			SVG_label(mon_svg,[[string_nombre(origine),100,50]],2,'black',1);
-			for (i=0;i<points_connus.length;i++) {
+			for (let i=0;i<points_connus.length;i++) {
 				valeur=string_nombre(points_connus[i][0]);					 
 				distance=calcul(longueur_pas1*points_connus[i][1]+longueur_pas2*points_connus[i][2]);
 				SVG_label(mon_svg,[[valeur,100+distance,50]],2,'black',1)
