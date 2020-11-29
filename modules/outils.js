@@ -1,6 +1,4 @@
 // Fonctions diverses pour la création des exercices
-
-
 /**
 * Utilise this.liste\_questions et this.liste\_corrections pour remplir this.contenu et this.contenu_correction
 * 
@@ -6898,7 +6896,7 @@ export function  telechargeFichier(text,filename) {
 * @param {string} Le titre de l'entête 
 * @author Rémi Angot
 */
-export function  intro_LaTeX(entete = "Exercices") {
+export function  intro_LaTeX(entete = "Exercices",liste_packages) {
 	if (entete=='') {entete='Exercices'}
 		return `\\documentclass[12pt]{article}
 \\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
@@ -6966,7 +6964,7 @@ ${preambule_personnalise(liste_packages)}
 * Renvoie un texte avec le préambule d'un fichier LaTeX avec le style CoopMaths
 * @author Rémi Angot
 */
-	export function  intro_LaTeX_coop(){
+	export function  intro_LaTeX_coop(liste_packages){
 
 		let intro_LaTeX_coop = `\\documentclass[12pt]{article}
 \\usepackage[left=1.5cm,right=1.5cm,top=4cm,bottom=2cm]{geometry}
@@ -7120,7 +7118,7 @@ shapes.callouts, shapes.multipart, shapes.gates.logic.US,shapes.gates.logic.IEC,
 	}
 }
 
-${preambule_personnalise()}
+${preambule_personnalise(liste_packages)}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%% Fin du préambule %%%
@@ -7137,7 +7135,7 @@ ${preambule_personnalise()}
 
 
 
-export function  preambule_personnalise(){
+export function  preambule_personnalise(liste_packages){
 	let result = ''
 	for (let packages of liste_packages){
 		switch (packages) {
