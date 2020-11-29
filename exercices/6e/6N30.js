@@ -8,7 +8,7 @@ import { combinaison_listes, liste_de_question_to_contenu, randint } from '/modu
  * @Auteur Jean-Claude Lhote et Rémi Angot
  * référence 6N30
  */
-function Lire_abscisse_decimale() {
+export default function Lire_abscisse_decimale() {
   "use strict";
   Exercice.call(this); // Héritage de la classe Exercice()
   this.titre = "Lire l'abscisse décimale d'un point";

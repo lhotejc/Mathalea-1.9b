@@ -1,3 +1,9 @@
+import Exercice from '../ClasseExercice.js';
+import {liste_de_question_to_contenu,randint,combinaison_listes,mise_en_evidence,katex_Popup2,fraction_simplifiee} from "/modules/outils.js"
+
+
+
+
 /**
  * Additions et/ou soustractions classique et/ou à trou.
  *
@@ -5,7 +11,7 @@
  * @Auteur Rémi Angot
  * Référence 6D12
  */
-function Tables_additions_soustractions() {
+export default function Tables_additions_soustractions() {
   "use strict";
   Exercice.call(this); // Héritage de la classe Exercice()
   this.sup = 20;
@@ -14,7 +20,7 @@ function Tables_additions_soustractions() {
   this.consigne = "Calculer";
   this.spacing = 2;
 
-  this.nouvelle_version = function (numero_de_l_exercice) {
+  this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
     let liste_type_de_questions = [];
