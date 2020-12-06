@@ -52,7 +52,7 @@ def main():
                             line = re.sub('this.titre\s*=\s*(\"|\')\s*','',line) # Enlève this.titre
                             line = re.sub('\s*(\"|\')\s*\;\s*$','',line) # Guillemets et ; de la fin
                             line = re.sub('^\s*','',line) # Espaces du début
-                            dictionnaireDesRef += '"'+os.path.splitext(file)[0]+'":{"url":"'+dirpath+'/'+file+'","titre":"'+line+'"},'
+                            dictionnaireDesRef += '"'+os.path.splitext(file)[0]+'":{"url":"'+dirpath.replace('./','/')+'/'+file+'","titre":"'+line+'"},'
             
     #print(listOfFiles)
     dictionnaireDesRef += '};'
@@ -65,7 +65,7 @@ def main():
         out.writelines(lines)
         out.close()
         
-    replace_line('./modules/menuDesExercicesDisponibles.js', 1, 'let dictionnaireDesExercices = '+dictionnaireDesRef)
+    replace_line('./modules/menuDesExercicesDisponibles.js', 1, 'export let dictionnaireDesExercices = '+dictionnaireDesRef)
         
 if __name__ == '__main__':
     main()

@@ -349,18 +349,22 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 let urlVars = getUrlVars();
                 for (var i = 0; i < urlVars.length; i++) {
                     // récupère les éventuels paramètres dans l'URL
+                    // et les recopie dans les formulaires des paramètres
                     if (urlVars[i]["nb_questions"] && listeObjetsExercice[i].nb_questions_modifiable) {
                         listeObjetsExercice[i].nb_questions = urlVars[i]["nb_questions"];
                         form_nb_questions[i].value = listeObjetsExercice[i].nb_questions;
                     }
                     if (urlVars[i]["sup"]) {
                         listeObjetsExercice[i].sup = urlVars[i]["sup"];
+                        form_sup[i].value = listeObjetsExercice[i].sup;
                     }
                     if (urlVars[i]["sup2"]) {
                         listeObjetsExercice[i].sup2 = urlVars[i]["sup2"];
+                        form_sup2[i].value = listeObjetsExercice[i].sup2;
                     }
                     if (urlVars[i]["sup3"]) {
                         listeObjetsExercice[i].sup3 = urlVars[i]["sup3"];
+                        form_sup3[i].value = listeObjetsExercice[i].sup3;
                     }
                 }
             })

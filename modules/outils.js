@@ -2781,14 +2781,14 @@ export function  Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnu
 	result+=`\n\t \\foreach \\x in {0,${calcul(1/pas2)},...,7}`
 	result+=`\n\t {\\draw (${decalage}+\\x,-0.05)--(${decalage}+\\x,0.05);}`  	//result+=`\n\t {\\draw (${origine*pas1}+\\x,-0.05)--(${origine*pas1}+\\x,0.05);}`
 
-	for (i=0;i<points_connus.length;i++){
+	for (let i=0;i<points_connus.length;i++){
 		valeur=calcul(origine+points_connus[i][1]/pas1+calcul(points_connus[i][2]/pas1/pas2))
 		result+=`\n\t \\tkzDefPoint(${valeur},0){A}`
 		result +=`\n\t \\tkzLabelPoint[color = black,below,inner sep = 5pt,font=\\scriptsize](A){$${tex_nombrec(valeur)}$}`
 	}
 	//Points inconnus
 	let position=6;
-	for (i=0;i<points_inconnus.length;i++){
+	for (let i=0;i<points_inconnus.length;i++){
 		valeur=calcul(origine+points_inconnus[i][1]/pas1+calcul(points_inconnus[i][2]/pas1/pas2))
 		result+=`\n\t \\tkzDefPoint(${valeur},0){A}`
 		result+=`\n\t \\tkzDefPoint(${valeur},-0.3-${position*0.02}){B}`
