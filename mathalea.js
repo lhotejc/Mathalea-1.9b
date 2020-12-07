@@ -46,7 +46,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
         (function gestionURL() {
             if (liste_des_exercices.length > 0) {
                 let fin_de_l_URL = "";
-                if (sortie_html) {
+                if (sortie_html && !est_diaporama) {
                     fin_de_l_URL += "exercice.html";
                 }
                 if (listeObjetsExercice[0].sup2) {
@@ -75,6 +75,9 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         fin_de_l_URL += `,sup3=${listeObjetsExercice[i].sup3}`;
                     }
                 }
+                if (duree){
+                    fin_de_l_URL +=`&duree=${duree}`
+                }
                 fin_de_l_URL += `&serie=${mathalea.graine}`;
                 window.history.pushState("", "", fin_de_l_URL);
                 let url = window.location.href.split("&serie")[0]; //met l'URL dans le bouton de copie de l'URL sans garder le numéro de la série
@@ -85,9 +88,74 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 });
             }
         })();
+        if (sortie_html && est_diaporama) {
+            if (liste_des_exercices.length>0) { // Pour les diaporamas tout cacher quand un exercice est choisi
+                $("#liste_des_exercices").hide();
+                $("#parametres_generaux").show();
+            } else {
+                $("#liste_des_exercices").show();
+                $("h3").show();
+                $("#formulaire_choix_de_la_duree").show();
+        
+            }
+            document.getElementById("exercices").innerHTML = "";
+            document.getElementById("corrections").innerHTML = "";
+
+            let contenuDesExercices = "",
+                contenuDesCorrections = "";
+            if (liste_des_exercices.length > 0) {
+                for (let i = 0; i < liste_des_exercices.length; i++) {
+                    listeObjetsExercice[i].id = liste_des_exercices[i];
+                    try {
+                        listeObjetsExercice[i].nouvelle_version(i);
+                    } catch (error) {
+                        console.log(error);
+                    }
+
+                    contenuDesExercices +=`<section class="slider single-item" id="diaporama">`
+                    for(let question of listeObjetsExercice[i].liste_questions){
+                        contenuDesExercices += `\n<div id="question_diap" style="font-size:${listeObjetsExercice[i].tailleDiaporama}px"><span>` + question.replace(/\\dotfill/g,'...').replace(/\\\\/g,'<br>').replace(/\\not=/g,'≠').replace(/\\ldots/g,'....') + '</span></div>'   // .replace(/~/g,' ') pour enlever les ~ mais je voulais les garder dans les formules LaTeX donc abandonné
+                    }
+                    contenuDesExercices += '<div id="question_diap" style="font-size:100px"><span>$\\text{Terminé !}$</span></div></section>'
+                    if (listeObjetsExercice[i].type_exercice == "MG32") {
+                        contenuDesExercices += `<div id="MG32div${i}" class="MG32"></div>`;
+                    }
+                    contenuDesCorrections += listeObjetsExercice[i].contenu_correction;
+                    if (listeObjetsExercice[i].type_exercice == "MG32" && listeObjetsExercice[i].MG32codeBase64corr) {
+                        contenuDesCorrections += `<div id="MG32divcorr${i}" class="MG32"></div>`;
+                    }
+                }
+                contenuDesCorrections = `<ol>\n${contenuDesCorrections}\n</ol>`;
+                $("#message_liste_exercice_vide").hide();
+                $("#cache").dimmer("hide");
+            } else {
+                $("#message_liste_exercice_vide").show(); // Message au dessus de la liste des exercices
+                $("#cache").dimmer("show"); // Cache au dessus du code LaTeX
+            }
+
+            document.getElementById("exercices").innerHTML = contenuDesExercices;
+            document.getElementById("corrections").innerHTML = contenuDesCorrections;
+            // KaTeX
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "\\[", right: "\\]", display: true },
+                    { left: "$", right: "$", display: false },
+                ],
+                throwOnError: true,
+                errorColor: "#CC0000",
+                strict: "warn",
+                trust: false,
+            });
+            // Interprete toutes les balises <pre class="blocks">
+            scratchblocks.renderMatching("pre.blocks", {
+                style: "scratch3",
+                languages: ["fr"],
+            });
+        }
+
 
         // Ajoute le contenu dans les div #exercices et #corrections
-        if (sortie_html) {
+        if (sortie_html && !est_diaporama) {
             document.getElementById("exercices").innerHTML = "";
             document.getElementById("corrections").innerHTML = "";
 
@@ -142,7 +210,8 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 style: "scratch3",
                 languages: ["fr"],
             });
-        } else {
+        } 
+        if (!sortie_html) {
             // Sortie LaTeX
             // code pour la sortie LaTeX
             let codeEnonces = "",
@@ -366,6 +435,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         listeObjetsExercice[i].sup3 = urlVars[i]["sup3"];
                         form_sup3[i].value = listeObjetsExercice[i].sup3;
                     }
+                    
                 }
             })
             .then(() => {
@@ -922,7 +992,9 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
 
         // Gestion du bouton « Nouvelles données »
         let btn_mise_a_jour_code = document.getElementById("btn_mise_a_jour_code");
-        btn_mise_a_jour_code.addEventListener("click", nouvelles_donnees);
+        if (btn_mise_a_jour_code){
+            btn_mise_a_jour_code.addEventListener("click", nouvelles_donnees);
+        }
         function nouvelles_donnees() {
             mathalea.graine = strRandom({
                 includeUpperCase: true,
@@ -977,6 +1049,9 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
         let serie = params.get("serie");
         if (serie) {
             mathalea.graine = serie;
+        }
+        if (params.get("duree")) {
+            duree = params.get("duree");
         }
         let urlVars = getUrlVars();
         if (urlVars.length > 0) {

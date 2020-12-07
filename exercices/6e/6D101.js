@@ -16,6 +16,7 @@ export default function Heures_decimales() {
   this.spacing = 2;
   this.nb_questions = 5;
   this.nb_cols_corr = 1;
+  this.tailleDiaporama = 200;
 
   this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
