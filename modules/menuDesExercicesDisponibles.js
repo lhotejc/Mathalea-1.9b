@@ -1,6 +1,5 @@
 import { tridictionnaire, filtreDictionnaire }  from "./outils.js" ;
-export let dictionnaireDesExercices = {"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},};
-
+export let dictionnaireDesExercices = {"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},"1E12":{"url":"/exercices/1ere/1E12.js","titre":"Trouver l\'équation d\'une parabole"}};
 export function menuDesExercicesDisponibles(){
     // Trie par ordre alphabétique les exercices disponibles
     let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
@@ -127,7 +126,9 @@ export function menuDesExercicesDisponibles(){
         ['3G1','3G1 - Homothétie et rotation'],['3G2','3G2 - Théorème de Thalès'],['3G3','3G3 - Trigonométrie'],['3G4',"3G4 - Espace"],
         ['3L1','3L1 - Calcul littéral'],['3P1','3P1 - Proportionnalité'],['3S1','3S1 - Statistiques'],['3S2','3S2 - Probabilités']
       ])
-
+      liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
+        ['1E1','1E1 -  Équations']
+       ])
     for (var id in liste_des_exercices_disponibles) {
       let exercice_tmp = id;
       
