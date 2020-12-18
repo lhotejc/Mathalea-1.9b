@@ -15,6 +15,7 @@ html, body {
     .slick-slide {
       margin: 10px 20px;
       text-align: center;
+      line-height: 200%;
     }
 
     .slick-slide img {

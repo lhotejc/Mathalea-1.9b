@@ -75,7 +75,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         fin_de_l_URL += `,sup3=${listeObjetsExercice[i].sup3}`;
                     }
                 }
-                if (duree){
+                if (typeof duree !== 'undefined'){
                     fin_de_l_URL +=`&duree=${duree}`
                 }
                 fin_de_l_URL += `&serie=${mathalea.graine}`;
