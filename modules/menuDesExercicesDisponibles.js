@@ -1,8 +1,10 @@
 import { tridictionnaire, filtreDictionnaire }  from "./outils.js" ;
-export let dictionnaireDesExercices = {"1E12":{"url":"/exercices/1ere/1E12.js","titre":"Trouver l\'équation d'une parabole"},"1N11":{"url":"/exercices/1ere/1N11.js","titre":"Déterminer les termes d'une suite définie de façon explicite"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},};    // Trie par ordre alphabétique les exercices disponibles
+export let dictionnaireDesExercices = {"6N14":{"url":"/exercices/6e/6N14.js","titre":"Représenter des fractions"},"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"6N20-1":{"url":"/exercices/6e/6N20-1.js","titre":"Encadrer une fraction entre deux nombres entiers"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"6G10-1":{"url":"/exercices/6e/6G10-1.js","titre":"Description et notation des droites, segments et demi-droites"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},};    
+
 export function menuDesExercicesDisponibles(){
-let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
-    // Détermine le nombre d'exercices par niveaux
+  // Trie par ordre alphabétique les exercices disponibles
+  let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
+  // Détermine le nombre d'exercices par niveaux
     let nombre_d_exercices_disponibles_c3 = 0;
     let nombre_d_exercices_disponibles_6 = 0;
     let nombre_d_exercices_disponibles_5 = 0;
@@ -139,7 +141,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
       if (id[0] == 'T') {
@@ -149,7 +151,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
       if (id[0] == "P" && id[1] == "E") {
@@ -159,7 +161,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
       if (id[0] == "C") {
@@ -169,7 +171,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
       if (id[0] == "P" && id[1] == "0") {
@@ -179,7 +181,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
       if (id[0] == "b" && id[1] == "e") {
@@ -189,7 +191,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           '</span> - <a class="lien_id_exercice" numero="' +
           id +
           '">' +
-          exercice_tmp.titre +
+          dictionnaireDesExercices[exercice_tmp].titre +
           "</a></br>\n";
       }
     }

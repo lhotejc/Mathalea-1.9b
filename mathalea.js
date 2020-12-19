@@ -6,7 +6,6 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
     // IIFE principal
     let listeObjetsExercice = []; // Liste des objets listeObjetsExercices
     let liste_des_exercices = []; // Liste des identifiants des exercices
-    let mathalea = {};
     let code_LaTeX = "";
     let liste_packages = new Set();
 
@@ -75,8 +74,8 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         fin_de_l_URL += `,sup3=${listeObjetsExercice[i].sup3}`;
                     }
                 }
-                if (typeof duree !== 'undefined'){
-                    fin_de_l_URL +=`&duree=${duree}`
+                if (typeof mathalea.duree !== 'undefined'){
+                    fin_de_l_URL +=`&duree=${mathalea.duree}`
                 }
                 fin_de_l_URL += `&serie=${mathalea.graine}`;
                 window.history.pushState("", "", fin_de_l_URL);
@@ -402,6 +401,7 @@ console.log(listeObjetsExercice,liste_des_exercices)
             promises.push(
                 import(url)
                     .catch(() => {
+                        console.log(url)
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
                     })
                     .then((module) => {
@@ -1053,7 +1053,7 @@ console.log(listeObjetsExercice,liste_des_exercices)
             mathalea.graine = serie;
         }
         if (params.get("duree")) {
-            duree = params.get("duree");
+            mathalea.duree = params.get("duree");
         }
         let urlVars = getUrlVars();
         if (urlVars.length > 0) {

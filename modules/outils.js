@@ -1,3 +1,6 @@
+import {point, translation, vecteur, carre, cercle, segment, rotation, arc} from "/modules/2d.js"
+
+
 // Fonctions diverses pour la création des exercices
 /**
 * Utilise this.liste\_questions et this.liste\_corrections pour remplir this.contenu et this.contenu_correction
@@ -5496,7 +5499,7 @@ export function  Fraction(num,den) {
 		let objets = [], n, num, k, dep, s, a, O, C
 		n = quotientier(this.numIrred, this.denIrred)
 		num = this.numIrred
-		 unegraduation=function (x,y,couleur='black',epaisseur=1){
+		let unegraduation=function (x,y,couleur='black',epaisseur=1){
 			let A=point(x,y+0.2)
 			let B=point(x,y-0.2)
 			let g=segment(A,B)
@@ -5644,7 +5647,7 @@ export function  Fraction(num,den) {
 		let objets = [], n, num, k, dep, s, a, O, C
 		n = quotientier(this.num, this.den)
 		num = this.num
-		 unegraduation=function (x,y,couleur='black',epaisseur=1){
+		 let unegraduation=function (x,y,couleur='black',epaisseur=1){
 			let A=point(x,y+0.2)
 			let B=point(x,y-0.2)
 			let g=segment(A,B)
@@ -5664,7 +5667,7 @@ export function  Fraction(num,den) {
 				}
 				dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90-depart * 360 / this.den)
 				for (let j = 0; j < Math.min(this.den, num); j++) {
-					a = arc(dep, O,- 360 / this.den, true, fill = couleur)
+					a = arc(dep, O,- 360 / this.den, true, couleur)
 					a.opacite = 0.3
 					dep = rotation(dep, O, -360 / this.den)
 					objets.push(a)
@@ -5682,7 +5685,7 @@ export function  Fraction(num,den) {
 			
 				dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O,90- depart * 360 / this.den)
 				if (this.num%this.den!=0) for (let j = 0; j < Math.min(this.den, num); j++) {
-					a = arc(dep, O, -360 / this.den, true, fill = couleur)
+					a = arc(dep, O, -360 / this.den, true, couleur)
 					a.opacite = 0.3
 					dep = rotation(dep, O, -360 / this.den)
 					objets.push(a)
