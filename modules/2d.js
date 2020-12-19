@@ -21,7 +21,7 @@ import {egal,randint,rangeMinMax,unSiPositifMoinsUnSinon,arrondi,arrondi_virgule
 
 let numId = 0 // Créer un identifiant numérique unique par objet SVG
 
-// let pixelsParCm = 20;
+let pixelsParCm = 20;
 // let unitesLutinParCm = 50;
 // let mainlevee=false
 // let amplitude=1
@@ -4466,8 +4466,7 @@ function LabelX(
 ) {
   ObjetMathalea2D.call(this);
   let objets = [];
-  for (
-    x = Math.ceil(xmin / coeff);
+  for ( let x = Math.ceil(xmin / coeff);
     calcul(x * coeff) <= xmax;
     x = calcul(x + step)
   ) {
@@ -4522,8 +4521,7 @@ function LabelY(
 ) {
   ObjetMathalea2D.call(this);
   let objets = [];
-  for (
-    y = Math.ceil(ymin / coeff);
+  for (let y = Math.ceil(ymin / coeff);
     calcul(y * coeff) <= ymax;
     y = calcul(y + step)
   ) {

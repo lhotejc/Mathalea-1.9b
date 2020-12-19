@@ -25,6 +25,7 @@ import {repere,courbe,mathalea2d,} from "/modules/2d.js"
     this.correction_detaillee_disponible=true
   
     this.nouvelle_version = function () {
+      var pixelsParCm=20
       this.liste_questions = []; // Liste de questions
       this.liste_corrections = []; // Liste de questions corrigées
       let liste_type_de_questions,type_de_questions_disponibles;
@@ -156,7 +157,7 @@ import {repere,courbe,mathalea2d,} from "/modules/2d.js"
         svgYmin=Math.min(calcul(Ymin/Yscale),-1)
         svgYmax=Math.max(calcul(Ymax/Yscale),1)
         F = x => a*x**2+b*x+c;
-        texte+=mathalea2d({xmin:-10, xmax:11,ymin:svgYmin,ymax:svgYmax+2,pixelsParCm:20,scale:.6},courbe(F,-10,10,'blue',1.5,r),r)
+        texte+=mathalea2d({xmin:-10, xmax:11,ymin:svgYmin,ymax:svgYmax+2,pixelsParCm:pixelsParCm,scale:.6},courbe(F,-10,10,'blue',1.5,r),r)
         if (this.liste_questions.indexOf(texte) == -1) {
           // Si la question n'a jamais été posée, on en créé une autre
           this.liste_questions.push(texte);
