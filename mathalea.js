@@ -399,6 +399,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
             promises.push(
                 import(url)
                     .catch(() => {
+                        console.log(url)
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
                     })
                     .then((module) => {
