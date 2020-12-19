@@ -1,13 +1,12 @@
 let premier_clic_sur_play = true;
 let diaporama_deja_visualise = false;
-let form_duree = []; // Création de tableaux qui recevront les éléments HTML de chaque formulaires
-let duree;
+let form_duree = []; 
 let chrono;
 
 $(document).ready(function () {
     form_choix_de_la_duree = document.getElementById("choix_de_la_duree");
-    if (duree){
-        form_choix_de_la_duree.value = duree;
+    if (mathalea.duree){
+        form_choix_de_la_duree.value = mathalea.duree;
     } else {
         form_choix_de_la_duree.value = 10;
     }
@@ -15,12 +14,12 @@ $(document).ready(function () {
     form_choix_de_la_duree.addEventListener("change", function (e) {
         // Changement du texte
         if (e.target.value == "") {
-            duree = 10;
+            mathalea.duree = 10;
         } else {
-            duree = e.target.value;
-            chrono = duree;
+            mathalea.duree = e.target.value;
+            chrono = mathalea.duree;
             let params = new URL(document.location).searchParams;
-            params.set("duree",duree);
+            params.set("duree",mathalea.duree);
             history.pushState(null, null, "?"+params.toString());
 
 
@@ -106,19 +105,19 @@ $(document).ready(function () {
     });
 
     $("#prev").click(function () {
-        chrono = duree*1000;
+        chrono = mathalea.duree*1000;
         $("#timer").html("&ndash; " + chrono / 1000 + " s");
         $(".single-item").slick("slickPrev");
     });
 
     $("#next").click(function () {
-        chrono = duree*1000;
+        chrono = mathalea.duree*1000;
         $("#timer").html("&ndash; " + chrono / 1000 + " s");
         $(".single-item").slick("slickNext");
     });
 
     function timer() {
-        chrono = duree*1000;
+        chrono = mathalea.duree*1000;
         $("#timer").html("&ndash; " + chrono / 1000 + " s");
         intervalID = setInterval(change_timer, 1000);
     }
@@ -128,7 +127,7 @@ $(document).ready(function () {
             chrono -= 1000;
         } else {
             $(".single-item").slick("slickNext");
-            chrono = duree*1000;
+            chrono = mathalea.duree*1000;
         }
         $("#timer").html("&ndash; " + chrono / 1000 + " s");
     }
