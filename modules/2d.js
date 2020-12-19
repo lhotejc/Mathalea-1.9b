@@ -164,8 +164,8 @@ function TracePoint(...points) {
         }
       }
     }
-    code = "";
-    for (objet of objetssvg) {
+    let code = "";
+    for (let objet of objetssvg) {
       code += "\n\t" + objet.svg(coeff);
     }
     code = `<g id="${this.id}">`+code+`</g>`
@@ -226,8 +226,8 @@ function TracePoint(...points) {
         }
       }
     }
-    code = "";
-    for (objet of objetstikz) {
+    let code = "";
+    for (let objet of objetstikz) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -950,31 +950,31 @@ function ConstructionMediatrice(
     objets.push(sAM, sBM, sAN, sBN, codes,codage);
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     code = `<g id="${this.id}">${code}</g>`
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
   };
   this.svgml =function(coeff,amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
      if (typeof(objet.svgml)=='undefined') code += "\n\t" + objet.svg(coeff);
      else code += "\n\t" + objet.svgml(coeff,amp);
     }
     return code;
   }
   this.tikzml = function (amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       if (typeof(objet.tikzml)=='undefined') code += "\n\t" + objet.tikz();
       else code += "\n\t" + objet.tikzml(amp);
     }
@@ -1076,15 +1076,15 @@ function ConstructionBissectrice(
     objets.push(sMP, sNP, codes);
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -1763,15 +1763,15 @@ function CodageCarre(c, color = "black", mark = "×") {
   );
 
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -3437,7 +3437,7 @@ export function afficherTempo(objet, t0 = 1, t = 5, r = 'Infinity') {
 export function afficherUnParUn(objets, t = 1, r = 'Infinity', tApresDernier = 5){
   let t0 = t
   let tf = objets.length*t+tApresDernier
-  for (objet of objets){
+  for (let objet of objets){
     afficherTempo(objet, t0, tf, r);
     t0 +=t;
   }
@@ -4042,7 +4042,7 @@ function CodeAngle(debut,centre,angle,taille=0.8,mark='',color='black',epaisseur
       t.isVisible = false;
       objets.push(t);
     }
-    for (objet of objets) {
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     if (objets.length>1){
@@ -4189,21 +4189,21 @@ function DroiteGraduee(x=0,y=0,position='H',type='dd',longueurUnite=10,division=
 
   this.svg = function (coeff) {
    let code = "";
-    for (objet of objets) {
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
     let code = "";
-    for (objet of objets) {
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
   };
   this.svgml = function (coeff,amp) {
     let code = "";
-     for (objet of objets) {
+     for (let objet of objets) {
       if (!mainlevee||typeof(objet.svgml)=='undefined') code += "\t" + objet.svg(coeff) + "\n";
       else code += "\t" + objet.svgml(coeff,amp) + "\n";
      }
@@ -4211,7 +4211,7 @@ function DroiteGraduee(x=0,y=0,position='H',type='dd',longueurUnite=10,division=
    };
    this.tikzml = function (amp) {
      let code = "";
-     for (objet of objets) {
+     for (let objet of objets) {
       if (!mainlevee||typeof(objet.tikzml)=='undefined') code += "\t" + objet.tikz() + "\n";
       else code += "\t" + objet.tikzml(amp) + "\n";
      }
@@ -4357,21 +4357,21 @@ export function droiteGraduee(...args) {
 
   this.svg = function (coeff) {
     let code = "";
-     for (objet of objets) {
+     for (let objet of objets) {
        code += "\n\t" + objet.svg(coeff);
      }
      return code;
    };
    this.tikz = function () {
      let code = "";
-     for (objet of objets) {
+     for (let objet of objets) {
        code += "\n\t" + objet.tikz();
      }
      return code;
    };
    this.svgml = function (coeff,amp) {
      let code = "";
-      for (objet of objets) {
+      for (let objet of objets) {
        if (typeof(objet.svgml)=='undefined') code += "\t" + objet.svg(coeff) + "\n";
        else code += "\t" + objet.svgml(coeff,amp) + "\n";
       }
@@ -4379,7 +4379,7 @@ export function droiteGraduee(...args) {
     };
     this.tikzml = function (amp) {
       let code = "";
-      for (objet of objets) {
+      for (let objet of objets) {
        if (typeof(objet.tikzml)=='undefined') code += "\t" + objet.tikz() + "\n";
        else code += "\t" + objet.tikzml(amp) + "\n";
       }
@@ -4436,15 +4436,15 @@ function Axes(
     objets.push(s);
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4483,15 +4483,15 @@ function LabelX(
     );
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4539,15 +4539,15 @@ function LabelY(
     );
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4603,15 +4603,15 @@ function Grille(
   }
   this.commentaire = `Grille(xmin = ${xmin}, ymin = ${ymin}, xmax = ${xmax}, ymax = ${ymax}, color = ${color}, opacite = ${opacite}, pas = ${step})`;
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4657,15 +4657,15 @@ function GrilleHorizontale(
     objets.push(s);
   }
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4694,15 +4694,15 @@ function Seyes(xmin = 0, ymin = 0, xmax = 15, ymax = 15,opacite1 = .5, opacite2 
   }
   objets.push(grille(xmin, ymin, xmax, ymax, "blue", opacite1, 1));
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
@@ -4776,7 +4776,7 @@ function Repere({
     xmax=premierMultipleSuperieur(xscale,xmax)
   }
   this.svg = function (coeff) {
-    code = "";
+    let code = "";
     if (grillePrincipaleVisible) {
       if (grilleHorizontaleVisible){
         code+=grilleHorizontale(
@@ -4914,7 +4914,7 @@ function Repere({
     return code;
   };
   this.tikz = function () {
-    code = "";
+    let code = "";
     if (grillePrincipaleVisible) {
       if (grilleHorizontaleVisible){
         code+=grilleHorizontale(
@@ -5333,30 +5333,30 @@ function Repere2({
 
   // LES SORTIES TiKZ et SVG
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
   };
   this.svgml =function(coeff,amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
      if (typeof(objet.svgml)=='undefined') code += "\n\t" + objet.svg(coeff);
      else code += "\n\t" + objet.svgml(coeff,amp);
     }
     return code;
   }
   this.tikzml = function (amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       if (typeof(objet.tikzml)=='undefined') code += "\n\t" + objet.tikz();
       else code += "\n\t" + objet.tikzml(amp);
     }
@@ -5424,30 +5424,30 @@ function TraceGraphiqueCartesien(data, repere, {
 
   // LES SORTIES TiKZ et SVG
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
   };
   this.svgml =function(coeff,amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
      if (typeof(objet.svgml)=='undefined') code += "\n\t" + objet.svg(coeff);
      else code += "\n\t" + objet.svgml(coeff,amp);
     }
     return code;
   }
   this.tikzml = function (amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       if (typeof(objet.tikzml)=='undefined') code += "\n\t" + objet.tikz();
       else code += "\n\t" + objet.tikzml(amp);
     }
@@ -5700,7 +5700,7 @@ export function lectureAntecedent(...args){
  * @Auteur Rémi Angot
  */
 
-export function courbe(
+function Courbe(
   f,
   xmin = -20,
   xmax = 30,
@@ -5735,6 +5735,23 @@ export function courbe(
   return p;
 }
 
+export function courbe(
+  f,
+  xmin = -20,
+  xmax = 30,
+  color = "black",
+  epaisseur = 2,
+  r = [1, 1],
+  step = 0.1
+) {
+  return new Courbe( f,
+  xmin,
+  xmax,
+  color,
+  epaisseur,
+  r,
+  step)
+}
 
 /**
  * courbe2(f,{color,epaisseur,step,xMin,xMax,yMin,yMax,xUnite,yUnite}) // Trace la courbe de f
@@ -5796,30 +5813,30 @@ function Courbe2(f,{
 
   // LES SORTIES TiKZ et SVG
   this.svg = function (coeff) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.svg(coeff);
     }
     return code;
   };
   this.tikz = function () {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
     return code;
   };
   this.svgml =function(coeff,amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
      if (typeof(objet.svgml)=='undefined') code += "\n\t" + objet.svg(coeff);
      else code += "\n\t" + objet.svgml(coeff,amp);
     }
     return code;
   }
   this.tikzml = function (amp) {
-    code = "";
-    for (objet of objets) {
+    let code = "";
+    for (let objet of objets) {
       if (typeof(objet.tikzml)=='undefined') code += "\n\t" + objet.tikz();
       else code += "\n\t" + objet.tikzml(amp);
     }
@@ -5869,15 +5886,15 @@ function CourbeInterpolee(
     let c = courbe(f, depart, fin, color, epaisseur, r);
     mesCourbes.push(c);
     this.svg = function (coeff) {
-      code = "";
-      for (objet of mesCourbes) {
+      let code = "";
+      for (let objet of mesCourbes) {
         code += "\n\t" + objet.svg(coeff);
       }
       return code;
     };
     this.tikz = function () {
-      code = "";
-      for (objet of mesCourbes) {
+      let code = "";
+      for (let objet of mesCourbes) {
         code += "\n\t" + objet.tikz();
       }
       return code;
@@ -5922,14 +5939,14 @@ function GraphiqueInterpole(
     mesCourbes.push(c);
     this.svg = function (coeff) {
       let code = "";
-      for (objet of mesCourbes) {
+      for (let objet of mesCourbes) {
         code += "\n\t" + objet.svg(coeff);
       }
       return code;
     };
     this.tikz = function () {
       let code = "";
-      for (objet of mesCourbes) {
+      for (let objet of mesCourbes) {
         code += "\n\t" + objet.tikz();
       }
       return code;
@@ -6637,7 +6654,7 @@ export function mathalea2d(
           else
                code += "\t" + objet.svgml(pixelsParCm,amplitude) + "\n";
          }
-    } catch (error) {console.log('le try tout seul',error.message,i)}
+    } catch (error) {console.log('le try tout seul',error.message)}
     }
     code += `\n</svg>`;
     code = code.replace(/\\thickspace/gm,' ')
