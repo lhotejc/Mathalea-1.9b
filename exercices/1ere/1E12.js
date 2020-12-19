@@ -1,6 +1,5 @@
 import Exercice from '../ClasseExercice.js';
-import { combinaison_listes, liste_de_question_to_contenu, randint } from '/modules/outils.js';
-
+import {liste_de_question_to_contenu,randint,combinaison_listes,rien_si_1,ecriture_algebrique,ecriture_algebrique_sauf1,ecriture_parenthese_si_negatif,calcul,tex_nombrec,lettre_minuscule_depuis_chiffre,tex_nombre,mise_en_evidence,katex_Popup2,fraction_simplifiee} from "/modules/outils.js"
 
 /**
  * @Auteur Jean-Claude Lhote
@@ -10,7 +9,6 @@ import { combinaison_listes, liste_de_question_to_contenu, randint } from '/modu
  * 3) connaissant les deux racines et un autre point de passage à coordonnées entières
  * référence 1E12
  */
-
  export default function Trouver_equation_parabole() {
     Exercice.call(this); // Héritage de la classe Exercice()
     this.titre = "Trouver l'équation d'une parabole";
@@ -28,7 +26,7 @@ import { combinaison_listes, liste_de_question_to_contenu, randint } from '/modu
       let liste_type_de_questions,type_de_questions_disponibles;
       if (this.sup<4) type_de_questions_disponibles=[parseInt(this.sup)]
       else type_de_questions_disponibles=[1,2,2,3,3]
-      let f_name=[]
+      let f_name=[],Ymin,Yscale,Ymax
       liste_type_de_questions=combinaison_listes(type_de_questions_disponibles,this.nb_questions)
       for (let i = 0, texte, texte_corr, a, b, c, x1, x2,x3,f,r, cpt = 0;i < this.nb_questions && cpt < 50;) {
         f_name.push(lettre_minuscule_depuis_chiffre(i+6))
