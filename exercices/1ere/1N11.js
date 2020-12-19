@@ -1,8 +1,11 @@
+import Exercice from '../ClasseExercice.js';
+import {liste_de_question_to_contenu,randint,choice,combinaison_listes,ecriture_algebrique,pgcd,katex_Popup2,fraction_simplifiee,fraction} from "/modules/outils.js"
+
 /**
  * 1N10
  * @Auteur Gaelle Morvan
  */
-function Terme_d_une_suite_definie_explicitement() {
+export default function Terme_d_une_suite_definie_explicitement() {
   Exercice.call(this); // Héritage de la classe Exercice()
   this.titre = "Déterminer les termes d'une suite définie de façon explicite";
   this.consigne = "Une suite étant donnée, calculer le terme demandé.";
@@ -18,7 +21,7 @@ function Terme_d_une_suite_definie_explicitement() {
       this.nb_questions
     ); // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
 
-    for (let i = 0, texte, texte_corr, cpt = 0, a, b, c, d, k; i < this.nb_questions && cpt < 50;) {
+    for (let i = 0, texte, texte_corr, cpt = 0, a, b, c, d, frac,k; i < this.nb_questions && cpt < 50;) {
       switch (liste_type_de_questions[i]) {
         case 1: //fonction affine
           a = randint(1, 7) * choice([-1, 1]);
