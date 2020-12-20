@@ -65,7 +65,7 @@ def main():
         out.writelines(lines)
         out.close()
         
-    replace_line('./modules/menuDesExercicesDisponibles.js', 1, 'export let dictionnaireDesExercices = '+dictionnaireDesRef)
+    replace_line('./modules/menuDesExercicesDisponibles.js', 1, 'export let dictionnaireDesExercices = '+dictionnaireDesRef+'\n')
         
 if __name__ == '__main__':
     main()
