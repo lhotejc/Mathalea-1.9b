@@ -5162,7 +5162,7 @@ function Repere2({
   if (!xThickListe) {
     xThickListe = rangeMinMax(xThickMin,xThickMax,[0],xThickDistance)
   }
-  for (x of xThickListe){
+  for (let x of xThickListe){
     let thick = segment(calcul(x*xUnite),calcul(OrdonneeAxe*yUnite-thickHauteur),calcul(x*xUnite),calcul(OrdonneeAxe*yUnite+thickHauteur));
     thick.isVisible = false;
     thick.epaisseur = thickEpaisseur;
@@ -5172,7 +5172,7 @@ function Repere2({
   if (!yThickListe) {
     yThickListe = rangeMinMax(yThickMin,yThickMax,[0],yThickDistance)
   }
-  for (y of yThickListe){
+  for (let y of yThickListe){
     let thick = segment(calcul(abscisseAxe*xUnite-thickHauteur),calcul(y*yUnite),calcul(abscisseAxe*xUnite+thickHauteur),calcul(y*yUnite));
     thick.isVisible = false;
     thick.epaisseur = thickEpaisseur;
@@ -5185,7 +5185,7 @@ function Repere2({
   if (!xLabelListe) {
     xLabelListe = rangeMinMax(xLabelMin,xLabelMax,[0],xLabelDistance)
   }
-  for (x of xLabelListe){
+  for (let x of xLabelListe){
     let l = texteParPosition(tex_nombre(x),calcul(x*xUnite),calcul(OrdonneeAxe*yUnite)-.5)
     l.isVisible = false;
     objets.push(l);
@@ -5194,7 +5194,7 @@ function Repere2({
   if (!yLabelListe) {
     yLabelListe = rangeMinMax(yLabelMin,yLabelMax,[0],yLabelDistance)
   }
-  for (y of yLabelListe){
+  for (let y of yLabelListe){
     let l = texteParPosition(tex_nombre(y),calcul(abscisseAxe*xUnite)-.5,calcul(y*yUnite),'gauche')
     l.isVisible = false;
     objets.push(l);
@@ -5226,7 +5226,7 @@ function Repere2({
       // On créé la liste avec ces valeurs 
       grilleYListe = rangeMinMax(grilleYMin,grilleYMax,[0],grilleYDistance)
     }
-    for (y of grilleYListe){
+    for (let y of grilleYListe){
       let traitH = segment(calcul(xMin*xUnite),calcul(y*yUnite),calcul(xMax*xUnite),calcul(y*yUnite));
       traitH.isVisible = false;
       traitH.color = grilleYCouleur;
@@ -5254,7 +5254,7 @@ function Repere2({
       // On créé la liste avec ces valeurs 
       grilleXListe = rangeMinMax(grilleXMin,grilleXMax,[0],grilleXDistance)
     }
-    for (x of grilleXListe){
+    for (let x of grilleXListe){
       let traitV = segment(calcul(x*xUnite),calcul(yMin*yUnite),calcul(x*xUnite),calcul(yMax*yUnite));
       traitV.isVisible = false;
       traitV.color = grilleXCouleur;
@@ -5287,7 +5287,7 @@ function Repere2({
       // On créé la liste avec ces valeurs 
       grilleSecondaireYListe = rangeMinMax(grilleSecondaireYMin,grilleSecondaireYMax,[0],grilleSecondaireYDistance)
     }
-    for (y of grilleSecondaireYListe){
+    for (let y of grilleSecondaireYListe){
       let traitH = segment(calcul(xMin*xUnite),calcul(y*yUnite),calcul(xMax*xUnite),calcul(y*yUnite));
       traitH.isVisible = false;
       traitH.color = grilleSecondaireYCouleur;
@@ -5315,7 +5315,7 @@ function Repere2({
       // On créé la liste avec ces valeurs 
       grilleSecondaireXListe = rangeMinMax(grilleSecondaireXMin,grilleSecondaireXMax,[0],grilleSecondaireXDistance)
     }
-    for (x of grilleSecondaireXListe){
+    for (let x of grilleSecondaireXListe){
       let traitV = segment(calcul(x*xUnite),calcul(yMin*yUnite),calcul(x*xUnite),calcul(yMax*yUnite));
       traitV.isVisible = false;
       traitV.color = grilleSecondaireXCouleur;

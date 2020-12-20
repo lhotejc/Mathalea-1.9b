@@ -6,9 +6,9 @@ export let dictionnaireDesExercices = {"1N11":{"url":"/exercices/1ere/1N11.js","
 
 
 export function menuDesExercicesDisponibles(){
-  // Trie par ordre alphabétique les exercices disponibles
-  let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
-  // Détermine le nombre d'exercices par niveaux
+let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
+
+// Détermine le nombre d'exercices par niveaux
     let nombre_d_exercices_disponibles_c3 = 0;
     let nombre_d_exercices_disponibles_6 = 0;
     let nombre_d_exercices_disponibles_5 = 0;
@@ -134,6 +134,7 @@ export function menuDesExercicesDisponibles(){
       liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
         ['1E1','1E1 -  Équations'],
         ['1N1','1N1 -  Nombres et calculs'],
+        ['1F1','1F1 -  Fonctions'],
        ])
     for (var id in liste_des_exercices_disponibles) {
       let exercice_tmp = id;
