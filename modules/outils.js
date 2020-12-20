@@ -1057,7 +1057,7 @@ export function  pgcd(a,b){
 * Renvoie le PPCM de deux nombres
 * @Auteur Rémi Angot
 */
-const ppcm = (a,b) => { return parseInt(Algebrite.run(`lcm(${a},${b})`))}
+export const ppcm = (a,b) => { return parseInt(Algebrite.run(`lcm(${a},${b})`))}
 
 
 /**
@@ -5325,7 +5325,7 @@ export function  Fraction(num,den) {
 	 this.fractionEgale = function (k){
 		return fraction(calcul(this.numIrred*k),calcul(this.denIrred*k))
 	}   
-	 this.simpsimplifie=function () {
+	 this.simplifie=function () {
 		return fraction(this.numIrred,this.denIrred)
 	}
 	/**
