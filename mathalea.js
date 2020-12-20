@@ -99,7 +99,6 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
             }
             document.getElementById("exercices").innerHTML = "";
             document.getElementById("corrections").innerHTML = "";
-
             let contenuDesExercices = "",
                 contenuDesCorrections = "";
             if (liste_des_exercices.length > 0) {
@@ -160,6 +159,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
 
             let contenuDesExercices = "",
                 contenuDesCorrections = "";
+console.log(listeObjetsExercice,liste_des_exercices)
             if (liste_des_exercices.length > 0) {
                 for (let i = 0; i < liste_des_exercices.length; i++) {
                     listeObjetsExercice[i].id = liste_des_exercices[i];
@@ -391,11 +391,13 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
             id = liste_des_exercices[i];
             let url;
+            console.log(liste_des_exercices,dictionnaireDesExercices[id])
             try {
                 url = dictionnaireDesExercices[id]["url"];
             } catch (error) {
                 console.log(`Exercice ${id} non disponible`);
             }
+            console.log(url)
             promises.push(
                 import(url)
                     .catch(() => {

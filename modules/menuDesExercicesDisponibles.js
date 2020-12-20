@@ -132,22 +132,15 @@ export function menuDesExercicesDisponibles(){
         ['3G1','3G1 - Homothétie et rotation'],['3G2','3G2 - Théorème de Thalès'],['3G3','3G3 - Trigonométrie'],['3G4',"3G4 - Espace"],
         ['3L1','3L1 - Calcul littéral'],['3P1','3P1 - Proportionnalité'],['3S1','3S1 - Statistiques'],['3S2','3S2 - Probabilités']
       ])
-
-    for (let id in liste_des_exercices_disponibles) {
+      liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
+        ['1E1','1E1 -  Équations'],
+        ['1N1','1N1 -  Nombres et calculs'],
+       ])
+    for (var id in liste_des_exercices_disponibles) {
       let exercice_tmp = id;
       
       if (id[0] == 2) {
         liste_html_des_exercices_2 +=
-          '<span class="id_exercice">' +
-          id +
-          '</span> - <a class="lien_id_exercice" numero="' +
-          id +
-          '">' +
-          dictionnaireDesExercices[exercice_tmp].titre +
-          "</a></br>\n";
-      }
-      if (id[0] == 1) {
-        liste_html_des_exercices_1 +=
           '<span class="id_exercice">' +
           id +
           '</span> - <a class="lien_id_exercice" numero="' +
