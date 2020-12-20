@@ -25,7 +25,7 @@ let pixelsParCm = 20;
 // let unitesLutinParCm = 50;
 // let mainlevee=false
 // let amplitude=1
-// let fenetreMathalea2d = [-1,-10,29,10]
+let fenetreMathalea2d = [-1,-10,29,10]
 // let scale=1
 
 /*

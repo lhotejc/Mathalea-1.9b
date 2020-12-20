@@ -1351,7 +1351,7 @@ export function  creerNomDePolygone(nbsommets,liste_a_eviter=[]){
 */
 export function  possedeUnCaractereInterdit(texte,liste_a_eviter) {
 	let result = false
-	for (mot_a_eviter of liste_a_eviter) {
+	for (let mot_a_eviter of liste_a_eviter) {
 		for (let i = 0 ; i < mot_a_eviter.length; i++) {
 			if (texte.indexOf(mot_a_eviter[i])>-1) {
 				result = true
