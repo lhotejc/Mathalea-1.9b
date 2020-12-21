@@ -1,13 +1,17 @@
-import { strRandom, telechargeFichier, intro_LaTeX, intro_LaTeX_coop } from "./modules/outils.js";
+import { strRandom, telechargeFichier, intro_LaTeX, intro_LaTeX_coop, scratchTraductionFr } from "./modules/outils.js";
 import { getUrlVars } from "./modules/getUrlVars.js";
 import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules/menuDesExercicesDisponibles.js";
 
+
+
 (function () {
     // IIFE principal
+    mathalea.listeDesScriptsCharges = []
     let listeObjetsExercice = []; // Liste des objets listeObjetsExercices
     let liste_des_exercices = []; // Liste des identifiants des exercices
     let code_LaTeX = "";
     let liste_packages = new Set();
+    // création des figures MG32 (géométrie dynamique)	
 
     menuDesExercicesDisponibles();
 
@@ -28,6 +32,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
     });
 
     function mise_a_jour_du_code() {
+        window.MG32_tableau_de_figures = [];
         // Fixe la graine pour les fonctions aléatoires
         if (!mathalea.graine) {
             mathalea.graine = strRandom({
@@ -115,7 +120,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         contenuDesExercices += `\n<div id="question_diap" style="font-size:${listeObjetsExercice[i].tailleDiaporama}px"><span>` + question.replace(/\\dotfill/g,'...').replace(/\\\\/g,'<br>').replace(/\\not=/g,'≠').replace(/\\ldots/g,'....') + '</span></div>'   // .replace(/~/g,' ') pour enlever les ~ mais je voulais les garder dans les formules LaTeX donc abandonné
                     }
                     contenuDesExercices += '<div id="question_diap" style="font-size:100px"><span>$\\text{Terminé !}$</span></div></section>'
-                    if (listeObjetsExercice[i].type_exercice == "MG32") {
+                    if (listeObjetsExercice[i].type_exercice == "MG32") {    
                         contenuDesExercices += `<div id="MG32div${i}" class="MG32"></div>`;
                     }
                     contenuDesCorrections += listeObjetsExercice[i].contenu_correction;
@@ -144,11 +149,45 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 strict: "warn",
                 trust: false,
             });
-            // Interprete toutes les balises <pre class="blocks">
-            scratchblocks.renderMatching("pre.blocks", {
-                style: "scratch3",
-                languages: ["fr"],
-            });
+            let besoinMG32 = false;
+              let besoinScratch = false;
+              for (let i = 0; i < liste_des_exercices.length; i++) {
+                if (listeObjetsExercice[i].type_exercice == "MG32") {
+                 besoinMG32 = true
+                }
+                if (listeObjetsExercice[i].type_exercice == "Scratch") {
+                 besoinScratch = true
+                }
+              }
+              if (besoinMG32){
+                loadScript("https://www.mathgraph32.org/js/mtgLoad/mtgLoad.min.js")
+                .then(()=>{
+                    //Ajoute figures MG32
+                    for (let i = 0; i < liste_des_exercices.length; i++) {
+                        if (listeObjetsExercice[i].type_exercice == "MG32") {
+                          MG32_ajouter_figure(i);
+                        }
+                      }
+                      MG32_tracer_toutes_les_figures();
+                })
+              }
+
+              if (besoinScratch){
+                  loadScript("include/scratchblocks-v3.5-min.js")
+                  .then(()=>{
+                    scratchTraductionFr();
+                    scratchblocks.renderMatching("pre.blocks", {
+                        style: "scratch3",
+                        languages: ["fr"],
+                    });
+                    scratchblocks.renderMatching("code.b", {
+                        inline: true,
+                        style: "scratch3",
+                        languages: ["fr"],
+                    });
+                    mathalea.listeDesScriptsCharges.push('Scratch')
+                  })
+              }
         }
 
 
@@ -163,7 +202,6 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 for (let i = 0; i < liste_des_exercices.length; i++) {
                     listeObjetsExercice[i].id = liste_des_exercices[i];
                     try {
-                        console.log(listeObjetsExercice)
                         listeObjetsExercice[i].nouvelle_version(i);
                     } catch (error) {
                         console.log(error);
@@ -204,11 +242,52 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 strict: "warn",
                 trust: false,
             });
-            // Interprete toutes les balises <pre class="blocks">
-            scratchblocks.renderMatching("pre.blocks", {
-                style: "scratch3",
-                languages: ["fr"],
-            });
+              $(".katexPopup").popup({
+                popup: ".special.popup",
+                on: "hover",
+                variation: "inverted",
+                inline: true,
+              });
+              
+              let besoinMG32 = false;
+              let besoinScratch = false;
+              for (let i = 0; i < liste_des_exercices.length; i++) {
+                if (listeObjetsExercice[i].type_exercice == "MG32") {
+                 besoinMG32 = true
+                }
+                if (listeObjetsExercice[i].type_exercice == "Scratch") {
+                 besoinScratch = true
+                }
+              }
+              if (besoinMG32){
+                loadScript("https://www.mathgraph32.org/js/mtgLoad/mtgLoad.min.js")
+                .then(()=>{
+                    //Ajoute figures MG32
+                    for (let i = 0; i < liste_des_exercices.length; i++) {
+                        if (listeObjetsExercice[i].type_exercice == "MG32") {
+                          MG32_ajouter_figure(i);
+                        }
+                      }
+                      MG32_tracer_toutes_les_figures();
+                })
+              }
+
+              if (besoinScratch){
+                  loadScript("include/scratchblocks-v3.5-min.js")
+                  .then(()=>{
+                    scratchTraductionFr();
+                    scratchblocks.renderMatching("pre.blocks", {
+                        style: "scratch3",
+                        languages: ["fr"],
+                    });
+                    scratchblocks.renderMatching("code.b", {
+                        inline: true,
+                        style: "scratch3",
+                        languages: ["fr"],
+                    });
+                    mathalea.listeDesScriptsCharges.push('Scratch')
+                  })
+              }
         } 
         if (!sortie_html) {
             // Sortie LaTeX
@@ -387,19 +466,20 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
      *
      */
     function mise_a_jour_de_la_liste_des_exercices() {
+        mathalea.listeDesScriptsCharges = [];
         let promises = [];
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
             id = liste_des_exercices[i];
             let url;
             try {
                 url = dictionnaireDesExercices[id]["url"];
-                console.log(url)
             } catch (error) {
+                console.log(error);
                 console.log(`Exercice ${id} non disponible`);
             }
             promises.push(
                 import(url)
-                    .catch(() => {
+    .catch(() => {
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
                     })
                     .then((module) => {
@@ -442,6 +522,126 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 mise_a_jour_du_code();
             });
     }
+
+    const loadScript = src => {
+        return new Promise((resolve, reject) => {
+              if (mathalea.listeDesScriptsCharges.indexOf(src)<0){
+                  const script = document.createElement('script')
+                  script.type = 'text/javascript'
+                  script.onload = resolve
+                  script.onerror = reject
+                  script.src = src
+                  document.head.append(script)
+                  mathalea.listeDesScriptsCharges.push(src)
+              } else {
+                  resolve()
+              }
+          })
+          
+    }
+
+    // GESTION DE MG32
+    /**
+    * Récupère le code JS d'un exercice qui modifie les valeurs d'une figure MG32 et actualise la figure
+    * @Auteur Rémi Angot
+    */
+   function  MG32_modifie_figure(numero_figure) {
+    let code_pour_modifier_la_figure =  listeObjetsExercice[numero_figure].MG32code_pour_modifier_la_figure
+    if (window.mtg32App.docs.length==1){
+        code_pour_modifier_la_figure = code_pour_modifier_la_figure.replace("display","updateDisplay")
+    }
+    let modification = new Function ('numero_figure',code_pour_modifier_la_figure)
+    modification(numero_figure);
+    }
+
+    /**
+    * Actualise toutes les figures MG32 avec les nouvelles valeurs
+    * @Auteur Rémi Angot
+    */
+    function  MG32_modifie_toutes_les_figures() {
+    for (let i = 0; i < liste_des_exercices.length; i++) {
+        if ( listeObjetsExercice[i].type_exercice=='MG32'){
+            MG32_modifie_figure(i)
+        }
+    }
+    }
+
+    /**
+    * Ajoute une figure MG32 dans le code HTML de la page
+    * @Auteur Rémi Angot
+    */
+    function  MG32_ajouter_figure(numero_de_l_exercice) {
+    if (window.mtg32App) {
+        for (var i = 0; i < mtg32App.docs.length; i++) {
+            mtg32App.removeDoc(mtg32App.docs[i].idDoc)
+        }	
+    }
+    MG32_tableau_de_figures.push(
+    // pour chaque figure on précise ici ses options
+    {
+    idContainer: `MG32div${numero_de_l_exercice}`,
+    svgOptions: {
+        width: `${ listeObjetsExercice[numero_de_l_exercice].taille_div_MG32[0]}`, 
+        height: `${ listeObjetsExercice[numero_de_l_exercice].taille_div_MG32[1]}`, 
+        idSvg: `MG32svg${numero_de_l_exercice}`
+    },
+    mtgOptions: {
+            fig:  listeObjetsExercice[numero_de_l_exercice].MG32codeBase64,
+            isEditable:  listeObjetsExercice[numero_de_l_exercice].MG32editable
+        }
+    }
+    )	
+
+    if ( listeObjetsExercice[numero_de_l_exercice].MG32codeBase64corr) {
+        MG32_tableau_de_figures.push(
+    // pour chaque figure on précise ici ses options
+    {
+    idContainer: `MG32divcorr${numero_de_l_exercice}`,
+    svgOptions: {
+        width: `${ listeObjetsExercice[numero_de_l_exercice].taille_div_MG32[0]}`, 
+        height: `${ listeObjetsExercice[numero_de_l_exercice].taille_div_MG32[1]}`, 
+        idSvg: `MG32svgcorr${numero_de_l_exercice}`
+    },
+    mtgOptions: {
+        fig:  listeObjetsExercice[numero_de_l_exercice].MG32codeBase64corr,
+        isEditable: false
+    }
+    }
+    )		
+    }
+    }
+
+    /**
+    * Pour chaque figure on récupère une promesse de chargement, 
+    * on lance tout en parallèle, 
+    * et quand toutes seront résolues on continue
+    * @Auteur Rémi Angot
+    */
+    function  MG32_tracer_toutes_les_figures() {
+        (function  verifie_div_MG32() {
+            const el = document.getElementsByClassName('MG32');
+            // Sélectionne les div de classe MG32
+            if (el.length) { // S'ils existent, on peut appeler MG32
+                Promise.all(MG32_tableau_de_figures.map(({idContainer, svgOptions, mtgOptions}) => mtgLoad(idContainer, svgOptions, mtgOptions)))
+            .then(results => {
+                        // results est le tableau des valeurs des promesses résolues, avec la même instance du player pour chacune, la 1re valeur nous suffit donc
+                        window.mtg32App = results[0]
+                        // on peut l'utiliser…
+                        MG32_modifie_toutes_les_figures()
+                    })
+            .catch(error => console.error(error))
+        } else {
+                setTimeout(verifie_div_MG32, 300); // retente dans 300 milliseconds
+            }
+        })();
+
+
+    }
+
+
+
+
+    // FIN DE GESTION DE MG32
 
     // Gestion des paramètres
     let div = document.getElementById("div_code_LaTeX"); // Récupère le div dans lequel le code va être affiché

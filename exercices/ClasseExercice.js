@@ -44,4 +44,7 @@ export default function Exercice() {
     this.MG32editable = false; //pas d'interface par défaut pour les figures MG32
     this.nouvelle_version = function (numero_de_l_exercice) {};
     this.liste_packages = []; // string ou liste de string avec le nom des packages spécifiques à ajouter dans le préambule
+    //this.type_exercice = "MG32";
+    //this.taille_div_MG32 = [500, 450];
+    //this.type_exercice = "Scratch"
   }
