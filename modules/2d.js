@@ -298,7 +298,6 @@ export function tracePointSurDroite(A,O) {
  * @Auteur Rémi Angot
  */
 export function milieu(A, B, nom, positionLabel = "above") {
-  ObjetMathalea2D.call(this);
   let x = calcul((A.x + B.x) / 2);
   let y = calcul((A.y + B.y) / 2);
   return new Point(x, y, nom, positionLabel);
