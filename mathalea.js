@@ -11,7 +11,6 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
     let code_LaTeX = "";
     let liste_packages = new Set();
     // création des figures MG32 (géométrie dynamique)	
-    window.MG32_tableau_de_figures = []
 
     menuDesExercicesDisponibles();
 
@@ -32,6 +31,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
     });
 
     function mise_a_jour_du_code() {
+        window.MG32_tableau_de_figures = []
         // Fixe la graine pour les fonctions aléatoires
         if (!mathalea.graine) {
             mathalea.graine = strRandom({
