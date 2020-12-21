@@ -119,7 +119,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                         contenuDesExercices += `\n<div id="question_diap" style="font-size:${listeObjetsExercice[i].tailleDiaporama}px"><span>` + question.replace(/\\dotfill/g,'...').replace(/\\\\/g,'<br>').replace(/\\not=/g,'≠').replace(/\\ldots/g,'....') + '</span></div>'   // .replace(/~/g,' ') pour enlever les ~ mais je voulais les garder dans les formules LaTeX donc abandonné
                     }
                     contenuDesExercices += '<div id="question_diap" style="font-size:100px"><span>$\\text{Terminé !}$</span></div></section>'
-                    if (listeObjetsExercice[i].type_exercice == "MG32") {
+                    if (listeObjetsExercice[i].type_exercice == "MG32") {    
                         contenuDesExercices += `<div id="MG32div${i}" class="MG32"></div>`;
                     }
                     contenuDesCorrections += listeObjetsExercice[i].contenu_correction;
@@ -224,13 +224,40 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
                 variation: "inverted",
                 inline: true,
               });
-              //Ajoute figures MG32
+              const loadScript = src => {
+                return new Promise((resolve, reject) => {
+                  const script = document.createElement('script')
+                  script.type = 'text/javascript'
+                  script.onload = resolve
+                  script.onerror = reject
+                  script.src = src
+                  document.head.append(script)
+                })
+              }
+              let besoinMG32 = false;
               for (let i = 0; i < liste_des_exercices.length; i++) {
                 if (listeObjetsExercice[i].type_exercice == "MG32") {
-                  MG32_ajouter_figure(i);
+                 besoinMG32 = true
                 }
               }
-              MG32_tracer_toutes_les_figures();
+              if (besoinMG32){
+                  loadScript("https://www.mathgraph32.org/js/mtgLoad/mtgLoad.min.js")
+                .then(()=>{
+                    console.log('MG32 a été chargé')
+                })
+                .then(()=>{
+                    //Ajoute figures MG32
+                    for (let i = 0; i < liste_des_exercices.length; i++) {
+                        if (listeObjetsExercice[i].type_exercice == "MG32") {
+                          MG32_ajouter_figure(i);
+                        }
+                      }
+                      MG32_tracer_toutes_les_figures();
+                })
+              }
+
+           
+              
         } 
         if (!sortie_html) {
             // Sortie LaTeX
@@ -543,23 +570,23 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
     * @Auteur Rémi Angot
     */
     function  MG32_tracer_toutes_les_figures() {
+        (function  verifie_div_MG32() {
+            const el = document.getElementsByClassName('MG32');
+            // Sélectionne les div de classe MG32
+            if (el.length) { // S'ils existent, on peut appeler MG32
+                Promise.all(MG32_tableau_de_figures.map(({idContainer, svgOptions, mtgOptions}) => mtgLoad(idContainer, svgOptions, mtgOptions)))
+            .then(results => {
+                        // results est le tableau des valeurs des promesses résolues, avec la même instance du player pour chacune, la 1re valeur nous suffit donc
+                        window.mtg32App = results[0]
+                        // on peut l'utiliser…
+                        MG32_modifie_toutes_les_figures()
+                    })
+            .catch(error => console.error(error))
+        } else {
+                setTimeout(verifie_div_MG32, 300); // retente dans 300 milliseconds
+            }
+        })();
 
-    (function  verifie_div_MG32() {
-        const el = document.getElementsByClassName('MG32');
-        // Sélectionne les div de classe MG32
-        if (el.length) { // S'ils existent, on peut appeler MG32
-            Promise.all(MG32_tableau_de_figures.map(({idContainer, svgOptions, mtgOptions}) => mtgLoad(idContainer, svgOptions, mtgOptions)))
-        .then(results => {
-                    // results est le tableau des valeurs des promesses résolues, avec la même instance du player pour chacune, la 1re valeur nous suffit donc
-                    window.mtg32App = results[0]
-                    // on peut l'utiliser…
-                    MG32_modifie_toutes_les_figures()
-                })
-        .catch(error => console.error(error))
-    } else {
-            setTimeout(verifie_div_MG32, 300); // retente dans 300 milliseconds
-        }
-    })();
 
     }
 
