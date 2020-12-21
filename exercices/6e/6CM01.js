@@ -1,6 +1,6 @@
 import Exercice from '../ClasseExercice.js'
-import {liste_de_question_to_contenu, modal_texte_court} from '/modules/outils.js'
-import {randint, choice, tex_nombre, creer_couples} from '/modules/outils.js'
+import {liste_de_question_to_contenu} from '/modules/outils.js'
+import {choice, tex_nombre, creer_couples} from '/modules/outils.js'
 
 /**
  * Tables de multiplications classiques, à trou ou un mélange des deux.
@@ -18,7 +18,7 @@ export default function Tables_de_multiplications(tables_par_defaut = "2-3-4-5-6
   this.consigne = "Calculer";
   this.spacing = 2;
 
-  this.nouvelle_version = function (numero_de_l_exercice) {
+  this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
     if (!this.sup) {
