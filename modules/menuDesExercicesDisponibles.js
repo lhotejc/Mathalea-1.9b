@@ -75,8 +75,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
     let liste_html_des_exercices_beta = [];
 
     // Affiche de la liste des exercices disponibles
-    let liste_html_des_exercices =
-      '<h3 class="ui block header">Exercices disponibles</h3>\n\n';
+    let liste_html_des_exercices ='<h3 class="ui block header">Exercices disponibles</h3>\n\n';
 
     function liste_html_des_exercices_d_un_theme(theme){
       let liste = '';
@@ -123,15 +122,14 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
         ['4F1','4F1 - Notion de fonction'],
         ['4G1','4G1 - Translation et rotation'],['4G2','4G2 - Théorème de Pythagore'],['4G3','4G3 - Théorème de Thalès'],['4G4',"4G4 - Cosinus d'un angle"],['4G5',"4G5 - Espace"],
         ['4L1','4L1 - Calcul littéral'],['4L2','4L2 - Équation'],['4P1','4P1 - Proportionnalité'],['4S1','4S1 - Statistiques'],['4S2','4S2 - Probabilités'],
-        ['4Algo1','4A1 - Algorithmique']
-      ])
+        ['4Algo1','4A1 - Algorithmique']]);
       liste_html_des_exercices_3 = liste_html_des_exercices_d_un_niveau([
         ['3A1','3A1 - Arithmetique'],
         ['3F1','3F1 - Généralités sur les fonctions'],['3F2','3F2 - Fonctions affines et linéaires'],
         ['3G1','3G1 - Homothétie et rotation'],['3G2','3G2 - Théorème de Thalès'],['3G3','3G3 - Trigonométrie'],['3G4',"3G4 - Espace"],
         ['3L1','3L1 - Calcul littéral'],['3P1','3P1 - Proportionnalité'],['3S1','3S1 - Statistiques'],['3S2','3S2 - Probabilités']
       ])
-      liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
+ /*    liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
         ['1E1','1E1 -  Équations'],
         ['1N1','1N1 -  Nombres et calculs'],
         ['1F1','1F1 -  Fonctions'],
@@ -141,11 +139,30 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           ['2N1','2N1 -  Nombres et calculs'],
           ['1L1','1L1 -  Calcul littéral'],
         ])
-       
+  */    
     for (var id in liste_des_exercices_disponibles) {
       let exercice_tmp = id;
       
-     
+      if (id[0] == '1') {
+        liste_html_des_exercices_1 +=
+          '<span class="id_exercice">' +
+          id +
+          '</span> - <a class="lien_id_exercice" numero="' +
+          id +
+          '">' +
+          dictionnaireDesExercices[exercice_tmp].titre +
+          "</a></br>\n";
+      }
+      if (id[0] == '2') {
+        liste_html_des_exercices_2 +=
+          '<span class="id_exercice">' +
+          id +
+          '</span> - <a class="lien_id_exercice" numero="' +
+          id +
+          '">' +
+          dictionnaireDesExercices[exercice_tmp].titre +
+          "</a></br>\n";
+      }   
       if (id[0] == 'T') {
         liste_html_des_exercices_T +=
           '<span class="id_exercice">' +
@@ -230,9 +247,8 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
       liste_html_des_exercices += liste_html_des_exercices_1;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>Terminale (${nombre_d_exercices_disponibles_T})</div><div class="content">`;
-      liste_html_des_exercices += liste_html_des_exercices_T;
       liste_html_des_exercices += `</div>`;
-      liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
+      liste_html_des_liste_html_des_exercicesexercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
       liste_html_des_exercices += liste_html_des_exercices_PE;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `</div>`;
