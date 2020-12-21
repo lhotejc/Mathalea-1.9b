@@ -159,11 +159,11 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "./modules
 
             let contenuDesExercices = "",
                 contenuDesCorrections = "";
-console.log(listeObjetsExercice,liste_des_exercices)
             if (liste_des_exercices.length > 0) {
                 for (let i = 0; i < liste_des_exercices.length; i++) {
                     listeObjetsExercice[i].id = liste_des_exercices[i];
                     try {
+                        console.log(listeObjetsExercice)
                         listeObjetsExercice[i].nouvelle_version(i);
                     } catch (error) {
                         console.log(error);
@@ -391,17 +391,15 @@ console.log(listeObjetsExercice,liste_des_exercices)
         for (let i = 0, id; i < liste_des_exercices.length; i++) {
             id = liste_des_exercices[i];
             let url;
-            console.log(liste_des_exercices,dictionnaireDesExercices[id])
             try {
                 url = dictionnaireDesExercices[id]["url"];
+                console.log(url)
             } catch (error) {
                 console.log(`Exercice ${id} non disponible`);
             }
-            console.log(url)
             promises.push(
                 import(url)
                     .catch(() => {
-                        console.log(url)
                         listeObjetsExercice[i] = { titre: "Cet exercice n'existe pas", contenu: "", contenu_correction: "" }; // Un exercice vide pour l'exercice qui n'existe pas
                     })
                     .then((module) => {
