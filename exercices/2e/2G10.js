@@ -1,6 +1,5 @@
 import Exercice from '../ClasseExercice.js';
 import {liste_de_question_to_contenu,randint,choice,combinaison_listes,ecriture_parenthese_si_negatif,extraire_racine_carree,tex_racine_carree,tex_nombre} from "/modules/outils.js"
-import {point,} from "/modules/2d.js"
 
 /**
  * 2G10
@@ -38,8 +37,6 @@ export default function Distance() {
                     xB = randint(0, 5) * choice([-1, 1]);
                     yB = randint(0, 5) * choice([-1, 1]);
                     if (xB == xA && yA == yB) { xB = xB + randint(1, 5) * choice([-1, 1]); }
- //                   A = point(xA, yA, 'A', 'red');
- //                   B = point(xB, yB, 'B', 'red');
                     XAB = (xB - xA) * (xB - xA);
                     YAB = (yB - yA) * (yB - yA);
                     AB = XAB + YAB;
