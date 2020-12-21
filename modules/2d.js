@@ -109,7 +109,7 @@ function TracePoint(...points) {
   }
   else this.color='black';
   this.svg = function (coeff) {
-    let objetssvg=[];
+    let objetssvg=[],s1,s2,p1,p2,c
     for (let A of points) {
       if (A.constructor == Point) {
         if (this.style=='x'){
@@ -172,7 +172,7 @@ function TracePoint(...points) {
     return code;
   };
   this.tikz = function () {
-    let objetstikz=[];
+    let objetstikz=[],s1,s2,p1,p2,c
     let tailletikz=this.taille/20/scale;
     for (let A of points) {
       if (A.constructor == Point) {
@@ -3495,7 +3495,7 @@ export function hauteurTriangle(A, B, C, color = "black") {
   let p = projectionOrtho(A, d);
   return droite(p, A, "", color);
 }
-function CodageHauteurTriangle(A, B, C, color = "black") {
+export function CodageHauteurTriangle(A, B, C, color = "black") {
   ObjetMathalea2D.call(this);
   this.color = color;
   let d = droite(B, C);
@@ -6021,7 +6021,7 @@ function CrochetD(A, color = "blue") {
     if (Boolean(this.pointilles)) {
       this.style += ` stroke-dasharray="4 3" `;
     }
-    code = `<polyline points="${calcul(A.xSVG(coeff) + this.taille*20)},${calcul(A.ySVG(coeff)+
+    let code = `<polyline points="${calcul(A.xSVG(coeff) + this.taille*20)},${calcul(A.ySVG(coeff)+
       2*this.taille*20/coeff * coeff
     )} ${A.xSVG(coeff)},${calcul(A.ySVG(coeff)+2*this.taille*20)} ${A.xSVG(coeff)},${calcul(A.ySVG(coeff)+
       -2*this.taille*20
@@ -6036,7 +6036,7 @@ function CrochetD(A, color = "blue") {
     return code;
   };
   this.tikz = function () {
-    code = `\\draw[very thick,${this.color}] (${calcul(A.x + this.taille/scale)},${A.y+this.taille/scale})--(${
+    let code = `\\draw[very thick,${this.color}] (${calcul(A.x + this.taille/scale)},${A.y+this.taille/scale})--(${
       A.x
     },${A.y+this.taille/scale})--(${A.x},${A.y-this.taille/scale})--(${calcul(A.x + this.taille/scale)},${A.y-this.taille/scale});`;
     code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/scale}) node[below] {$${A.nom}$};`;
@@ -6060,7 +6060,7 @@ function CrochetG(A, color = "blue") {
     if (Boolean(this.pointilles)) {
       this.style += ` stroke-dasharray="4 3" `;
     }
-    code = `<polyline points="${calcul(A.xSVG(coeff) - this.taille*20 )},${calcul(A.ySVG(coeff)+
+    let code = `<polyline points="${calcul(A.xSVG(coeff) - this.taille*20 )},${calcul(A.ySVG(coeff)+
       2*this.taille *20
     )} ${A.xSVG(coeff)},${calcul(A.ySVG(coeff)+2*this.taille *20)} ${A.xSVG(coeff)},${calcul(A.ySVG(coeff)
       -2*this.taille *20
@@ -6075,7 +6075,7 @@ function CrochetG(A, color = "blue") {
     return code;
   };
   this.tikz = function () {
-    code = `\\draw[very thick,${this.color}] (${calcul(A.x - this.taille/scale)},${A.y+this.taille/scale})--(${
+    let code = `\\draw[very thick,${this.color}] (${calcul(A.x - this.taille/scale)},${A.y+this.taille/scale})--(${
       A.x
     },${A.y+this.taille/scale})--(${A.x},${A.y-this.taille/scale})--(${calcul(A.x - this.taille/scale)},${A.y-this.taille/scale});`;
     code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/scale}) node[below] {$${A.nom}$};`;
@@ -6652,7 +6652,7 @@ export function mathalea2d(
           else
                code += "\t" + objet.svgml(pixelsParCm,amplitude) + "\n";
          }
-    } catch (error) {console.log('le try tout seul',error.message)}
+    } catch (error) {console.log('le try tout seul',error.message,objet)}
     }
     code += `\n</svg>`;
     code = code.replace(/\\thickspace/gm,' ')

@@ -1,5 +1,5 @@
 import { tridictionnaire, filtreDictionnaire }  from "./outils.js" ;
-export let dictionnaireDesExercices = {"1E10":{"url":"/exercices/1e/1E10.js","titre":"Calcul du discriminant d'une équation du second degré"},"1E11":{"url":"/exercices/1e/1E11.js","titre":"Résoudre une équation du second degré"},"1E12":{"url":"/exercices/1e/1E12.js","titre":"Trouver l'équation d'une parabole"},"1N10":{"url":"/exercices/1e/1N10.js","titre":"Déterminer les termes d'une suite définie de façon explicite"},"1F10":{"url":"/exercices/1e/1F10.js","titre":"Calculs de dérivés"},"1N11":{"url":"/exercices/1e/1N11.js","titre":"Déterminer les termes d'une suite définie par récurrence"},"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6N14":{"url":"/exercices/6e/6N14.js","titre":"Représenter des fractions"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N20-1":{"url":"/exercices/6e/6N20-1.js","titre":"Encadrer une fraction entre deux nombres entiers"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"6G10-1":{"url":"/exercices/6e/6G10-1.js","titre":"Description et notation des droites, segments et demi-droites"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"3F12-2":{"url":"/exercices/3e/3F12-2.js","titre":"Déterminer l'image d'un nombre par une fonction d'après sa forme algébrique"},"3S20":{"url":"/exercices/3e/3S20.js","titre":"Calculer des probabilités dans une expérience aléatoire à deux épreuves"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},"2N21":{"url":"/exercices/2e/2N21.js","titre":"Déterminer la parité d'une expression"},"2N12":{"url":"/exercices/2e/2N12.js","titre":"Appliquer la double distributivité avec les racines carrées"},"2G12":{"url":"/exercices/2e/2G12.js","titre":"Déterminer la nature d'un polygone."},};
+export let dictionnaireDesExercices = {"1E10":{"url":"/exercices/1e/1E10.js","titre":"Calcul du discriminant d'une équation du second degré"},"1E11":{"url":"/exercices/1e/1E11.js","titre":"Résoudre une équation du second degré"},"1E12":{"url":"/exercices/1e/1E12.js","titre":"Trouver l'équation d'une parabole"},"1N10":{"url":"/exercices/1e/1N10.js","titre":"Déterminer les termes d'une suite définie de façon explicite"},"1F10":{"url":"/exercices/1e/1F10.js","titre":"Calculs de dérivés"},"1N11":{"url":"/exercices/1e/1N11.js","titre":"Déterminer les termes d'une suite définie par récurrence"},"6N30":{"url":"/exercices/6e/6N30.js","titre":"Lire l'abscisse décimale d'un point"},"6test1":{"url":"/exercices/6e/6test1.js","titre":"Mon test"},"6C101":{"url":"/exercices/6e/6C101.js","titre":"Tables de multiplications"},"6N21":{"url":"/exercices/6e/6N21.js","titre":"Lire l'abscisse fractionnaire d'un point"},"6D101":{"url":"/exercices/6e/6D101.js","titre":"Utiliser les heures décimales"},"6N14":{"url":"/exercices/6e/6N14.js","titre":"Représenter des fractions"},"6D10":{"url":"/exercices/6e/6D10.js","titre":"Convertir des durées"},"6N11":{"url":"/exercices/6e/6N11.js","titre":"Lire l'abscisse entière d'un point (grands nombres)"},"CM000":{"url":"/exercices/6e/CM000.js","titre":"Additions et de soustractions"},"6CM01":{"url":"/exercices/6e/6CM01.js","titre":"Tables de multiplications"},"6N20-1":{"url":"/exercices/6e/6N20-1.js","titre":"Encadrer une fraction entre deux nombres entiers"},"6N11-2":{"url":"/exercices/6e/6N11-2.js","titre":"Placer un point d'abscisse entière (grands nombres)"},"6D12":{"url":"/exercices/6e/6D12.js","titre":"Calculer des durées ou déterminer un horaire"},"6D11":{"url":"/exercices/6e/6D11.js","titre":"Additionner des durées"},"6G10-1":{"url":"/exercices/6e/6G10-1.js","titre":"Description et notation des droites, segments et demi-droites"},"6N30-1":{"url":"/exercices/6e/6N30-1.js","titre":"Lire l'abscisse décimale d'un point repéré par une fraction"},"6test2":{"url":"/exercices/6e/6test2.js","titre":"Mon test"},"3F12-2":{"url":"/exercices/3e/3F12-2.js","titre":"Déterminer l'image d'un nombre par une fonction d'après sa forme algébrique"},"3S20":{"url":"/exercices/3e/3S20.js","titre":"Calculer des probabilités dans une expérience aléatoire à deux épreuves"},"5D10":{"url":"/exercices/5e/5D10.js","titre":"Convertir des durées"},"5C10":{"url":"/exercices/5e/5C10.js","titre":"Ajouter 9"},"5CM01":{"url":"/exercices/5e/5CM01.js","titre":"Tables de multiplications"},"2N12-1":{"url":"/exercices/2e/2N12-1.js","titre":"Développer les identités remarquables avec des racines carrées"},"2N25":{"url":"/exercices/2e/2N25.js","titre":"Utiliser et comprendre les symboles $\\cup $ et $\\cap $ avec les intervalles de $\\mathbb{R}$"},"2N11":{"url":"/exercices/2e/2N11.js","titre":"Ecrire le nombre proposé sous la forme $a\\sqrt{b}$"},"2G10":{"url":"/exercices/2e/2G10.js","titre":"Utiliser la distance entre deux points dans un repère orthonormé"},"2G11":{"url":"/exercices/2e/2G11.js","titre":"Déterminer les coordonnées milieu d’un segment dans un repère"},"2N21":{"url":"/exercices/2e/2N21.js","titre":"Déterminer la parité d'une expression"},"2L10":{"url":"/exercices/2e/2L10.js","titre":"Développer avec les identités remarquables"},"2N10-1":{"url":"/exercices/2e/2N10-1.js","titre":"Connaître les propriétés calculatoires des racines carrées"},"2N10":{"url":"/exercices/2e/2N10.js","titre":"Existence d'une racine carrée"},"2N24":{"url":"/exercices/2e/2N24.js","titre":"Associer un intervalle de  $\\mathbb{R}$ à une inéquation et son schéma sur une droite graduée"},"2N20":{"url":"/exercices/2e/2N20.js","titre":"Déterminer le plus petit ensemble de nombres dans lequel le nombre proposé appartient"},"2N23":{"url":"/exercices/2e/2N23.js","titre":"Résoudre une équation avec des valeurs absolues"},"2N22":{"url":"/exercices/2e/2N22.js","titre":"Utiliser la notion de valeur absolue d'une quantité"},"2N11-1":{"url":"/exercices/2e/2N11-1.js","titre":"Simplifier une somme de racines carrées"},"2L11":{"url":"/exercices/2e/2L11.js","titre":"Factoriser avec les identités remarquables"},"2N12":{"url":"/exercices/2e/2N12.js","titre":"Appliquer la double distributivité avec les racines carrées"},"2G12":{"url":"/exercices/2e/2G12.js","titre":"Déterminer la nature d'un polygone."},};
 
 
 
@@ -75,8 +75,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
     let liste_html_des_exercices_beta = [];
 
     // Affiche de la liste des exercices disponibles
-    let liste_html_des_exercices =
-      '<h3 class="ui block header">Exercices disponibles</h3>\n\n';
+    let liste_html_des_exercices ='<h3 class="ui block header">Exercices disponibles</h3>\n\n';
 
     function liste_html_des_exercices_d_un_theme(theme){
       let liste = '';
@@ -123,15 +122,14 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
         ['4F1','4F1 - Notion de fonction'],
         ['4G1','4G1 - Translation et rotation'],['4G2','4G2 - Théorème de Pythagore'],['4G3','4G3 - Théorème de Thalès'],['4G4',"4G4 - Cosinus d'un angle"],['4G5',"4G5 - Espace"],
         ['4L1','4L1 - Calcul littéral'],['4L2','4L2 - Équation'],['4P1','4P1 - Proportionnalité'],['4S1','4S1 - Statistiques'],['4S2','4S2 - Probabilités'],
-        ['4Algo1','4A1 - Algorithmique']
-      ])
+        ['4Algo1','4A1 - Algorithmique']]);
       liste_html_des_exercices_3 = liste_html_des_exercices_d_un_niveau([
         ['3A1','3A1 - Arithmetique'],
         ['3F1','3F1 - Généralités sur les fonctions'],['3F2','3F2 - Fonctions affines et linéaires'],
         ['3G1','3G1 - Homothétie et rotation'],['3G2','3G2 - Théorème de Thalès'],['3G3','3G3 - Trigonométrie'],['3G4',"3G4 - Espace"],
         ['3L1','3L1 - Calcul littéral'],['3P1','3P1 - Proportionnalité'],['3S1','3S1 - Statistiques'],['3S2','3S2 - Probabilités']
       ])
-      liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
+ /*    liste_html_des_exercices_1 = liste_html_des_exercices_d_un_niveau([
         ['1E1','1E1 -  Équations'],
         ['1N1','1N1 -  Nombres et calculs'],
         ['1F1','1F1 -  Fonctions'],
@@ -141,11 +139,30 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
           ['2N1','2N1 -  Nombres et calculs'],
           ['1L1','1L1 -  Calcul littéral'],
         ])
-       
+  */    
     for (var id in liste_des_exercices_disponibles) {
       let exercice_tmp = id;
       
-     
+      if (id[0] == '1') {
+        liste_html_des_exercices_1 +=
+          '<span class="id_exercice">' +
+          id +
+          '</span> - <a class="lien_id_exercice" numero="' +
+          id +
+          '">' +
+          dictionnaireDesExercices[exercice_tmp].titre +
+          "</a></br>\n";
+      }
+      if (id[0] == '2') {
+        liste_html_des_exercices_2 +=
+          '<span class="id_exercice">' +
+          id +
+          '</span> - <a class="lien_id_exercice" numero="' +
+          id +
+          '">' +
+          dictionnaireDesExercices[exercice_tmp].titre +
+          "</a></br>\n";
+      }   
       if (id[0] == 'T') {
         liste_html_des_exercices_T +=
           '<span class="id_exercice">' +
@@ -230,9 +247,8 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
       liste_html_des_exercices += liste_html_des_exercices_1;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>Terminale (${nombre_d_exercices_disponibles_T})</div><div class="content">`;
-      liste_html_des_exercices += liste_html_des_exercices_T;
       liste_html_des_exercices += `</div>`;
-      liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
+      liste_html_des_liste_html_des_exercicesexercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
       liste_html_des_exercices += liste_html_des_exercices_PE;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `</div>`;

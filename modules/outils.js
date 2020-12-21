@@ -1169,8 +1169,8 @@ export function  reduire_ax_plus_b(a,b) {
 */
 export function  obtenir_liste_facteurs_premiers(n){
 	// Algorithme de base où l'on divise par chacun des nombres premiers 
-	liste = []
-	liste_nombres_premiers = obtenir_liste_nombres_premiers()
+	let liste = []
+	let liste_nombres_premiers = obtenir_liste_nombres_premiers()
 	let i = 0;
 	while (n>1 && liste_nombres_premiers[i]<=n){
 		if (n%liste_nombres_premiers[i]==0) {
