@@ -4218,12 +4218,21 @@ export function  texte_ou_pas(texte) {
 /**
  * Crée un tableau avec un nombre de lignes et de colonnes déterminées par la longueur des tableaux des entetes passés en paramètre
  * Les contenus sont en mode maths par défaut, il faut donc penser à remplir les tableaux en utilisant éventuellement la commande \\text{}
- * @param {array} tab_entetes_colonnes contient les entetes des colonnes
+ * tab_C_L(['coin','A','B'],['1','2'],['A1','B1','A2','B2']) affiche le tableau ci-dessous
+ * ------------------
+ * | coin | A  | B  |
+ * ------------------
+ * |  1   | A1 | B1 |
+ * ------------------
+ * |  2   | A2 | B2 |
+ * ------------------
+* @param {array} tab_entetes_colonnes contient les entetes des colonnes
  * @param {array} tab_entetes_lignes contient les entetes des lignes
  * @param {array} tab_lignes contient les elements de chaque ligne
  * @author Sébastien Lozano
+ * 
  */
-export function  tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
+export function tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	'use strict';
 	// on définit le nombre de colonnes
 	let C = tab_entetes_colonnes.length;
@@ -4243,17 +4252,38 @@ export function  tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	tableau_C_L +=`}\n`;
 					
 	tableau_C_L += `\\hline\n`
-	tableau_C_L += tab_entetes_colonnes[0];
+	if (typeof tab_entetes_colonnes[0]=='number') {
+		tableau_C_L += tex_nombre(tab_entetes_colonnes[0]);
+	}
+	else
+	{
+		tableau_C_L += tab_entetes_colonnes[0];		
+	}
 	for (let k=1;k<C;k++) {
-		tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;
+		if (typeof tab_entetes_colonnes[k]=='number') {
+				tableau_C_L += ` & `+tex_nombre(tab_entetes_colonnes[k])+``;
+		}
+		else {
+			tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;		
+		}
 	};
 	tableau_C_L += `\\\\\n`;
 	tableau_C_L += `\\hline\n`;
 	// on construit toutes les lignes
 	for (let k=0;k<L;k++) {
-		tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		if (typeof tab_entetes_lignes[k]=='number'){
+			tableau_C_L += ``+tex_nombre(tab_entetes_lignes[k])+``;
+		}
+		else {
+			tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		}
 		for (let m=1;m<C;m++) {
-			tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			if (typeof tab_lignes[(C-1)*k+m-1]== 'number') {
+				tableau_C_L += ` & `+tex_nombre(tab_lignes[(C-1)*k+m-1]);
+			}
+			else {
+				tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			}
 		};
 		tableau_C_L += `\\\\\n`;
 		tableau_C_L += `\\hline\n`;	
