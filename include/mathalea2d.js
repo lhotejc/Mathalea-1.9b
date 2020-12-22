@@ -63,19 +63,19 @@ function Point(arg1, arg2, arg3, positionLabel = "above") {
   if (arguments.length == 1) {
     this.nom = arg1;
   } else if (arguments.length == 2) {
-    this.x = arg1;
-    this.y = arg2;
+    this.x = arrondi(arg1,2);
+    this.y = arrondi(arg2,2);
   } else {
-    this.x = arg1;
-    this.y = arg2;
+    this.x = arrondi(arg1,2);
+    this.y = arrondi(arg2,2);
     this.nom = arg3;
   }
   this.positionLabel = positionLabel;
   this.xSVG = function (coeff) {
-    return this.x * coeff;
+    return arrondi(this.x * coeff,1);
   };
   this.ySVG = function (coeff) {
-    return -this.y * coeff;
+    return arrondi(-this.y * coeff,1);
   };
   if (!this.nom) {
     this.nom = " "; // Le nom d'un point est par défaut un espace
@@ -86,54 +86,6 @@ function point(...args) {
   return new Point(...args);
 }
 
-/**
- * tracePoint(A) // Place une croix à l'emplacement du point A
- * tracePoint(A,B,C,D) // Place une croix pour les différents points
- * tracePoint(A,B,C,D,'blue') // Place une croix pour les différents points
- * @Auteur Rémi Angot
- */
-/*
-function TracePoint(...points) {
-  ObjetMathalea2D.call(this);
-  this.taille = 4/pixelsParCm; // maintenant 0.2/pixelsParCm*20 en SVG donc taille de point constante. Pour Latex, la taille du point ne change pas avec scale.
-  if (typeof points[points.length - 1] === "string") {
-    this.color = points[points.length - 1];
-  }
-  this.svg = function (coeff) {
-    let code = "";
-    for (let A of points) {
-      if (A.constructor == Point) {
-        code += `<line x1="${calcul((A.x - this.taille) * coeff)}" y1="${calcul(
-          (-A.y - this.taille) * coeff
-        )}" x2="${calcul((A.x + this.taille) * coeff)}" y2="${calcul(
-          (-A.y + this.taille) * coeff
-        )}" stroke="${this.color}" />`;
-        code += `\n\t<line x1="${calcul(
-          (A.x - this.taille) * coeff
-        )}" y1="${calcul((-A.y + this.taille) * coeff)}" x2="${calcul(
-          (A.x + this.taille) * coeff
-        )}" y2="${calcul((-A.y - this.taille) * coeff)}" stroke="${
-          this.color
-        }" />`;
-      }
-    }
-    return code;
-  };
-  this.tikz = function () {
-    let code = "";
-    for (let A of points) {
-      if (A.constructor == Point) {
-        if (this.color == "black") {
-          code += `\n\\node[point] at (${A.x},${A.y}) {};`;
-        } else {
-          code += `\n\\node[point,${color}] at (${A.x},${A.y}) {};`;
-        }
-      }
-    }
-    return code;
-  };
-}
-*/
 /**
  * tracePoint(A) // Place une croix à l'emplacement du point A
  * tracePoint(A,B,C,D) // Place une croix pour les différents points
@@ -181,7 +133,7 @@ function TracePoint(...points) {
         else if (this.style=='#'){
           p1=point(A.x-this.taille/coeff,A.y-this.taille/coeff)
           p2=point(A.x+this.taille/coeff,A.y-this.taille/coeff)
-          c=carreIndirect(p1,p2,this.color)
+          c=carre(p1,p2,this.color)
           c.epaisseur=this.epaisseur
           c.opacite=this.opacite
           c.couleurDeRemplissage=this.color
@@ -243,7 +195,7 @@ function TracePoint(...points) {
         else if (this.style=='#'){
           p1=point(A.x-tailletikz,A.y-tailletikz)
           p2=point(A.x+tailletikz,A.y-tailletikz)
-          c=carreIndirect(p1,p2,this.color)
+          c=carre(p1,p2,this.color)
           c.epaisseur=this.epaisseur
           c.opacite=this.opacite
           c.couleurDeRemplissage=this.color
@@ -455,7 +407,64 @@ function pointAdistance(...args) {
 function LabelPoint(...points) {
   ObjetMathalea2D.call(this);
   this.svg = function (coeff) {
+    let code = "",x,y;
+    let style =' font-family= "KaTeX_Math" '
+    if (Array.isArray(points[0])) {
+      //Si le premier argument est un tableau
+      this.listePoints = points[0];
+    } else {
+      this.listePoints = points;
+    }
+    for (let point of this.listePoints) {
+      x=point.x,y=point.y
+      switch (point.positionLabel) {
+        case "left":
+          code += texteParPosition(point.nom,x-15/coeff,y,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "right":
+          code += texteParPosition(point.nom,x+15/coeff,y,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "below":
+          code += texteParPosition(point.nom,x,y-15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "above":
+          code += texteParPosition(point.nom,x,y+15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "above right":
+          code += texteParPosition(point.nom,x+15/coeff,y+15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "below left":
+          code += texteParPosition(point.nom,x-15/coeff,y-15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        case "below right":
+          code += texteParPosition(point.nom,x+15/coeff,y-15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+        default:
+          code += texteParPosition(point.nom,x-15/coeff,y+15/coeff,'milieu',this.color,1,"",true).svg(coeff)+`\n`
+          break;
+      }
+    }
+    code = `<g id="${this.id}">${code}</g>`
+    return code;
+  };
+  this.tikz = function () {
     let code = "";
+    let style = "";
+    if (this.color != "black") {
+      style = `,${this.color}`;
+    }
+    for (let point of points) {
+      code += `\t\\draw (${point.x},${point.y}) node[${point.positionLabel}${style}] {$${point.nom}$};\n`;
+    }
+    return code;
+  };
+}
+
+function LabelPointbak(...points) { // Vielle fonction LabelPoint au cas où la nouvelle ait des effets pervers.
+  ObjetMathalea2D.call(this);
+  this.svg = function (coeff) {
+    let code = "";
+    let style =' font-family= "KaTeX_Math" '
     if (Array.isArray(points[0])) {
       //Si le premier argument est un tableau
       this.listePoints = points[0];
@@ -471,7 +480,7 @@ function LabelPoint(...points) {
             coeff
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "right":
           code += `\t<text x="${calcul(
@@ -480,49 +489,49 @@ function LabelPoint(...points) {
             coeff
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "below":
           code += `\t<text x="${point.xSVG(coeff)}" y="${calcul(
             point.ySVG(coeff) + 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "above":
           code += `\t<text x="${point.xSVG(coeff)}" y="${calcul(
             point.ySVG(coeff) - 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "above right":
           code += `\t<text x="${calcul(point.xSVG(coeff) + 15)}" y="${calcul(
             point.ySVG(coeff) - 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "below left":
           code += `\t<text x="${calcul(point.xSVG(coeff) - 15)}" y="${calcul(
             point.ySVG(coeff) + 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         case "below right":
           code += `\t<text x="${calcul(point.xSVG(coeff) + 15)}" y="${calcul(
             point.ySVG(coeff) + 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
         default:
           code += `\t<text x="${calcul(point.xSVG(coeff) - 15)}" y="${calcul(
             point.ySVG(coeff) - 15
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
-          }">${point.nom}</text>\n `;
+          }" ${style} >${point.nom}</text>\n `;
           break;
       }
     }
@@ -581,6 +590,7 @@ function barycentre(p, nom, positionLabel = "above") {
 function Droite(arg1, arg2, arg3, arg4, color) {
   ObjetMathalea2D.call(this);
   if (arguments.length == 2) {
+    this.nom=""
     this.x1 = arg1.x;
     this.y1 = arg1.y;
     this.x2 = arg2.x;
@@ -593,6 +603,7 @@ function Droite(arg1, arg2, arg3, arg4, color) {
   } else if (arguments.length == 3) {
     if (typeof arg1 == "number") {
       // droite d'équation ax +by +c =0
+      this.nom=""
       this.a = arg1;
       this.b = arg2;
       this.c = arg3;
@@ -635,7 +646,7 @@ function Droite(arg1, arg2, arg3, arg4, color) {
       a=arg1
       b=arg2
       c=arg3
-      nom=arg4
+      this.nom=arg4
       if (egal(a, 0)) {
         this.x1 = 0;
         this.x2 = 1;
@@ -652,7 +663,6 @@ function Droite(arg1, arg2, arg3, arg4, color) {
         this.x2 = 1;
         this.y2 = calcul((-c - a) / b);
       }
-      this.nom = nom;
     } else {
       this.x1 = arg1.x;
       this.y1 = arg1.y;
@@ -683,39 +693,52 @@ function Droite(arg1, arg2, arg3, arg4, color) {
     point(this.directeur.x, this.directeur.y)
   );
   let absNom,ordNom,leNom
-  let pointXmin=pointSurDroite(this,fenetreMathalea2d[0])
+ // let pointXmin=pointSurDroite(this,fenetreMathalea2d[0])
   if (this.nom!='') {
-    pointXmin=pointSurDroite(this,fenetreMathalea2d[0])
-    if (pointXmin.y>fenetreMathalea2d[1]&&pointXmin.y<fenetreMathalea2d[3]) {
+    if (egal(this.b,0,0.1)) { // ax+c=0 x=-c/a est l'équation de la droite
+      absNom=-this.c/this.a+0.8 // l'abscisse du label est décalé de 0.8
+      ordNom=fenetreMathalea2d[1]+1 // l'ordonnée du label est ymin +1
+    }
+    else if (egal(this.a,0,0.1)){ //by+c=0 y=-c/b est l'équation de la droite
+      absNom=fenetreMathalea2d[0]+0.8 // l'abscisse du label est xmin +1
+      ordNom=-this.c/this.b+0.8 // l'ordonnée du label est décalée de 0.8 
+    }
+    else { // a et b sont différents de 0 ax+by+c=0 est l'équation
+    // y=(-a.x-c)/b est l'aquation cartésienne et x=(-by-c)/a
+    let y0=(-this.a*(fenetreMathalea2d[0]+1)-this.c)/this.b
+    let y1=(-this.a*(fenetreMathalea2d[2]-1)-this.c)/this.b
+    let x0=(-this.b*(fenetreMathalea2d[1]+1)-this.c)/this.a
+    let x1=(-this.b*(fenetreMathalea2d[3]-1)-this.c)/this.a
+    if (y0>fenetreMathalea2d[1]&&y0<fenetreMathalea2d[3]) {
       absNom=fenetreMathalea2d[0]+1
-      ordNom=pointXmin.y+0.5
+      ordNom=y0+this.pente
     }
     else {
-      pointXmin=pointSurDroite(this,fenetreMathalea2d[2])
-      if (pointXmin.y>fenetreMathalea2d[1]&&pointXmin.y<fenetreMathalea2d[3]) {
+      if (y1>fenetreMathalea2d[1]&&y1<fenetreMathalea2d[3]) {
         absNom=fenetreMathalea2d[2]-1
-        ordNom=pointXmin.y+0.5
+        ordNom=y1-this.pente
       }
       else {
-        pointXmin=pointIntersectionDD(this,droiteHorizontaleParPoint(point(0,fenetreMathalea2d[1])))
-        if (pointXmin.x>fenetreMathalea2d[0]&&pointXmin.x<fenetreMathalea2d[2]) {
-          absNom=pointXmin.x+0.5
-          ordNom=fenetreMathalea2d[1]+1
+        if (x0>fenetreMathalea2d[0]&&x0<fenetreMathalea2d[2]) {
+          absNom=x0
+          ordNom=fenetreMathalea2d[1]+math.abs(this.pente)
         }
         else {
-          pointXmin=pointIntersectionDD(this,droiteHorizontaleParPoint(point(0,fenetreMathalea2d[3])))
-          if (pointXmin.x>fenetreMathalea2d[0]&&pointXmin.x<fenetreMathalea2d[2]) {
-            absNom=pointXmin.x+0.5
-            ordNom=fenetreMathalea2d[3]-1
+          if (x1>fenetreMathalea2d[0]&&x1<fenetreMathalea2d[2]) {
+            absNom=x1
+            ordNom=fenetreMathalea2d[3]+this.pente
           }
           else {
-            absNom=(fenetreMathalea2d[0]+fenetreMathalea2d[2]/2)
-            ordNom=pointSurDroite(this,absNom).y+0.5
+            absNom=(fenetreMathalea2d[0]+fenetreMathalea2d[2])/2
+            ordNom=pointSurDroite(this,absNom).y
           }
         }
       }
     }
-    leNom=texteParPosition(this.nom,absNom,ordNom,"milieu",this.color,1,"milieu",true)
+  }
+  absNom=arrondi(absNom,2)
+  ordNom=arrondi(ordNom,2)
+    leNom=texteParPosition(this.nom,absNom,ordNom,"milieu",this.color,1.2,"milieu",true)
 
   }
   this.svg = function (coeff) {
@@ -747,7 +770,7 @@ function Droite(arg1, arg2, arg3, arg4, color) {
     let B = point(this.x2, this.y2);
     let A1 = pointSurSegment(A, B, -50);
     let B1 = pointSurSegment(B, A, -50);
-    if (typeof(leNom)=='undefined')
+    if (this.nom =="")
        return `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(coeff)}" x2="${B1.xSVG(
       coeff
     )}" y2="${B1.ySVG(coeff)}" stroke="${this.color}" ${this.style} id ="${this.id}" />`;
@@ -791,15 +814,20 @@ function Droite(arg1, arg2, arg3, arg4, color) {
     }
     let A = point(this.x1, this.y1);
     let B = point(this.x2, this.y2);
-    let A1 = pointSurSegment(A, B, -10);
-    let B1 = pointSurSegment(B, A, -10);
-    return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});`+leNom.tikz();
+    let A1 = pointSurSegment(A, B, -50);
+    let B1 = pointSurSegment(B, A, -50);
+
+    if (this.nom!="")
+        return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});`+leNom.tikz();
+    else 
+         return `\\draw${optionsDraw} (${A1.x},${A1.y})--(${B1.x},${B1.y});`;
+      
   };
   this.svgml = function(coeff,amp){
     let A = point(this.x1, this.y1);
     let B = point(this.x2, this.y2);
-    let A1 = pointSurSegment(A, B, -10);
-    let B1 = pointSurSegment(B, A, -10);
+    let A1 = pointSurSegment(A, B, -50);
+    let B1 = pointSurSegment(B, A, -50);
     let s=segment(A1,B1,this.color)
     s.isVisible=false
   return s.svgml(coeff,amp)+leNom.svg(coeff)
@@ -807,8 +835,8 @@ function Droite(arg1, arg2, arg3, arg4, color) {
   this.tikzml = function(amp){
     let A = point(this.x1, this.y1);
     let B = point(this.x2, this.y2);
-    let A1 = pointSurSegment(A, B, -10);
-    let B1 = pointSurSegment(B, A, -10);
+    let A1 = pointSurSegment(A, B, -50);
+    let B1 = pointSurSegment(B, A, -50);
     let s=segment(A1,B1,this.color)
     s.isVisible=false
   return s.tikzml(amp)+leNom.tikz()
@@ -1172,7 +1200,21 @@ function Polyline(...points) {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     if (this.opacite != 1) {
       this.style += ` stroke-opacity="${this.opacite}" `;
@@ -1192,9 +1234,22 @@ function Polyline(...points) {
       tableauOptions.push(`line width = ${this.epaisseur}`);
     }
     if (Boolean(this.pointilles)) {
-      tableauOptions.push(`dashed`);
-    }
-    if (this.opacite != 1) {
+      switch (this.pointilles) {
+         case 1 :
+           tableauOptions.push(` dash dot `);
+           break;
+         case 2 : 
+         tableauOptions.push(` dash dash dot `);
+         break;       
+         case 3 :
+           tableauOptions.push(` dash dot dot `);
+           break;      
+         default : 
+           tableauOptions.push(` dashed `);
+         break; 
+       }
+     }
+     if (this.opacite != 1) {
       tableauOptions.push(`opacity = ${this.opacite}`);
     }
 
@@ -1295,6 +1350,7 @@ function Vecteur(arg1, arg2, nom = "") {
     let B = point(A.x + this.x, A.y + this.y);
     let s = segment(A, B);
     s.styleExtremites = "|->";
+    return s
   };
 }
 function vecteur(...args) {
@@ -1331,16 +1387,16 @@ function Segment(arg1, arg2, arg3, arg4, color) {
     this.y2 = arg2.y;
     this.color = arg3;
   } else if (arguments.length == 4) {
-    this.x1 = arg1;
-    this.y1 = arg2;
-    this.x2 = arg3;
-    this.y2 = arg4;
+    this.x1 = arrondi(arg1,2);
+    this.y1 = arrondi(arg2,2);
+    this.x2 = arrondi(arg3,2);
+    this.y2 = arrondi(arg4,2);
   } else {
     // 5 arguments
-    this.x1 = arg1;
-    this.y1 = arg2;
-    this.x2 = arg3;
-    this.y2 = arg4;
+    this.x1 = arrondi(arg1,2);
+    this.y1 = arrondi(arg2,2);
+    this.x2 = arrondi(arg3,2);
+    this.y2 = arrondi(arg4,2);
     this.color = color;
   }
   this.extremite1 = point(this.x1, this.y1);
@@ -1360,7 +1416,21 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     if (this.opacite != 1) {
       this.style += ` stroke-opacity="${this.opacite}" `;
@@ -1477,9 +1547,22 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       tableauOptions.push(`opacity = ${this.opacite}`);
     }
     if (Boolean(this.pointilles)) {
-      tableauOptions.push(`dashed`);
-    }
-    if (this.styleExtremites.length > 1) {
+      switch (this.pointilles) {
+         case 1 :
+           tableauOptions.push(` dash dot `);
+           break;
+         case 2 : 
+         tableauOptions.push(` dash dash dot `);
+         break;       
+         case 3 :
+           tableauOptions.push(` dash dot dot `);
+           break;      
+         default : 
+           tableauOptions.push(` dashed `);
+         break; 
+       }
+     }
+     if (this.styleExtremites.length > 1) {
       tableauOptions.push(this.styleExtremites);
     }
     if (tableauOptions.length > 0) {
@@ -1627,7 +1710,21 @@ function Polygone(...points) {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     if (this.couleurDeRemplissage == "") {
       this.style += ` fill="none" `;
@@ -1650,9 +1747,22 @@ function Polygone(...points) {
       tableauOptions.push(`line width = ${this.epaisseur}`);
     }
     if (Boolean(this.pointilles)) {
-      tableauOptions.push(`dashed`);
-    }
-    if (this.opacite != 1) {
+      switch (this.pointilles) {
+         case 1 :
+           tableauOptions.push(` dash dot `);
+           break;
+         case 2 : 
+         tableauOptions.push(` dash dash dot `);
+         break;       
+         case 3 :
+           tableauOptions.push(` dash dot dot `);
+           break;      
+         default : 
+           tableauOptions.push(` dashed `);
+         break; 
+       }
+     }
+     if (this.opacite != 1) {
       tableauOptions.push(`opacity=${this.opacite}`);
     }
     if (this.opaciteDeRemplissage !=1) {
@@ -1731,7 +1841,7 @@ function polygoneRegulier(A, B, n, color = "black") {
     listePoints[i + 1] = rotation(
       listePoints[i - 1],
       listePoints[i],
-      calcul(180 - 360 / n)
+      calcul(-180 + 360 / n)
     );
   }
   return polygone(listePoints, color);
@@ -1748,7 +1858,7 @@ function polygoneRegulierIndirect(A, B, n, color = "black") {
     listePoints[i + 1] = rotation(
       listePoints[i - 1],
       listePoints[i],
-      calcul(-180 + 360 / n)
+      calcul(180 - 360 / n)
     );
   }
   return polygone(listePoints, color);
@@ -1760,7 +1870,7 @@ function polygoneRegulierIndirect(A, B, n, color = "black") {
  * @Auteur Rémi Angot
  */
 function carre(A, B, color) {
-  return polygoneRegulier(B, A, 4, color);
+  return polygoneRegulier(A, B, 4, color);
 }
 
 /**
@@ -1941,16 +2051,16 @@ function NommePolygone(p, nom = "", k = 0.5) {
   ObjetMathalea2D.call(this);
   this.poly=p
   this.dist=k
-  for (let i = 0, point; i < p.listePoints.length; i++) {
+  for (let i = 0; i < p.listePoints.length; i++) {
     if (nom != "") p.listePoints[i].nom = nom[i];
   }
   this.svg = function (coeff) {
     let code = "";
     let P,p=this.poly,d=this.dist
     let G = barycentre(p);
-    for (let i = 0, point; i < p.listePoints.length; i++) {
+    for (let i = 0; i < p.listePoints.length; i++) {
       P=pointSurSegment(G,p.listePoints[i],longueur(G,p.listePoints[i])+d*20/coeff)
-      code += "\n\t" + texteParPoint(p.listePoints[i].nom, P, "milieu").svg(coeff)
+      code += "\n\t" + texteParPoint(p.listePoints[i].nom,P,0,'black',1,"middle",true).svg(coeff)
     }
     return code;
   };
@@ -1960,7 +2070,7 @@ function NommePolygone(p, nom = "", k = 0.5) {
     let G = barycentre(p);
     for (let i = 0, point; i < p.listePoints.length; i++) {
       P=pointSurSegment(G,p.listePoints[i],longueur(G,p.listePoints[i])+d/scale)
-      code += "\n\t" + texteParPoint(p.listePoints[i].nom, P, "milieu").tikz()
+      code += "\n\t" + texteParPoint(p.listePoints[i].nom, P, 0,'black',1,"middle",true).tikz()
     }
     return code;
   }
@@ -2023,7 +2133,21 @@ function Cercle(O, r, color) {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     if (this.opacite != 1) {
       this.style += ` stroke-opacity="${this.opacite}" `;
@@ -2049,9 +2173,22 @@ function Cercle(O, r, color) {
       tableauOptions.push(`line width = ${this.epaisseur}`);
     }
     if (Boolean(this.pointilles)) {
-      tableauOptions.push(`dashed`);
-    }
-    if (this.opacite != 1) {
+      switch (this.pointilles) {
+         case 1 :
+           tableauOptions.push(` dash dot `);
+           break;
+         case 2 : 
+         tableauOptions.push(` dash dash dot `);
+         break;       
+         case 3 :
+           tableauOptions.push(` dash dot dot `);
+           break;      
+         default : 
+           tableauOptions.push(` dashed `);
+         break; 
+       }
+     }
+     if (this.opacite != 1) {
       tableauOptions.push(`opacity = ${this.opacite}`);
     }
     if (tableauOptions.length > 0) {
@@ -2289,14 +2426,14 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
   this.couleurDeRemplissage = fill;
   this.opaciteDeRemplissage = fillOpacite
   if (typeof(angle)!='number'){
-    angle=angleOriente(M,Omega,angle)
+    angle=arrondi(angleOriente(M,Omega,angle),1)
   }
   let l = longueur(Omega, M), large = 0, sweep = 0
  // let d = droite(Omega, M)
   //d.isVisible = false
   let A = point(Omega.x + 1, Omega.y)
-  let azimut = angleOriente(A, Omega, M)
-  let anglefin = azimut + angle
+  let azimut = arrondi(angleOriente(A, Omega, M),1)
+  let anglefin = arrondi(azimut + angle,1)
   if (angle > 180) {
     angle = angle - 360
     large = 1
@@ -2318,15 +2455,29 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
       this.style += ` stroke-width="${this.epaisseur}" `
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
-    if (this.opacite != 1) {
+   if (this.opacite != 1) {
       this.style += ` stroke-opacity="${this.opacite}" `
     }
     if (this.couleurDeRemplissage != 'none') {
       this.style += ` fill-opacity="${this.opaciteDeRemplissage}" `;
     }
-    return `<path d="M${M.xSVG(coeff)} ${M.ySVG(coeff)} A ${l * coeff} ${l * coeff} 0 ${large} ${sweep} ${N.xSVG(coeff)} ${N.ySVG(coeff)} L ${Omega.xSVG(coeff)} ${Omega.ySVG(coeff)} Z" stroke="${this.color}" fill="${this.couleurDeRemplissage}" ${this.style}/>`
+    return `<path d="M${M.xSVG(coeff)} ${M.ySVG(coeff)} A ${arrondi(l * coeff,1)} ${arrondi(l * coeff,1)} 0 ${large} ${sweep} ${N.xSVG(coeff)} ${N.ySVG(coeff)} L ${Omega.xSVG(coeff)} ${Omega.ySVG(coeff)} Z" stroke="${this.color}" fill="${this.couleurDeRemplissage}" ${this.style}/>`
   }
   else this.svg = function (coeff) {
     this.style=``
@@ -2334,12 +2485,26 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
       this.style += ` stroke-width="${this.epaisseur}" `
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     if (this.opacite != 1) {
       this.style += ` stroke-opacity="${this.opacite}" `
     }
-    return `<path d="M${M.xSVG(coeff)} ${M.ySVG(coeff)} A ${l * coeff} ${l * coeff} 0 ${large} ${sweep} ${N.xSVG(coeff)} ${N.ySVG(coeff)}" stroke="${this.color}" fill="${fill}" ${this.style} id="${this.id}" />`
+    return `<path d="M${M.xSVG(coeff)} ${M.ySVG(coeff)} A ${arrondi(l * coeff,1)} ${arrondi(l * coeff,1)} 0 ${large} ${sweep} ${N.xSVG(coeff)} ${N.ySVG(coeff)}" stroke="${this.color}" fill="${fill}" ${this.style} id="${this.id}" />`
   }
   this.tikz = function () {
     let optionsDraw = []
@@ -2351,9 +2516,22 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
       tableauOptions.push(`line width = ${this.epaisseur}`)
     }
     if (Boolean(this.pointilles)) {
-      tableauOptions.push(`dashed`)
-    }
-    if (this.opacite != 1) {
+      switch (this.pointilles) {
+         case 1 :
+           tableauOptions.push(` dash dot `);
+           break;
+         case 2 : 
+         tableauOptions.push(` dash dash dot `);
+         break;       
+         case 3 :
+           tableauOptions.push(` dash dot dot `);
+           break;      
+         default : 
+           tableauOptions.push(` dashed `);
+         break; 
+       }
+     }
+     if (this.opacite != 1) {
       tableauOptions.push(`opacity = ${this.opacite}`)
     }
     if (rayon && fill != 'none') {
@@ -2365,8 +2543,8 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
     if (tableauOptions.length > 0) {
       optionsDraw = "[" + tableauOptions.join(',') + "]"
     }
-    if (rayon) return `\\filldraw  ${optionsDraw} (${N.x},${N.y}) -- (${Omega.x},${Omega.y}) -- (${M.x},${M.y}) arc (${azimut}:${anglefin}:${longueur(Omega, M)}) -- cycle ;`
-    else return `\\draw${optionsDraw} (${M.x},${M.y}) arc (${azimut}:${anglefin}:${longueur(Omega, M)}) ;`
+    if (rayon) return `\\filldraw  ${optionsDraw} (${N.x},${N.y}) -- (${Omega.x},${Omega.y}) -- (${M.x},${M.y}) arc (${azimut}:${anglefin}:${arrondi(longueur(Omega, M),2)}) -- cycle ;`
+    else return `\\draw${optionsDraw} (${M.x},${M.y}) arc (${azimut}:${anglefin}:${arrondi(longueur(Omega, M),2)}) ;`
   }
   let la,da,code,P,dMx,dMy,dPx,dPy
 
@@ -2437,8 +2615,8 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
     let optionsDraw = []
     let tableauOptions = [];
     let A = point(Omega.x + 1, Omega.y)
-    let azimut = angleOriente(A, Omega, M)
-    let anglefin = azimut + angle
+    let azimut = arrondi(angleOriente(A, Omega, M),1)
+    let anglefin = arrondi(azimut + angle,1)
     let N = rotation(M, Omega, angle)
     if (this.color.length > 1 && this.color !== 'black') {
       tableauOptions.push(this.color)
@@ -2459,8 +2637,8 @@ function Arc(M, Omega, angle, rayon = false, fill = 'none', color = 'black', fil
 
     optionsDraw = "[" + tableauOptions.join(',') + "]"
 
-    if (rayon) return `\\filldraw  ${optionsDraw} (${N.x},${N.y}) -- (${Omega.x},${Omega.y}) -- (${M.x},${M.y}) arc (${azimut}:${anglefin}:${longueur(Omega, M)}) -- cycle ;`
-    else return `\\draw${optionsDraw} (${M.x},${M.y}) arc (${azimut}:${anglefin}:${longueur(Omega, M)}) ;`
+    if (rayon) return `\\filldraw  ${optionsDraw} (${N.x},${N.y}) -- (${Omega.x},${Omega.y}) -- (${M.x},${M.y}) arc (${azimut}:${anglefin}:${arrondi(longueur(Omega, M),2)}) -- cycle ;`
+    else return `\\draw${optionsDraw} (${M.x},${M.y}) arc (${azimut}:${anglefin}:${arrondi(longueur(Omega, M),2)}) ;`
   }
 }
 function arc(...args) {
@@ -2718,6 +2896,10 @@ function PolygoneMainLevee(points,amp,color='black') {
 function polygoneMainLevee(points,amp,color='black') {
   return new PolygoneMainLevee(points,amp,color)
 }
+/**
+ * Une fonction pour dessiner des arcs à main levée comme son nom l'indique.
+* @Auteur Jean-Claude Lhote
+ */
 
 function ArcMainLevee(M,Omega,angle,amp,rayon=false,fill='none',color='black',fillOpacite=0.2){
   ObjetMathalea2D.call(this)
@@ -2802,6 +2984,155 @@ function arcMainLevee(M,Omega,angle,amp,rayon=false,fill='none',color='black',fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
+/**
+ * retourne un couple de coordonnées correspondant au centre d'une cible 
+ * afin xue le point (x,y) se trouve dans la case correspondante à cellule
+ * cellule est une chaine comme 'A1' ou 'B3'
+ * @Auteur Jean-Claude Lhote
+ */
+function dansLaCibleCarree(x,y,rang,taille,cellule) {
+  let lettre=cellule[0],chiffrelettre=lettre.charCodeAt(0)-64
+  let Taille=Math.floor(4*taille)
+  let chiffre=parseInt(cellule[1]),dx=calcul(randint(-Taille,Taille)/10),dy=calcul(randint(-Taille,Taille)/10)
+  let delta=taille/2
+  if (chiffre>rang||chiffrelettre>rang) return 'Cette cellule n\'existe pas dans la cible'
+  else {
+    return [arrondi(x+dx-chiffrelettre*taille+delta+rang*delta,2),arrondi(y+dy-chiffre*2*delta+(rang+1)*delta,2)]
+  }
+}
+/**
+ * Comme dansLaCibleCarree mais pour un cible ronde. (voir ci-dessus)
+ * Cellule va de A1 à Hn où n est le rang de la cible.
+ * taille c'est la différence entre deux rayons successifs.
+ * x et y sont les coordonnées du point à cibler.
+ * @Auteur Jean-Claude Lhote
+ */
+function dansLaCibleRonde(x,y,rang,taille,cellule) {
+  let lettre=cellule[0],chiffrelettre=lettre.charCodeAt(0)-64
+  let Taille=Math.floor(4*taille)
+  let chiffre=parseInt(cellule[1])
+  let drayon=calcul(randint(-Taille,Taille)/10)
+  let dangle=randint(-20,20)
+  let angle=calcul((chiffrelettre-1)*45-157.5+dangle)
+  let rayon=calcul(taille/2+(chiffre-1)*taille+drayon)
+  let P=similitude(point(1,0),point(0,0),angle,rayon)
+  P.x+=x;
+  P.y+=y
+  if (chiffre>rang||chiffrelettre>8) return 'Cette cellule n\'existe pas dans la cible'
+  else {
+    return [arrondi(P.x,2),arrondi(P.y,2)]
+  }
+}
+
+/**
+ * création d'une cible carrée pour l'auto-correction
+ * @Auteur Jean-Claude Lhote
+ * @param {} param0 
+ */
+function CibleCarree({x=0,y=0,rang=4,num,taille=0.6}){
+  ObjetMathalea2D.call(this);
+  this.x=x;
+  this.y=y;
+  this.rang=rang;
+  if (typeof(num)!='undefined') this.num=num;
+  this.taille=taille;
+  this.color='gray';
+  this.opacite=0.5;
+  let objets=[]
+  let numero
+  if (typeof(num)!='undefined') {
+    numero=texteParPosition(nombre_avec_espace(num),x-rang*this.taille/4,y-rang*this.taille/4,'milieu',this.color)
+    numero.opacite=0.5
+    numero.taille=30*this.taille
+    numero.contour=true
+    objets.push(numero)
+  }
+    let lettre,chiffre
+  objets.push(grille(calcul(x-rang*this.taille/2),calcul(y-rang*this.taille/2),calcul(x+rang*this.taille/2),calcul(y+rang*this.taille/2),this.color,this.opacite,step = this.taille,false))
+  for (let i=0;i<rang;i++) {
+    lettre=texteParPosition(lettre_depuis_chiffre(1+i),x-rang*this.taille/2+(2*i+1)*this.taille/2,y-(rang+1)*this.taille/2,'milieu')
+    chiffre=texteParPosition(nombre_avec_espace(i+1),x-(rang+1)*this.taille/2,y-rang*this.taille/2+(2*i+1)*this.taille/2,'milieu')
+    lettre.taille=10*this.taille
+    chiffre.taille=10*this.taille
+    objets.push(lettre)
+    objets.push(chiffre)
+  }
+
+  this.svg = function (coeff) {
+    let code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.svg(coeff);
+    }
+    return code;
+  };
+  this.tikz = function () {
+    let code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.tikz();
+    }
+    return code;
+  };
+}
+function cibleCarree({x=0,y=0,rang=4,num,taille=0.6}){
+  return new CibleCarree({x:x,y:y,rang:rang,num:num,taille:taille})
+}
+/**
+ * création d'une cible ronde pour l'auto-correction
+ * @Auteur Jean-Claude Lhote
+ * (x,y) sont les coordonnées du centre de la cible 
+ * Les secteurs de la cible fot 45°. Ils sont au nombre de rang*8
+ * Repérage de A1 à Hn où n est le rang.
+ */
+function CibleRonde({x=0,y=0,rang=3,num,taille=0.3}) {
+  ObjetMathalea2D.call(this);
+  this.x=x;
+  this.y=y;
+  this.num=num;
+  this.taille=taille;
+  this.rang=rang
+  this.opacite=0.5
+  this.color='gray'
+  let objets=[],numero,c,centre,azimut,rayon
+
+  centre =point(this.x,this.y,this.y)
+  azimut=point(this.x+this.rang*this.taille,this.y)
+  azimut2=pointSurSegment(centre,azimut,longueur(centre,azimut)+0.3)
+  for (let i=0;i<8;i++) {
+    rayon=segment(centre,rotation(azimut,centre,45*i))
+    rayon.color=this.color
+    rayon.opacite=this.opacite
+    objets.push(rayon)
+    objets.push(texteParPoint(lettre_depuis_chiffre(1+i),rotation(azimut2,centre,45*i+22.5),'milieu','gray'))
+  }
+  for (let i=0;i<this.rang;i++){
+    c=cercle(point(this.x,this.y),this.taille*(1+i))
+    c.opacite=this.opacite
+    c.color=this.color
+  objets.push(c);
+  }
+  numero=texteParPosition(nombre_avec_espace(num),this.x,this.y,0,'gray')
+  numero.opacite=0.5
+  numero.taille=30
+  numero.contour=true
+  objets.push(numero)
+  this.svg = function (coeff) {
+    let code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.svg(coeff);
+    }
+    return code;
+  };
+  this.tikz = function () {
+    let code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.tikz();
+    }
+    return code;
+  };
+}
+function cibleRonde({x=0,y=0,rang=3,num=1,taille=0.3}) {
+  return new CibleRonde({x:x,y:y,rang:rang,num:num,taille:taille})
+}
 /**
  * M = tion(O,v) //M est l'image de O dans la translation de vecteur v
  * M = translation(O,v,'M') //M est l'image de O dans la translation de vecteur v et se nomme M
@@ -3076,6 +3407,26 @@ function symetrieAxiale(A, d, nom = "", positionLabel = "above") {
 }
 
 /**
+ * Calcule la distance entre un point et une droite.
+ * 1ere version utilisant la projection orthogonale
+ * 2eme version utilisant la symétrie axiale (abandonnée)
+ * @Auteur Jean-Claude Lhote
+ * @param {*} A 
+ * @param {*} d 
+ */
+function distancePointDroite(A,d) {
+  let M=projectionOrtho(A,d)
+  return longueur(A,M,9)
+}
+/*
+function distancePointDroite2(A,d) {
+  let M=symetrieAxiale(A,d)
+  let I=milieu(A,M)
+  return longueur(A,I,5)
+}
+*/
+
+/**
  * N = projectionOrtho(M,d,'N','below left')
  *@Auteur Jean-Claude Lhote
  */
@@ -3326,7 +3677,7 @@ function HomothetieAnimee(
     p2.isVisible = false;
     let binomesXY2 = p2.binomesXY(coeff);
     code = `<polygon stroke="${p.color}" stroke-width="${p.epaisseur}" fill="none" >
-		<animate attributeName="points" dur="2s" repeatCount="indefinite"
+		<animate attributeName="points" ${animation}
 		from="${binomesXY1}"
 		to="${binomesXY2}"
 		/>
@@ -3356,7 +3707,7 @@ function SymetrieAnimee(
     p2.isVisible = false;
     let binomesXY2 = p2.binomesXY(coeff);
     code = `<polygon stroke="${p.color}" stroke-width="${p.epaisseur}" fill="none" >
-		<animate attributeName="points" dur="2s" repeatCount="indefinite"
+		<animate attributeName="points" ${animation}
 		from="${binomesXY1}"
 		to="${binomesXY2}"
 		/>
@@ -3381,7 +3732,7 @@ function AffiniteOrthoAnimee(
     p2.isVisible = false;
     let binomesXY2 = p2.binomesXY(coeff);
     code = `<polygon stroke="${p.color}" stroke-width="${p.epaisseur}" fill="none" >
-		<animate attributeName="points" dur="2s" repeatCount="indefinite"
+		<animate attributeName="points" ${animation}
 		from="${binomesXY1}"
 		to="${binomesXY2}"
 		/>
@@ -3424,6 +3775,8 @@ function montrerParDiv(id) {
   document.getElementById(id).style.visibility = "visible";
 }
 
+
+
 /**
  * Rend invisible un element d'après son id
  * 
@@ -3461,6 +3814,48 @@ function afficherTempo(objet, t0 = 1, t = 5, r = 'Infinity') {
           montrerParDiv(objet.id) // On attend t0 pour montrer
           let montreRepete = setInterval(function(){
             montrerParDiv(objet.id)
+            compteur++
+            if (typeof r === 'number'){
+              if (compteur >=r){
+                clearInterval(cacheRepete)
+                clearInterval(montreRepete)
+              }
+            }
+            },t*1000) // On montre tous les t s (vu qu'on a décalé de t0)
+          
+        },t0*1000) // Fin de l'animation en boucle
+      }
+    }
+  }, 100); // vérifie toutes les  100ms que le div existe
+}
+
+
+/**
+ * Masque un objet puis l'affiche au bout de t0 s avant de recommencer r fois toutes les t secondes
+ * 
+ * 
+ * @param {any} objet dont l'identifiant est accessible par objet.id
+ * @param {number} [t0=1] temps en secondes avant l'apparition
+ * @param {number} [t=5] temps à partir duquel l'animation recommence
+ * @param {string} [r='Infinity'] nombre de répétition (infini si ce n'est pas un nombre)
+
+ * 
+ * 
+ */
+function afficherTempoId(id, t0 = 1, t = 5, r = 'Infinity') {
+  let compteur = 1 // Nombre d'animations
+  let checkExist = setInterval(function () {
+    if (document.getElementById(id)) {
+      clearInterval(checkExist);
+      cacherParDiv(id)
+      if (r==1){ // On le montre au bout de t0 et on ne le cache plus
+        setTimeout(function(){montrerParDiv(id)},t0*1000) 
+      } else {
+        let cacheRepete = setInterval(function(){cacherParDiv(id)},t*1000) // On cache tous les t s
+        setTimeout(function(){
+          montrerParDiv(id) // On attend t0 pour montrer
+          let montreRepete = setInterval(function(){
+            montrerParDiv(id)
             compteur++
             if (typeof r === 'number'){
               if (compteur >=r){
@@ -3842,9 +4237,10 @@ function AfficheMesureAngle(A, B, C, color = "black", distance = 1.5) {
   this.svg=function(coeff){
     let d = bissectrice(A, B, C);
     d.isVisible = false;
-    let M = pointSurSegment(d.extremite1, d.extremite2, this.distance*20/coeff);
+    let M = pointSurSegment(this.sommet, this.depart, this.distance)
+    let N = rotation(pointSurSegment(this.sommet,M , this.distance+10/coeff),this.sommet,angleOriente(this.depart,this.sommet,this.arrivee)/2);
     let mesureAngle = arrondi_virgule(angle(this.depart,this.sommet,this.arrivee), 0) + "°";
-    return "\n"+texteParPoint(mesureAngle, M, "milieu", color).svg(coeff)+"\n"+arc(pointSurSegment(this.sommet, this.depart, this.distance-0.7*20/coeff), B, angleOriente(this.depart,this.sommet,this.arrivee)).svg(coeff);
+    return "\n"+texteParPoint(mesureAngle,N , "milieu", color).svg(coeff)+"\n"+arc(M, B, angleOriente(this.depart,this.sommet,this.arrivee)).svg(coeff);
   }
   this.tikz=function(){
     let d = bissectrice(A, B, C);
@@ -4637,7 +5033,7 @@ function Grille(
   this.color = color;
   this.opacite = opacite;
   let objets = [];
-  for (let i = xmin; i <= xmax; i += step) {
+  for (let i = arrondi(xmin,2); i <= arrondi(xmax,2); i = arrondi(calcul(i+step),2)) {
     let s = segment(i, ymin, i, ymax);
     s.color = this.color;
     s.opacite = this.opacite;
@@ -4646,7 +5042,7 @@ function Grille(
     }
     objets.push(s);
   }
-  for (let i = ymin; i <= ymax; i += step) {
+  for (let i = arrondi(ymin,2); i <= arrondi(ymax+0.005,2); i = arrondi(calcul(i+step),2)) {
     let s = segment(xmin, i, xmax, i);
     s.color = this.color;
     s.opacite = this.opacite;
@@ -4701,7 +5097,7 @@ function GrilleHorizontale(
   this.color = color;
   this.opacite = opacite;
   let objets = [];
-  for (let i = ymin; i <= ymax; i += step) {
+  for (let i = arrondi(ymin,2); i <= arrondi(ymax+0.005,2); i = arrondi(calcul(i+step),2)) {
     let s = segment(xmin, i, xmax, i);
     s.color = this.color;
     s.opacite = this.opacite;
@@ -4733,6 +5129,53 @@ function GrilleHorizontale(
  */
 function grilleHorizontale(...args) {
   return new GrilleHorizontale(...args);
+}
+function GrilleVerticale(
+  xmin = -30,
+  ymin = -30,
+  xmax = 30,
+  ymax = 30,
+  color = "gray",
+  opacite = 0.4,
+  step = 1,
+  pointilles = false
+) {
+  ObjetMathalea2D.call(this);
+  this.color = color;
+  this.opacite = opacite;
+  let objets = [];
+  for (let i = arrondi(xmin,2); i <= arrondi(xmax,2); i = arrondi(calcul(i+step),2)) {
+    let s = segment(i,ymin,i,ymax);
+    s.color = this.color;
+    s.opacite = this.opacite;
+    if (pointilles) {
+      s.pointilles = true;
+    }
+    objets.push(s);
+  }
+  this.svg = function (coeff) {
+    code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.svg(coeff);
+    }
+    return code;
+  };
+  this.tikz = function () {
+    code = "";
+    for (objet of objets) {
+      code += "\n\t" + objet.tikz();
+    }
+    return code;
+  };
+}
+
+/**
+ * grilleHorizontale(xmin,ymin,xmax,ymax,color,opacite,pas) // Trace les axes des abscisses et des ordinnées
+ *
+ * @Auteur Rémi Angot
+ */
+function grilleVerticale(...args) {
+  return new GrilleVerticale(...args);
 }
 
 function Seyes(xmin = 0, ymin = 0, xmax = 15, ymax = 15,opacite1 = .5, opacite2 = .2) {
@@ -6059,7 +6502,21 @@ function CrochetD(A, color = "blue") {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     code = `<polyline points="${calcul(A.xSVG(coeff) + this.taille*20)},${calcul(A.ySVG(coeff)+
       2*this.taille*20/coeff * coeff
@@ -6098,7 +6555,21 @@ function CrochetG(A, color = "blue") {
       this.style += ` stroke-width="${this.epaisseur}" `;
     }
     if (Boolean(this.pointilles)) {
-      this.style += ` stroke-dasharray="4 3" `;
+      switch (this.pointilles) {
+        case 1 :
+          this.style += ` stroke-dasharray="6 10" `;
+          break;
+        case 2 : 
+        this.style += ` stroke-dasharray="6 3" `;
+        break;       
+        case 3 :
+          this.style += ` stroke-dasharray="3 2 6 2 " `;
+          break;      
+        default : 
+        this.style += ` stroke-dasharray="5 5" `;
+        break; 
+      }
+
     }
     code = `<polyline points="${calcul(A.xSVG(coeff) - this.taille*20 )},${calcul(A.ySVG(coeff)+
       2*this.taille *20
@@ -6153,10 +6624,16 @@ function intervalle(A, B, color = "blue", h = 0) {
 function TexteParPoint(texte, A, orientation = "milieu", color='black',scale=1,ancrageDeRotation = "middle",math_on=false) {
   ObjetMathalea2D.call(this);
   this.color = color;
+  this.contour = false;
+  this.taille =10*scale;
+  this.opacite=1;
   this.svg = function (coeff) {
-    let code = "";
+    let code = "",style="";
+    if (math_on) style =' font-family= "KaTeX_Math" '
+    if (this.contour) style +=` style="font-size:${this.taille}px;fill:none;fill-opacity:${this.opacite};stroke:${this.color};stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:${this.opacite}" `
+    else style += ` style="font-size:${this.taille}px;fill:${this.color};fill-opacity:${this.opacite}" `
     if (typeof(orientation)=='number') {
-      code = `<text x="${A.xSVG(coeff)}" y="${A.ySVG(
+      code = `<text ${style} x="${A.xSVG(coeff)}" y="${A.ySVG(
         coeff
       )}" text-anchor = ${ancrageDeRotation} dominant-baseline = "central" fill="${
         this.color
@@ -6166,7 +6643,7 @@ function TexteParPoint(texte, A, orientation = "milieu", color='black',scale=1,a
     } else {
       switch (orientation) {
         case "milieu":
-          code = `<text x="${A.xSVG(coeff)}" y="${A.ySVG(
+          code = `<text ${style} x="${A.xSVG(coeff)}" y="${A.ySVG(
             coeff
           )}" text-anchor="middle" dominant-baseline="central" fill="${
             this.color
@@ -6279,18 +6756,23 @@ function latexParCoordonnees(texte, x, y) {
  * @Auteur Jean-Claude Lhote
  */
 
-function FractionParPosition({x=0,y=0,num=1,den=2,couleur='black'}){
+function FractionParPosition({x=0,y=0,fraction=fraction(1,2),couleur='black'}){
   ObjetMathalea2D.call(this);
-  let longueur=Math.max(Math.ceil(Math.log10(num)),Math.ceil(Math.log10(den)))*10
+  let num=Math.abs(fraction.num),den=Math.abs(fraction.den);
+  let signe=unSiPositifMoinsUnSinon(fraction.num)*unSiPositifMoinsUnSinon(fraction.den)
+  let longueur=Math.max(Math.floor(Math.log10(num))+1,Math.floor(Math.log10(den))+1)*10
   let offset=10
 
   this.svg=function(coeff){
     let s = segment(x-longueur/coeff/2,y,x+longueur/coeff/2,y,couleur);
     s.isVisible = false;
     let code= s.svg(coeff)
-    let t1 = texteParPosition(nombre_avec_espace(num),x,y+offset/coeff,"milieu",couleur); 
+    if (signe==-1) {
+      code+= segment(calcul(x-((longueur+15)/coeff/2),0),y,calcul(x-((longueur+5)/coeff/2),0),y,couleur).svg(coeff)
+    }
+    let t1 = texteParPosition(nombre_avec_espace(num),x,calcul(y+offset/coeff),"milieu",couleur); 
     code+= t1.svg(coeff)
-    let t2 = texteParPosition(nombre_avec_espace(den),x,y-offset/coeff,"milieu",couleur)
+    let t2 = texteParPosition(nombre_avec_espace(den),x,calcul(y-offset/coeff),"milieu",couleur)
     code+= t2.svg(coeff)
     t1.isVisible = false;
     t2.isVisible = false
@@ -6299,9 +6781,13 @@ function FractionParPosition({x=0,y=0,num=1,den=2,couleur='black'}){
   }
 
   this.tikz = function(){
-    let code=segment(x,y,x+longueur/scale,y,couleur).tikz()
-    code+=texteParPosition(nombre_avec_espace(num),x+longueur/2/scale,y+offset/scale,"milieu",couleur).tikz()
-    code+=texteParPosition(nombre_avec_espace(den),x+longueur/2/scale,y-offset/scale,"milieu",couleur).tikz()
+
+    let code=segment(x,y,calcul(x+longueur/30/scale,2),y,couleur).tikz()
+    if (signe==-1) {
+      code+= segment(calcul(x-((longueur/30+0.75)/scale/2),2),y,calcul(x-((longueur/30+0.25)/scale/2),2),y,couleur).tikz()
+    }
+    code+=texteParPosition(nombre_avec_espace(num),calcul(x+longueur/60/scale,2),calcul(y+offset/30/scale,2),"milieu",couleur).tikz()
+    code+=texteParPosition(nombre_avec_espace(den),calcul(x+longueur/60/scale,2),calcul(y-offset/30/scale,2),"milieu",couleur).tikz()
      return code
   }
 }
