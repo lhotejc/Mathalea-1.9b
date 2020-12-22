@@ -898,7 +898,7 @@ export function  image_point_par_transformation (transformation,pointA,pointO,ve
 	let matrice_rot_120_direct=matriceCarree([[-0.5,-Math.sin(Math.PI/3),0],[Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 	let matrice_rot_120_indirect=matriceCarree([[-0.5,Math.sin(Math.PI/3),0],[-Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 
-	let u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
+	let x2,y2,u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
 
 	if (pointA.length==2) pointA.push(1)
 	x2=pointO[0]  // Point O' (origine du repère dans lequel les transformations sont simples (centre des rotations et point d'intersection des axes))
