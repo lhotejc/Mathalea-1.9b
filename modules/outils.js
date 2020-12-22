@@ -1,4 +1,4 @@
-import {point, translation, vecteur, carre, cercle, segment, rotation, arc} from "/modules/2d.js"
+import {point,vecteur,segment,carre,cercle,arc,translation,rotation,texteParPosition,} from "/modules/2d.js"
 
 
 // Fonctions diverses pour la création des exercices
@@ -218,6 +218,7 @@ class NombreDecimal {
 export function  decimal(n) {
 	return new NombreDecimal(n)
 }
+
 /**
 * Créé tous les couples possibles avec un élément de E1 et un élément de E2.
 * L'ordre est pris en compte, donc on pourra avoir (3,4) et (4,3).
@@ -586,7 +587,7 @@ export function  tridictionnaire(dict) {
 */
 export function  filtreDictionnaire(dict,sub) {
 	return Object.assign({}, ...
-		Object.entries(dict).filter(([k,v]) => k.substring(0,sub.length)==sub).map(([k,v]) => ({[k]:v}))
+		Object.entries(dict).filter(([k]) => k.substring(0,sub.length)==sub).map(([k,v]) => ({[k]:v}))
 	);
 }
 
@@ -897,7 +898,7 @@ export function  image_point_par_transformation (transformation,pointA,pointO,ve
 	let matrice_rot_120_direct=matriceCarree([[-0.5,-Math.sin(Math.PI/3),0],[Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 	let matrice_rot_120_indirect=matriceCarree([[-0.5,Math.sin(Math.PI/3),0],[-Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 
-	let x,y,x1,y1,u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
+	let u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
 
 	if (pointA.length==2) pointA.push(1)
 	x2=pointO[0]  // Point O' (origine du repère dans lequel les transformations sont simples (centre des rotations et point d'intersection des axes))
@@ -991,20 +992,6 @@ export function  unSiPositifMoinsUnSinon(a) {
 	else return 1;
 }
 
-/**
-* Retourne un string avec la somme des chiffres
-* @Example
-* somme_des_chiffres(123)
-* // 6
-* @Auteur Rémi Angot
-export */function  somme_des_chiffre(n) { 
-	let somme_string =''
-	for (let i = 0; i < n.length-1; i++) {
-		somme_string += n[i]+'+'
-	}
-	somme_string += n[n.length-1]
-	return somme_string
-}
 
 /**
 * Retourne l'arrondi (par défaut au centième près)
@@ -1276,7 +1263,7 @@ export function  nombreDecimal(expression,arrondir=false){
 * Utilise Algebrite pour s'assurer qu'il n'y a pas d'erreur dans les calculs avec des décimaux et retourne un string avec la virgule comme séparateur décimal
 * @Auteur Rémi Angot
 */
-export function  tex_nombrec(expression,precision){ 
+export function  tex_nombrec(expression){ 
 	return tex_nombre(parseFloat(Algebrite.eval(expression)))
 }
 /**
@@ -1290,20 +1277,6 @@ export function  tex_nombrecoul(nombre){
 }
 
 
-/**
-* Renvoie un tableau (somme des termes positifs, somme des termes négatifs)
-* @Auteur Rémi Angot
-export */function  somme_des_termes_par_signe(liste){
-	let somme_des_positifs = 0, somme_des_negatifs = 0;
-	for (var i = 0; i < liste.length; i++) {
-		if (liste[i]>0){
-			somme_des_positifs += liste[i]
-		} else {
-			somme_des_negatifs += liste[i]
-		}
-	}
-	return [somme_des_positifs,somme_des_negatifs]
-}
 /**
  * prend une liste de nombres relatifs et la retourne avec les positifs au début et les négatifs à la fin.
  * @param {array} liste la liste de nombres à trier
@@ -1390,11 +1363,11 @@ export function  choisit_nombres_entre_m_et_n(m,n,combien,liste_a_eviter=[]){
  */
 export function  choisit_lettres_differentes(nombre,lettres_a_eviter,majuscule=true){
 	let liste_a_eviter=[],lettres=[]
-	for (l of lettres_a_eviter) {
+	for (let l of lettres_a_eviter) {
 		liste_a_eviter.push(l.charCodeAt(0)-64)
 	}
 	let index=choisit_nombres_entre_m_et_n(1,26,nombre,liste_a_eviter)
-	for (n of index) {
+	for (let n of index) {
 		if (majuscule) lettres.push(lettre_depuis_chiffre(n))
 		else lettres.push(lettre_minuscule_depuis_chiffre(n))
 	}
@@ -2527,12 +2500,10 @@ export function  SVG_Tracer_droite(mon_svg,tailleX,tailleY,Xmin,Xmax,Ymin,Ymax,O
 export function  Latex_Tracer_droite(Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom) {
 	'use strict';
 	let k=0;
-	let Pente_r=Pente*(Xmax-Xmin)/(Ymax-Ymin); // Pente adaptée au ratio d'échelle des axes.
 	while((k>Xmin)&((OrdX0+Pente*k)<Ymax)&((OrdX0+Pente*k)>Ymin)) k--;
 	let X1=k;
 	let Y1=OrdX0+Pente*k;
 	let DeltaX=Xmax-Xmin;
-	let DeltaY=Ymax-Ymin;
 	let X2=X1+DeltaX
 	let Y2=Y1+DeltaX*Pente;
 	return `\n\t \\draw[color=${couleur},thick](${X1},${Y1})--(${X2},${Y2}) node[pos=.1,above] {$${nom}$};`;
@@ -2623,7 +2594,7 @@ export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,po
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
 			const mon_svg = SVG().addTo(`#${id_du_div}`).viewbox(0, 0, 800, 150).size('100%','100%')
 			// Droite 
-			let droite = mon_svg.line(100, 50, 750, 50),taille,y,color,width
+			let droite = mon_svg.line(100, 50, 750, 50)	
 			droite.stroke({ color: 'black', width: 2, linecap: 'round' })
 			// Graduation secondaire
 			SVG_graduation(mon_svg,100,longueur_pas2,750,taille=5,y=50,color='black',width=2)
@@ -2726,7 +2697,7 @@ export function  Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnu
 * @author Rémi Angot
 */
 
-export function  tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5,xstep=1,ystep=1) {
+export function  tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5) {
 	return `
 	\\pgfplotsset{width=10cm,
 			compat=1.9,
@@ -2890,7 +2861,6 @@ export function  MatriceCarree(table){
 	 * Méthode : m=M.inverse() Retourne la matrice inverse de M. Utilisation : résolution de systèmes linéaires 
 	 */
 	 this.inverse=function () { // retourne la matrice inverse (si elle existe)
-		let n=this.dim,resultat=[],ligne
 		let d=this.determinant()
 		if (!egal(d,0)) {
 			return this.cofacteurs().transposee().multiplieParReel(calcul(1/d))
@@ -3676,7 +3646,6 @@ export function  SVG_chemin(groupe,chemin,couleur) {
 export function  SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_expressions) {
 	'use strict';
 	let interligne = 10;//w/80; //h/10; // unité d'espacement
-	var saut = 0; // pour la gestion des sauts entre les éléments on aura besoin d'une globale
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
 	window.SVGExist[id_du_div] = setInterval(function () {
@@ -3685,10 +3654,7 @@ export function  SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_ex
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
 			// on crée un rectangle dont la taille est adaptée au texte
 			let w_x_ant = 10*interligne;
-			// on incrémente le saut pour gérer le positionnement de l'élément suivant
-			saut = w_x_ant + 2*interligne;
 			//let path_cadre_rect_ant = 'M0,0L0,-'+interligne+',L'+(w_x_ant + 2*interligne)+',-'+interligne+',L'+(w_x_ant + 2*interligne)+','+interligne+'L0,'+interligne+'Z';
-			let path_cadre_rect_ant ='5,5 195,10 185,40 10,50';
 			document.getElementById(id_du_div).innerHTML = `
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 `+w+` `+h+`" width="`+w+`">
 					<g>
@@ -3978,7 +3944,6 @@ export function  SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_lign
 export function  SVG_machine_diag_3F12(id_du_div,w,h,nom,x_ant,etapes_expressions) {
 	'use strict';
 	let interligne = 10;//w/80; //h/10; // unité d'espacement
-	var saut = 0; // pour la gestion des sauts entre les éléments on aura besoin d'une globale
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
 	window.SVGExist[id_du_div] = setInterval(function () {
@@ -3987,10 +3952,7 @@ export function  SVG_machine_diag_3F12(id_du_div,w,h,nom,x_ant,etapes_expression
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
 			// on crée un rectangle dont la taille est adaptée au texte
 			let w_x_ant = 10*interligne;
-			// on incrémente le saut pour gérer le positionnement de l'élément suivant
-			saut = w_x_ant + 2*interligne;
 			//let path_cadre_rect_ant = 'M0,0L0,-'+interligne+',L'+(w_x_ant + 2*interligne)+',-'+interligne+',L'+(w_x_ant + 2*interligne)+','+interligne+'L0,'+interligne+'Z';
-			let path_cadre_rect_ant ='5,5 195,10 185,40 10,50';
 			document.getElementById(id_du_div).innerHTML = `
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 `+w+` `+h+`" width="`+w+`">
 					<g>
@@ -4256,12 +4218,21 @@ export function  texte_ou_pas(texte) {
 /**
  * Crée un tableau avec un nombre de lignes et de colonnes déterminées par la longueur des tableaux des entetes passés en paramètre
  * Les contenus sont en mode maths par défaut, il faut donc penser à remplir les tableaux en utilisant éventuellement la commande \\text{}
- * @param {array} tab_entetes_colonnes contient les entetes des colonnes
+ * tab_C_L(['coin','A','B'],['1','2'],['A1','B1','A2','B2']) affiche le tableau ci-dessous
+ * ------------------
+ * | coin | A  | B  |
+ * ------------------
+ * |  1   | A1 | B1 |
+ * ------------------
+ * |  2   | A2 | B2 |
+ * ------------------
+* @param {array} tab_entetes_colonnes contient les entetes des colonnes
  * @param {array} tab_entetes_lignes contient les entetes des lignes
  * @param {array} tab_lignes contient les elements de chaque ligne
  * @author Sébastien Lozano
+ * 
  */
-export function  tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
+export function tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	'use strict';
 	// on définit le nombre de colonnes
 	let C = tab_entetes_colonnes.length;
@@ -4281,17 +4252,38 @@ export function  tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	tableau_C_L +=`}\n`;
 					
 	tableau_C_L += `\\hline\n`
-	tableau_C_L += tab_entetes_colonnes[0];
+	if (typeof tab_entetes_colonnes[0]=='number') {
+		tableau_C_L += tex_nombre(tab_entetes_colonnes[0]);
+	}
+	else
+	{
+		tableau_C_L += tab_entetes_colonnes[0];		
+	}
 	for (let k=1;k<C;k++) {
-		tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;
+		if (typeof tab_entetes_colonnes[k]=='number') {
+				tableau_C_L += ` & `+tex_nombre(tab_entetes_colonnes[k])+``;
+		}
+		else {
+			tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;		
+		}
 	};
 	tableau_C_L += `\\\\\n`;
 	tableau_C_L += `\\hline\n`;
 	// on construit toutes les lignes
 	for (let k=0;k<L;k++) {
-		tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		if (typeof tab_entetes_lignes[k]=='number'){
+			tableau_C_L += ``+tex_nombre(tab_entetes_lignes[k])+``;
+		}
+		else {
+			tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		}
 		for (let m=1;m<C;m++) {
-			tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			if (typeof tab_lignes[(C-1)*k+m-1]== 'number') {
+				tableau_C_L += ` & `+tex_nombre(tab_lignes[(C-1)*k+m-1]);
+			}
+			else {
+				tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			}
 		};
 		tableau_C_L += `\\\\\n`;
 		tableau_C_L += `\\hline\n`;	
@@ -4719,17 +4711,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 		};
 	};
 
-	/**
-	 * Méthode non finalisée
-	 */
-	function  isQuelconque() {
-		// Vérifier que le triangle existe !!!
-		if ( ( ((self.l1!=self.l2) && (self.l1!=self.l3) && (self.l2!=self.l3) ) || ( (self.a1!=self.a2) && (self.a1!=self.a3) && (self.a2!=self.a3) ) ) && ( (self.a1 != 90) || (self.a2 != 90) || (self.a3 != 90) ) ) {
-			return true
-		} else {
-			return false;
-		};
-	};
+;
 	
 	this.l1 = l1;
 	this.l2 = l2;
@@ -4761,7 +4743,6 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
  */
 export function  Relatif(...relatifs) {
 	//'use strict'; pas de use strict avec un paramètre du reste
-	var self = this;
 	this.relatifs = relatifs;
 
 	/**
@@ -5035,7 +5016,6 @@ export function  Relatif(...relatifs) {
 
  export function  ListeFraction() {
 	 //'use strict'; pas de use strict avec un paramètre du reste
-	 var self = this;
 	 /**
 	  * @constant {array} denominateurs_amis tableau de tableaux de dénominateurs qui vont bien ensemble pour les calculs
 	  * le tableau [12,2,3,4,6] faisait planter 4C25-0
@@ -5193,11 +5173,6 @@ export function  Relatif(...relatifs) {
     return new Fraction(a,b)
 }
 
-/**
- * @constant {object} Frac objet générique pour accéder à tout moment aux méthodes et proprétés de la classe Fraction()
- */
-
-let Frac = new Fraction();
 
 /**
  * @class
@@ -5318,7 +5293,6 @@ export function  Fraction(num,den) {
  */
 	 this.fractionDecimale = function (){
 		let den=this.denIrred
-		let num=this.numIrred
 		let liste=obtenir_liste_facteurs_premiers(den)
 		let n2=0,n5=0
 		for (let n of liste) {
