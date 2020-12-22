@@ -1972,7 +1972,7 @@ export function  href(texte,lien){
 */
 export function  tex_prix(nb){
 	//Remplace le . par la ,
-	nombre = Number (nb);
+	let nombre = Number (nb);
 	let result ;
 	if (nombre==nombre.toFixed(0)){
 		result = nombre
