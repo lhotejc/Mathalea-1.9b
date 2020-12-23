@@ -3,7 +3,7 @@
 
 import os
 import re # Pour la gestion des expressions régulières
-from collections import namedtuple # pour les tuples nommés
+from collections import namedtuple # pour les tuples nommés utile ?
 
 # Récupèrer toutes les références des exos dans include/mathalea_exercices.js dans un tableau
 def getAllRefsClean():
@@ -123,16 +123,24 @@ def writeToFile(filename,code,niv):
 # Remplacer la premier occurence de function
 # le fichier existe puisqu'on l'a généré
 def firstFunctionReplace(path_to_file):
-    file = open(path_to_file,"w")
-    fileContent = file.readlines()
-    print(fileContent)
-    # compteur=0
-    # for line in fileContent:
-    #     if compteur == 1:
-    #         break
-    #     if "function" in line:
-    #         print(line)
-    #         compteur+=1
+    readFile = open(path_to_file,"r")
+    fileContent = readFile.readlines()
+    outFile = open(path_to_file,"w")
+    #print("ddd")
+    compteur=0
+    ok = False
+    for line in fileContent:
+        if "function" in line and ok == False:
+            print(line)
+            newLine = line.replace("function","export default function")
+            outFile.write(newLine)
+            print(newLine)
+            compteur+=1
+            ok = True
+        else:
+            outFile.write(line)
+    readFile.close()
+    outFile.close()
 
 if __name__ == '__main__':
     #print(getAllRefClean())
