@@ -12368,3 +12368,4 @@ function Tableaux_et_quatrieme_proportionnelle() {
 };
 
 
+/** */

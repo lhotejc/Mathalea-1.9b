@@ -175,7 +175,7 @@ if __name__ == '__main__':
     # writeToFile(exo[2],exo[0],'6e')
     # firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
 ############################################################################################
-# Niveau 6eme
+# Niveau 6eme et CM
 ############################################################################################
     # On récupère toutes les lignes avec /** au début dans le fichier    
     nbLine6 = getAllNbLineBeginCode("./include/mathalea_exercices.js")
@@ -188,8 +188,8 @@ if __name__ == '__main__':
         if nbl != nbLine6[len(nbLine6)-1]:
             #print("nbl : "+str(nbl))
             #print(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2])            
-            if getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2] != -1:
-                tab_exo6.append(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e'))
+            if getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6','CM'],'6e')[2] != -1:
+                tab_exo6.append(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6','CM'],'6e'))
     #print(tab_exo6)
     # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
     for exo in tab_exo6:
@@ -202,7 +202,7 @@ if __name__ == '__main__':
     nbLine5 = getAllNbLineBeginCode("./include/mathalea_exercices_5e.js")
     # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
     addEndSymb("./include/mathalea_exercices_5e.js")
-    print(nbLine5)
+    #print(nbLine5)
     tab_exo5 = []
     for nbl in nbLine5:
         # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
@@ -215,6 +215,61 @@ if __name__ == '__main__':
         writeToFile(exo[2],exo[0],'5e')
         firstFunctionReplace("./exercices/5e_to_clean/"+exo[2]+".js")    
     #print(getCodeRefEx(8520,"./include/mathalea_exercices_5e.js",['5'],'5e')[2])
+############################################################################################
+# Niveau 4eme
+############################################################################################    
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine4 = getAllNbLineBeginCode("./include/mathalea_exercices_4e.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    addEndSymb("./include/mathalea_exercices_4e.js")
+    #print(nbLine4)
+    tab_exo4 = []
+    for nbl in nbLine4:
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine4[len(nbLine4)-1]:
+            if getCodeRefEx(nbl,"./include/mathalea_exercices_4e.js",['4'],'4e')[2] != -1:
+                tab_exo4.append(getCodeRefEx(nbl,"./include/mathalea_exercices_4e.js",['4'],'4e'))
+    #print(tab_exo4)
+    # On ecrit maintenant tous les exos dans le dossier 4e_to_clean
+    for exo in tab_exo4:
+        writeToFile(exo[2],exo[0],'4e')
+        firstFunctionReplace("./exercices/4e_to_clean/"+exo[2]+".js")    
+    #print(getCodeRefEx(12371,"./include/mathalea_exercices_4e.js",['4'],'4e')[2])
+############################################################################################
+# Niveau 3eme déjà fini
+############################################################################################    
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine3 = getAllNbLineBeginCode("./include/mathalea_exercices_3e.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    addEndSymb("./include/mathalea_exercices_3e.js")
+    print(nbLine3)
+    tab_exo3 = []
+    for nbl in nbLine3:
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine3[len(nbLine3)-1]:
+            if getCodeRefEx(nbl,"./include/mathalea_exercices_3e.js",['3'],'3e')[2] != -1:
+                tab_exo3.append(getCodeRefEx(nbl,"./include/mathalea_exercices_3e.js",['3'],'3e'))
+    #print(tab_exo3)
+    # On ecrit maintenant tous les exos dans le dossier 3e_to_clean
+    for exo in tab_exo3:
+        writeToFile(exo[2],exo[0],'3e')
+        firstFunctionReplace("./exercices/3e_to_clean/"+exo[2]+".js")    
+    #print(getCodeRefEx(2,"./include/mathalea_exercices_3e.js",['3'],'3e')[2])
+############################################################################################
+# Niveau 2eme déjà fini
+############################################################################################    
+
+############################################################################################
+# Niveau 1eme déjà fini
+############################################################################################    
+
+############################################################################################
+# Niveau Profs déjà fini
+############################################################################################    
+
+############################################################################################
+# Niveau PE déjà fini
+############################################################################################    
 
 
     
