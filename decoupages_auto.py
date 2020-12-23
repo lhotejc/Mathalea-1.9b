@@ -113,8 +113,26 @@ def writeToFile(filename,code,niv):
     if not os.path.exists(path_to_write):
         os.mkdir(path_to_write)
     file = open(path_to_write+filename+".js","w")
+    entete = open("./exercices/entete.js","r")
+    enteteContent = entete.readlines()
+    file.writelines(enteteContent)
     file.writelines(code)
     file.close()
+    entete.close()
+
+# Remplacer la premier occurence de function
+# le fichier existe puisqu'on l'a généré
+def firstFunctionReplace(path_to_file):
+    file = open(path_to_file,"w")
+    fileContent = file.readlines()
+    print(fileContent)
+    # compteur=0
+    # for line in fileContent:
+    #     if compteur == 1:
+    #         break
+    #     if "function" in line:
+    #         print(line)
+    #         compteur+=1
 
 if __name__ == '__main__':
     #print(getAllRefClean())
@@ -136,6 +154,7 @@ if __name__ == '__main__':
     writeToFile('test',['test\n','test\n','test\n'],'6e')
     exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
     writeToFile(exo[2],exo[0],'6e')
+    firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
 
 
     
