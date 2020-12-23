@@ -242,7 +242,7 @@ if __name__ == '__main__':
     nbLine3 = getAllNbLineBeginCode("./include/mathalea_exercices_3e.js")
     # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
     addEndSymb("./include/mathalea_exercices_3e.js")
-    print(nbLine3)
+    #print(nbLine3)
     tab_exo3 = []
     for nbl in nbLine3:
         # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
