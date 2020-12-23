@@ -1,15 +1,12 @@
 import Exercice from '../ClasseExercice.js';
 import {liste_de_question_to_contenu_sans_numero,randint,choice,image_point_par_transformation,texte_en_couleur_et_gras,num_alpha} from "/modules/outils.js"
 
-
-
-
 /**
  * Trouver l'image d'une figure par une symétrie centrale dans un pavage (7 motifs différents)
  * @Auteur Jean-Claude Lhote
  * fonction servant à tous les niveaux
  * Pas de version Latex !
- * Références 5G12-1, 6G25-2, 4G11, 3G12
+ * Références 5G12-1, 6G25-2, 4G11-1, 3G12-1
  */
 export default function Pavages_et_transformations() {
 	'use strict';

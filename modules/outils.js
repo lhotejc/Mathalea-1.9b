@@ -3763,14 +3763,6 @@ export function sansAccent(str){
 * @param {string} textePopup = Le texte dévoilé par le bouton ou l'url de l'image.
 * @Auteur Jean-claude Lhote & Rémi Angot & Sebastien Lozano
 **/
-// function katex_Popup2(numero,type,texte,titrePopup,textePopup) {
-// 	'use strict';
-// 	switch (type) { 
-// 		case 0 : return katex_Popuptest(texte,titrePopup,textePopup)
-// 		case 1 : return `${texte}`+ modal_texte_long(numero,`${titrePopup}`,`${textePopup}`,`${texte}`,"info circle")
-// 		case 2 : return `${texte}`+ modal_image(numero,textePopup,`${titrePopup}`,`${texte}`)
-// 	}
-// };
 
 export function katex_Popup2(numero,type,texte,titrePopup,textePopup) {
 	'use strict';
