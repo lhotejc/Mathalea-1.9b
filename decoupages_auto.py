@@ -184,8 +184,6 @@ if __name__ == '__main__':
     #print(nbLine6)
     tab_exo6 = []
     for nbl in nbLine6:
-        #print(nbl)
-        #print(nbl != nbLine6[len(nbLine6)-1])
         # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
         if nbl != nbLine6[len(nbLine6)-1]:
             #print("nbl : "+str(nbl))
@@ -193,14 +191,35 @@ if __name__ == '__main__':
             if getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2] != -1:
                 tab_exo6.append(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e'))
     #print(tab_exo6)
+    # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
     for exo in tab_exo6:
         writeToFile(exo[2],exo[0],'6e')
         firstFunctionReplace("./exercices/6e_to_clean/"+exo[2]+".js")
+############################################################################################
+# Niveau 5eme
+############################################################################################
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine5 = getAllNbLineBeginCode("./include/mathalea_exercices_5e.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    addEndSymb("./include/mathalea_exercices_5e.js")
+    print(nbLine5)
+    tab_exo5 = []
+    for nbl in nbLine5:
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine5[len(nbLine5)-1]:
+            if getCodeRefEx(nbl,"./include/mathalea_exercices_5e.js",['5'],'5e')[2] != -1:
+                tab_exo5.append(getCodeRefEx(nbl,"./include/mathalea_exercices_5e.js",['5'],'5e'))
+    #print(tab_exo5)
+    # On ecrit maintenant tous les exos dans le dossier 5e_to_clean
+    for exo in tab_exo5:
+        writeToFile(exo[2],exo[0],'5e')
+        firstFunctionReplace("./exercices/5e_to_clean/"+exo[2]+".js")    
+    #print(getCodeRefEx(8520,"./include/mathalea_exercices_5e.js",['5'],'5e')[2])
 
 
-    # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
+    
 
-    #print(getCodeRefEx(17071,"./include/mathalea_exercices.js",['6'],'6e')[2])            
+    
 
 
     
