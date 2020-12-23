@@ -45,7 +45,7 @@ def main():
         # listOfFiles += [[os.path.splitext(file)[0],dirpath+'/'+file] for file in filenames if os.path.splitext(file)[1]=='.js']
         # dictionnaireDesRef.update(dict((os.path.splitext(file)[0],dirpath+'/'+file) for file in filenames if os.path.splitext(file)[1]=='.js'))
         for file in filenames :
-            if os.path.splitext(file)[1]=='.js' and os.path.splitext(file)[0]!='ClasseExercice' :
+            if os.path.splitext(file)[1]=='.js' and os.path.splitext(file)[0]!='ClasseExercice' and os.path.splitext(file)[0][0]!='_' :
                 with open(dirpath+'/'+file, encoding="utf8", errors='ignore') as searchfile:
                     for line in searchfile:
                         if 'this.titre' in line:
