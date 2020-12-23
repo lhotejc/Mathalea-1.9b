@@ -107,6 +107,14 @@ def getAllNbLineBeginCode(path_to_file):
     return tab
 
 # Écrire le code dans un fichier si l'exo n'existe pas
+# le nom du fichier, le tableau contenant le code à écrire, le niveau
+def writeToFile(filename,code,niv):
+    path_to_write = "./exercices/"+niv+"_to_clean/"
+    if not os.path.exists(path_to_write):
+        os.mkdir(path_to_write)
+    file = open(path_to_write+filename+".js","w")
+    file.writelines(code)
+    file.close()
 
 if __name__ == '__main__':
     #print(getAllRefClean())
@@ -124,6 +132,10 @@ if __name__ == '__main__':
     # print(getCodeRefEx(debsuivsuiv,"./include/mathalea_exercices.js"))
     # print(getCodeRefEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
     # print(getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
-    print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
+    # print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
+    writeToFile('test',['test\n','test\n','test\n'],'6e')
+    exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
+    writeToFile(exo[2],exo[0],'6e')
+
 
     
