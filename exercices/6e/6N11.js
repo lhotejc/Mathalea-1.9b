@@ -1,7 +1,6 @@
-import { calcul, html_consigne, Latex_reperage_sur_un_axe, lettre_depuis_chiffre } from '../../modules/outils.js';
-import Exercice from '../ClasseExercice.js'
-import {liste_de_question_to_contenu} from '/modules/outils.js'
-import {randint, combinaison_listes} from '/modules/outils.js'
+import Exercice from '../ClasseExercice.js';
+import {liste_de_question_to_contenu,randint,combinaison_listes,calcul,lettre_depuis_chiffre,html_consigne,SVG_reperage_sur_un_axe,Latex_reperage_sur_un_axe} from "/modules/outils.js"
+
 
 /**
  * Lire l'abscisse entière d'un point

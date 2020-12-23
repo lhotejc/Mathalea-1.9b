@@ -898,7 +898,7 @@ export function  image_point_par_transformation (transformation,pointA,pointO,ve
 	let matrice_rot_120_direct=matriceCarree([[-0.5,-Math.sin(Math.PI/3),0],[Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 	let matrice_rot_120_indirect=matriceCarree([[-0.5,Math.sin(Math.PI/3),0],[-Math.sin(Math.PI/3),-0.5,0],[0,0,1]])
 
-	let u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
+	let x2,y2,u,v,k,pointA1=[0,0,0],pointA2=[0,0,0]
 
 	if (pointA.length==2) pointA.push(1)
 	x2=pointO[0]  // Point O' (origine du repère dans lequel les transformations sont simples (centre des rotations et point d'intersection des axes))
@@ -1927,7 +1927,7 @@ export function  couleurAleatoire() {
 
   export function  arcenciel(i,fondblanc=true) {
 	  let couleurs
-	  if (fondblanc) couleurs=['violet','indigo',  'blue', 'green', 'lime', 'orange', 'red']
+	  if (fondblanc) couleurs=['violet','purple',  'blue', 'green', 'lime', 'orange', 'red']
 	  else couleurs=['violet','indigo',  'blue', 'green', 'yellow', 'orange', 'red']
 	  return couleurs[i%7]
   }
@@ -1972,7 +1972,7 @@ export function  href(texte,lien){
 */
 export function  tex_prix(nb){
 	//Remplace le . par la ,
-	nombre = Number (nb);
+	let nombre = Number (nb);
 	let result ;
 	if (nombre==nombre.toFixed(0)){
 		result = nombre
@@ -2597,9 +2597,9 @@ export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,po
 			let droite = mon_svg.line(100, 50, 750, 50)	
 			droite.stroke({ color: 'black', width: 2, linecap: 'round' })
 			// Graduation secondaire
-			SVG_graduation(mon_svg,100,longueur_pas2,750,taille=5,y=50,color='black',width=2)
+			SVG_graduation(mon_svg,100,longueur_pas2,750,5,50,'black',2)
 			// Graduation principale
-			SVG_graduation(mon_svg,100,longueur_pas1,750,taille=10,y=50,color='black',width=5)
+			SVG_graduation(mon_svg,100,longueur_pas1,750,10,50,'black',5)
 			SVG_tracer_flecheH(mon_svg,750,50)
 			// Nombres visibles
 			SVG_label(mon_svg,[[string_nombre(origine),100,50]],2,'black',1);
