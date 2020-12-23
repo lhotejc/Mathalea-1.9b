@@ -10,7 +10,7 @@ import {point,vecteur,segment,carre,cercle,arc,translation,rotation,texteParPosi
 * @param {exercice} 
 * @author Rémi Angot
 */
-export function  liste_de_question_to_contenu(argument) {
+export function liste_de_question_to_contenu(argument) {
 	if (sortie_html) {
 		argument.contenu = html_consigne(argument.consigne) + html_paragraphe(argument.introduction) + html_enumerate(argument.liste_questions,argument.spacing)
 		argument.contenu_correction = html_consigne(argument.consigne_correction) + html_enumerate(argument.liste_corrections,argument.spacing_corr)	
@@ -22,9 +22,27 @@ export function  liste_de_question_to_contenu(argument) {
 		if (document.getElementById('supprimer_reference').checked == true) {
 			argument.contenu = tex_consigne(argument.consigne) + vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
 		} else {
-			argument.contenu = `\\marginpar{\\footnotesize ${argument.id}}` + tex_consigne(argument.consigne) + vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
+			argument.contenu = tex_consigne(argument.consigne) + `\n\\marginpar{\\footnotesize ${argument.id}}` +  vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
 		}
 		argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
+	}
+	
+}
+export function liste_de_choses_a_imprimer(argument) {
+	if (sortie_html) {
+		argument.contenu =  html_ligne(argument.liste_questions,argument.spacing)
+		argument.contenu_correction = ""	
+	} else {
+		let vspace = '';
+		if (argument.vspace) {
+			vspace = `\\vspace{${argument.vspace} cm}\n`
+		}
+		if (document.getElementById('supprimer_reference').checked == true) {
+			argument.contenu = tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		} else {
+			argument.contenu = `\n\\marginpar{\\footnotesize ${argument.id}}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		}
+		argument.contenu_correction = ""
 	}
 	
 }
@@ -36,7 +54,7 @@ export function  liste_de_question_to_contenu(argument) {
 * @param {exercice} 
 * @author Rémi Angot
 */
-export function  liste_de_question_to_contenu_sans_numero(argument) {
+export function liste_de_question_to_contenu_sans_numero(argument) {
 	if (sortie_html) {
 		argument.contenu = html_consigne(argument.consigne) + html_paragraphe(argument.introduction) + html_ligne(argument.liste_questions,argument.spacing)
 		argument.contenu_correction = html_consigne(argument.consigne_correction) + html_ligne(argument.liste_corrections,argument.spacing_corr)	
@@ -44,7 +62,7 @@ export function  liste_de_question_to_contenu_sans_numero(argument) {
 		if (document.getElementById('supprimer_reference').checked == true) {
 			argument.contenu = tex_consigne(argument.consigne) + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 		} else {
-			argument.contenu = `\\marginpar{\\footnotesize ${argument.id}}` + tex_consigne(argument.consigne) + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+			argument.contenu = tex_consigne(argument.consigne) + `\n\\marginpar{\\footnotesize ${argument.id}}` + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 		}
 		// argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate_sans_numero(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
 		argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_paragraphe(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
@@ -60,11 +78,11 @@ export function  liste_de_question_to_contenu_sans_numero(argument) {
 * @param {exercice} 
 * @author Rémi Angot
 */
-export function  liste_de_question_to_contenu_sans_numero_et_sans_consigne(argument) {
+export function liste_de_question_to_contenu_sans_numero_et_sans_consigne(argument) {
 	if (document.getElementById('supprimer_reference').checked == true) {
 		argument.contenu = tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 	} else {
-		argument.contenu = `\\marginpar{\\footnotesize ${argument.id}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		argument.contenu = `\n\\marginpar{\\footnotesize ${argument.id}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 	}
 		// argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate_sans_numero(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
 	argument.contenu_correction =  tex_multicols(tex_paragraphe(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
@@ -79,7 +97,7 @@ export function  liste_de_question_to_contenu_sans_numero_et_sans_consigne(argum
 * 
 * @author Rémi Angot
 */
-export function  deuxColonnes(cont1,cont2){
+export function deuxColonnes(cont1,cont2){
 	if (sortie_html){
 		return `
 		<div style="float:left;min-width: fit-content;max-width : 35%;margin-right: 30px">
@@ -110,31 +128,31 @@ export function  deuxColonnes(cont1,cont2){
  * @Auteur Jean-Claude Lhote
  */
 const epsilon=0.000001;
- export function  egal(a,b,tolerance=epsilon){
+ export function egal(a,b,tolerance=epsilon){
 	if (Math.abs(a-b)<tolerance) return true
 	else return false
 }
-export function  superieur(a,b,tolerance=epsilon){
+export function superieur(a,b,tolerance=epsilon){
 	if (a-b>tolerance&&(!egal(a,b,tolerance))) return true
 	else return false
 }
-export function  inferieur(a,b,tolerance=epsilon){
+export function inferieur(a,b,tolerance=epsilon){
 	if (b-a>tolerance&&(!egal(a,b,tolerance))) return true
 	else return false
 }
-export function  superieurouegal(a,b,tolerance=epsilon) {
+export function superieurouegal(a,b,tolerance=epsilon) {
 	if (a-b>tolerance||egal(a,b,tolerance)) return true
 	else return false
 }
-export function  inferieurouegal(a,b,tolerance=epsilon) {
+export function inferieurouegal(a,b,tolerance=epsilon) {
 	if (b-a>tolerance||egal(a,b,tolerance)) return true
 	else return false
 }
-export function  estentier(a,tolerance=epsilon) {
+export function estentier(a,tolerance=epsilon) {
 	if (Math.abs(calcul(a-Math.round(a)))<tolerance) return true
 	else return false
 }
-export function  quotientier(a, b) {
+export function quotientier(a, b) {
 	if (Number.isInteger(a) && Number.isInteger(b)) {
 		let reste = a
 		let quotient = 0
@@ -146,13 +164,13 @@ export function  quotientier(a, b) {
 	}
 	else return false
 }
-export function  carreParfait(x) {
+export function carreParfait(x) {
 	if (estentier(Math.sqrt(x))) return true
 	else return false
 }
 
 // Petite fonction pour écrire des nombres avec Mathalea2d en vue de poser des opérations...
-export function  ecrireNombre2D(x,y,n){
+export function ecrireNombre2D(x,y,n){
 	let nString=nombre_avec_espace(n);
 	let nombre2D=[]
 	for (let k=0;k<nString.length;k++) {
@@ -163,7 +181,7 @@ export function  ecrireNombre2D(x,y,n){
 /*
 Pour l'instant, je commente... Faut que je réfléchisse et que je prenne mon temps (que je n'ai pas actuellement)
 On verra ça plus tard. La nuit porte conseil.
-export function  ecrireAdditionPosee(x,y,...args){
+function ecrireAdditionPosee(x,y,...args){
 	let nString=[],n=[]
 	for (k=0;k<args.length;k++) {
 		nString.push(tex_nombre(args[k]))
@@ -183,10 +201,8 @@ class NombreDecimal {
 			nombre=calcul(-nombre)
 		}
 		else this.signe=`+`
-		console.log(nombre)
 		this.exposant=Math.floor(Math.log10(nombre))
 		nombre=nombre/10**this.exposant
-		console.log(nombre)
 		this.mantisse=[]
 		for (let k=0;k<16;k++) {
 			if (egal(Math.ceil(nombre)-nombre,0,0.00001)) {
@@ -197,7 +213,6 @@ class NombreDecimal {
 				this.mantisse.push(Math.floor(nombre))
 				nombre=(nombre-this.mantisse[k])*10
 			}
-			console.log(nombre)
 			if (egal(nombre,0,0.001)) break
 		}
 		
@@ -215,7 +230,7 @@ class NombreDecimal {
 	}
 
 }
-export function  decimal(n) {
+export function decimal(n) {
 	return new NombreDecimal(n)
 }
 
@@ -231,7 +246,7 @@ export function  decimal(n) {
 * @author Rémi Angot
 */
 
-export function  creer_couples(E1, E2, nombre_de_couples_min = 10){
+export function creer_couples(E1, E2, nombre_de_couples_min = 10){
 	
 	let result = [], temp = [];
 	for (let i in E1){
@@ -266,7 +281,7 @@ export function  creer_couples(E1, E2, nombre_de_couples_min = 10){
 * @author Rémi Angot
 * @Source https://gist.github.com/pc035860/6546661
 */
-export function  randint(min,max,liste_a_eviter=[]){
+export function randint(min,max,liste_a_eviter=[]){
 	//Source : https://gist.github.com/pc035860/6546661
 	let range = max - min;
 	let rand = Math.floor(Math.random() * (range + 1));
@@ -296,7 +311,7 @@ export function  randint(min,max,liste_a_eviter=[]){
 *
 * @Source https://www.equinode.com/blog/article/generer-une-chaine-de-caracteres-aleatoire-avec-javascript
 */
-export function  strRandom(o) {
+export function strRandom(o) {
   var a = 10,
       b = 'abcdefghijklmnopqrstuvwxyz',
       c = '',
@@ -330,7 +345,7 @@ export function  strRandom(o) {
 *
 * @author Rémi Angot
 */
-export function  enleve_element(array,item){
+export function enleve_element(array,item){
 	// 
 	for(var i = array.length - 1; i >= 0; i--){
 		if(array[i] == item) {
@@ -343,7 +358,7 @@ export function  enleve_element(array,item){
  * @Auteur Rémi Angot & Jean-Claude Lhote
  */
 
-export function  enleve_element_bis(array,item=undefined) {
+export function enleve_element_bis(array,item=undefined) {
 	let tableaucopie=[]
 	for(i = 0;i<array.length;i++) {
 		tableaucopie.push(array[i])
@@ -360,14 +375,14 @@ export function  enleve_element_bis(array,item=undefined) {
  * Enlève l'élément index d'un tableau
  * @Auteur Jean-Claude Lhote
  */
-export function  enleve_element_No(array,index) {
+export function enleve_element_No(array,index) {
 	array.splice(index,1)
 }
 /**
  * Enlève l'élément index d'un tableau sans modifier le tableau et retourne le résultat
  * @Auteur Jean-Claude Lhote
  */
-export function  enleve_element_No_bis(array,index){
+export function enleve_element_No_bis(array,index){
 	let tableaucopie=[]
 	for(i = 0;i<array.length;i++) {
 		tableaucopie.push(array[i])
@@ -391,7 +406,7 @@ export function  enleve_element_No_bis(array,index){
 *
 * @author Rémi Angot
 */
-export function  choice(liste,liste_a_eviter=[]) {
+export function choice(liste,liste_a_eviter=[]) {
 	//copie la liste pour ne pas y toucher (ce n'est pas le but de choice)
 	let listebis = liste.slice();
 	// Supprime les éléments de liste à éviter
@@ -413,7 +428,7 @@ export function  choice(liste,liste_a_eviter=[]) {
 *
 * @author Rémi Angot
 */
-export function  range(max,liste_a_eviter=[]){
+export function range(max,liste_a_eviter=[]){
 	// Créer un tableau avec toutes les valeurs de 0 à max sauf celle de la liste à éviter
 	let nb_max = parseInt(max,10);
 	let liste = [...Array(nb_max+1).keys()];
@@ -435,7 +450,7 @@ export function  range(max,liste_a_eviter=[]){
 *
 * @author Rémi Angot
 */
-export function  rangeMinMax(min,max,liste_a_eviter=[],step=1){
+export function rangeMinMax(min,max,liste_a_eviter=[],step=1){
 	// Créer un tableau avec toutes les valeurs de 0 à max sauf celle de la liste à éviter
 	let liste = [];
 	for (let i = min; i <= max; i = calcul(i+step)) {
@@ -455,7 +470,7 @@ export function  rangeMinMax(min,max,liste_a_eviter=[],step=1){
 * @param {liste} liste valeurs à éviter 
 * @author Rémi Angot
 */
-export function  range1(max,liste_a_eviter=[]){
+export function range1(max,liste_a_eviter=[]){
 	let nb_max = parseInt(max,10);
 	let liste = [];
 	for (let i = 1; i <= nb_max; i++) {
@@ -475,7 +490,7 @@ export function  range1(max,liste_a_eviter=[]){
 *
 * @author Rémi Angot
 */
-export function  compare_fractions(a,b){ 
+export function compare_fractions(a,b){ 
 	if ((a[0]/a[1])>(b[0]/b[1])) 
 		return 1 ;
 	if ((a[0]/a[1])<(b[0]/b[1])) 
@@ -491,15 +506,15 @@ export function  compare_fractions(a,b){
 *
 * @author Rémi Angot
 */
-export function  compare_nombres(a,b){ 
+export function compare_nombres(a,b){ 
 	return a - b ;
 }
 /**
  * 
  * Copié sur https://delicious-insights.com/fr/articles/le-piege-de-array-sort/
  */
-export function  numTrie(arr) {
-	return arr.sort(function (a, b) {
+export function numTrie(arr) {
+	return arr.sort(function(a, b) {
 	  return +a - +b
 	})
   }
@@ -511,7 +526,7 @@ export function  numTrie(arr) {
 * tableau_melange = shuffle (tableau_origine)
 * @Source https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 */
-export function  shuffle(array) {
+export function shuffle(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
 
   // While there remain elements to shuffle...
@@ -539,7 +554,7 @@ return array_bis;
 * 
 * @Source https://stackoverflow.com/questions/18194745/shuffle-multiple-javascript-arrays-in-the-same-way
 */
-export function  shuffle2tableaux(obj1, obj2) {
+export function shuffle2tableaux(obj1, obj2) {
   var index = obj1.length;
   var rnd, tmp1, tmp2;
 
@@ -563,7 +578,7 @@ export function  shuffle2tableaux(obj1, obj2) {
 * dictionnaire_tri = tridictionnaire(dictionnaire)
 * @Source https://stackoverflow.com/questions/10946880/sort-a-dictionary-or-whatever-key-value-data-structure-in-js-on-word-number-ke
 */
-export function  tridictionnaire(dict) {
+export function tridictionnaire(dict) {
 	var sorted = [];
 	for(var key in dict) {
 		sorted[sorted.length] = key;
@@ -585,9 +600,9 @@ export function  tridictionnaire(dict) {
 * filtreDictionnaire(dict,'6N') renvoie un dictionnaire où toutes les clés commencent par 6N
 * @Auteur Rémi Angot
 */
-export function  filtreDictionnaire(dict,sub) {
+export function filtreDictionnaire(dict,sub) {
 	return Object.assign({}, ...
-		Object.entries(dict).filter(([k]) => k.substring(0,sub.length)==sub).map(([k,v]) => ({[k]:v}))
+		Object.entries(dict).filter(([k,v]) => k.substring(0,sub.length)==sub).map(([k,v]) => ({[k]:v}))
 	);
 }
 
@@ -603,7 +618,8 @@ export function  filtreDictionnaire(dict,sub) {
 *
 * @Auteur Rémi Angot
 */
-export function  combinaison_listes(liste,taille_minimale){
+export function combinaison_listes(liste,taille_minimale){
+	if (liste.length==0) return []
 	let l = shuffle(liste);
 	while (l.length<taille_minimale){
 		l = l.concat(shuffle(liste))
@@ -611,7 +627,7 @@ export function  combinaison_listes(liste,taille_minimale){
 	return l
 }
 
-export function  combinaison_listes_sans_changer_ordre(liste,taille_minimale){
+export function combinaison_listes_sans_changer_ordre(liste,taille_minimale){
 	// Concatène liste à elle même en changeant 
 	while (liste.length<taille_minimale){
 		liste = liste.concat(liste)
@@ -625,7 +641,7 @@ export function  combinaison_listes_sans_changer_ordre(liste,taille_minimale){
 * //rien_si_1(-1)+'x' -> -x
 * @Auteur Rémi Angot
 */
-export function  rien_si_1(a) { 
+export function rien_si_1(a) { 
 	if (a==1) {
 		return ''
 	} else if (a==-1) {
@@ -641,7 +657,7 @@ export function  rien_si_1(a) {
 * // 'dm'+exposant(3)
 * @Auteur Rémi Angot
 */
-export function  exposant(texte){
+export function exposant(texte){
 	if (sortie_html) {
 		return `<sup>${texte}</sup>`
 	} else {
@@ -655,7 +671,7 @@ export function  exposant(texte){
 * //(+3) ou (-3)
 * @Auteur Rémi Angot
 */
-export function  ecriture_nombre_relatif(a) { 
+export function ecriture_nombre_relatif(a) { 
 	let result = '';
 	if (a>0) {
 		result = '(+'+a+')'
@@ -670,7 +686,7 @@ export function  ecriture_nombre_relatif(a) {
  * Idem ecriture_nombre_relatif avec le code couleur : vert si positif, rouge si négatif, noir si nul
  * @param {number} a 
  */
-export function  ecriture_nombre_relatifc(a) { 
+export function ecriture_nombre_relatifc(a) { 
 	let result = '';
 	if (a>0) {
 		result =mise_en_evidence('(+'+tex_nombrec(a)+')','blue');
@@ -688,7 +704,7 @@ export function  ecriture_nombre_relatifc(a) {
 * //+3 ou -3
 * @Auteur Rémi Angot
 */
-export function  ecriture_algebrique(a) { 
+export function ecriture_algebrique(a) { 
 	let result = '';
 	if (a>=0) {
 		result = '+'+tex_nombrec(a);
@@ -704,7 +720,7 @@ export function  ecriture_algebrique(a) {
 * //+3 ou -3
 * @Auteur Rémi Angot
 */
-export function  ecriture_algebrique_sauf1(a) { 
+export function ecriture_algebrique_sauf1(a) { 
 	let result = '';
 	if (a>=0) {
 		result = '+'+tex_nombrec(a);
@@ -725,7 +741,7 @@ export function  ecriture_algebrique_sauf1(a) {
  * Idem ecriture_algebrique mais retourne le nombre en couleur (vert si positif, rouge si négatif et noir si nul)
  * @param {number} a 
  */
-export function  ecriture_algebriquec(a) {
+export function ecriture_algebriquec(a) {
 	let result = '';
 	if (a>0) {
 		result = mise_en_evidence('+'+tex_nombrec(a),'blue');
@@ -741,7 +757,7 @@ export function  ecriture_algebriquec(a) {
 * // 3 ou (-3)
 * @Auteur Rémi Angot
 */
-export function  ecriture_parenthese_si_negatif(a) { 
+export function ecriture_parenthese_si_negatif(a) { 
 	let result = '';
 	if (a>=0) {
 		result = a;
@@ -757,7 +773,7 @@ export function  ecriture_parenthese_si_negatif(a) {
 * // (-3x)
 * @Auteur Rémi Angot
 */
-export function  ecriture_parenthese_si_moins(expr) { 
+export function ecriture_parenthese_si_moins(expr) { 
 	let result = '';
 	if (expr[0]=='-') {
 		result = `(${expr})`;
@@ -772,7 +788,7 @@ export function  ecriture_parenthese_si_moins(expr) {
 * 
 * @Auteur Rémi Angot
 */
-export function  valeur_base(n) { 
+export function valeur_base(n) { 
 	switch (n){
 		case 'A' : return 10
 		break
@@ -812,7 +828,7 @@ Math.radians = function (degres) {
  * @Auteur Jean-Claude Lhote
  */
 
-export function  produit_matrice_vecteur_3x3(matrice,vecteur) { // matrice est un tableau 3x3 sous la forme [[ligne 1],[ligne 2],[ligne 3]] et vecteur est un tableau de 3 nombres [x,y,z]
+export function produit_matrice_vecteur_3x3(matrice,vecteur) { // matrice est un tableau 3x3 sous la forme [[ligne 1],[ligne 2],[ligne 3]] et vecteur est un tableau de 3 nombres [x,y,z]
 	let resultat=[0,0,0]
 	for (let j=0;j<3;j++){ // Chaque ligne de la matrice 
 		for (let i=0;i<3;i++){ // On traite la ligne i de la matrice -> résultat = coordonnée i du vecteur résultat
@@ -829,7 +845,7 @@ export function  produit_matrice_vecteur_3x3(matrice,vecteur) { // matrice est u
  * @Auteur Jean-Claude Lhote
  */
 
-export function  produit_matrice_matrice_3x3(matrice1,matrice2) { // les deux matrices sont des tableaux 3x3  [[ligne 1],[ligne 2],[ligne 3]] et le résultat est de la même nature.
+export function produit_matrice_matrice_3x3(matrice1,matrice2) { // les deux matrices sont des tableaux 3x3  [[ligne 1],[ligne 2],[ligne 3]] et le résultat est de la même nature.
 	let resultat = [[0,0,0],[0,0,0],[0,0,0]]
 	for (let j=0;j<3;j++)
 		for (let i=0;i<3;i++)
@@ -843,7 +859,7 @@ export function  produit_matrice_matrice_3x3(matrice1,matrice2) { // les deux ma
  * calcule les coordonnées d'un point donné par ses coordonnées en repère orthonormal en repère (O,I,J) tel que IOJ=60° 
  * @Auteur Jean-Claude Lhote
  */
-export function  changement_de_base_ortho_tri(point) {
+export function changement_de_base_ortho_tri(point) {
 	if (point.length==2) point.push(1);
 	return produit_matrice_vecteur_3x3([[1,-Math.cos(Math.PI/3)/Math.sin(Math.PI/3),0],[0,1/Math.sin(Math.PI/3),0],[0,0,1]],point)
 }
@@ -853,7 +869,7 @@ export function  changement_de_base_ortho_tri(point) {
  * Changement de base inverse de la fonction précédente
  * @Auteur Jean-CLaude Lhote
  */
-export function  changement_de_base_tri_ortho(point) {
+export function changement_de_base_tri_ortho(point) {
 	if (point.length==2) point.push(1);
 	return produit_matrice_vecteur_3x3([[1,Math.cos(Math.PI/3),0],[0,Math.sin(Math.PI/3),0],[0,0,1]],point)
 }
@@ -881,7 +897,7 @@ export function  changement_de_base_tri_ortho(point) {
  * @param {number} rapport rapport d'homothétie
  * @Auteur Jean-Claude Lhote
  */
-export function  image_point_par_transformation (transformation,pointA,pointO,vecteur=[],rapport=1){ //pointA,centre et pointO sont des tableaux de deux coordonnées
+export function image_point_par_transformation (transformation,pointA,pointO,vecteur=[],rapport=1){ //pointA,centre et pointO sont des tableaux de deux coordonnées
 	// on les rends homogènes en ajoutant un 1 comme 3ème coordonnée)
 	// nécessite d'être en repère orthonormal...
 	// Point O sert pour les rotations et homothéties en tant que centre (il y a un changement d'origine du repère en O pour simplifier l'expression des matrices de transformations.)
@@ -971,7 +987,7 @@ export function  image_point_par_transformation (transformation,pointA,pointO,ve
 * // + ou -
 * @Auteur Rémi Angot
 */
-export function  signe(a) { // + ou -
+export function signe(a) { // + ou -
 	let result = '';
 	if (a>0) {
 		result = '+';
@@ -987,18 +1003,31 @@ export function  signe(a) { // + ou -
  * -1 si a est négatif, 1 sinon.
  * @Auteur Jean-Claude Lhote
  */
-export function  unSiPositifMoinsUnSinon(a) {
+export function unSiPositifMoinsUnSinon(a) {
 	if (a<0) return -1;
 	else return 1;
 }
-
+/**
+* Retourne un string avec la somme des chiffres
+* @Example
+* somme_des_chiffres(123)
+* // 6
+* @Auteur Rémi Angot
+*/export function somme_des_chiffre(n) { 
+	let somme_string =''
+	for (let i = 0; i < n.length-1; i++) {
+		somme_string += n[i]+'+'
+	}
+	somme_string += n[n.length-1]
+	return somme_string
+}
 
 /**
 * Retourne l'arrondi (par défaut au centième près)
 * 
 * @Auteur Rémi Angot
 */
-export function  arrondi(nombre, precision=2){
+export function arrondi(nombre, precision=2){
 	let tmp = Math.pow(10, precision);
 	return Math.round( nombre*tmp )/tmp;
 }
@@ -1006,7 +1035,7 @@ export function  arrondi(nombre, precision=2){
  * Retourne la troncature signée de nombre.
  * @Auteur Jean-Claude Lhote
  */
-export function  troncature(nombre,precision){
+export function troncature(nombre,precision){
 	let signe,absolu,tronc
 	let tmp=Math.pow(10, precision)
 	if (nombre<0) signe=-1
@@ -1019,7 +1048,7 @@ export function  troncature(nombre,precision){
 * Renvoie la valeur absolue
 * @Auteur Rémi Angot
 */
-export function  abs(a){
+export function abs(a){
 	return Math.abs(a);
 }
 
@@ -1027,7 +1056,7 @@ export function  abs(a){
 * Retourne un arrondi sous la forme d'un string avec une virgule comme séparateur décimal
 * @Auteur Rémi Angot
 */
-export function  arrondi_virgule(nombre, precision=2){ //
+export function arrondi_virgule(nombre, precision=2){ //
 	let tmp = Math.pow(10, precision);
 	return String(Math.round( nombre*tmp )/tmp).replace('.',',');
 }
@@ -1036,7 +1065,7 @@ export function  arrondi_virgule(nombre, precision=2){ //
 * Renvoie le PGCD de deux nombres
 * @Auteur Rémi Angot
 */
-export function  pgcd(a,b){
+export function pgcd(a,b){
 	return parseInt(Algebrite.run(`gcd(${a},${b})`));
 }
 
@@ -1052,7 +1081,7 @@ export const ppcm = (a,b) => { return parseInt(Algebrite.run(`lcm(${a},${b})`))}
 * * **ATTENTION Fonction clonée dans la classe Fraction()**
 * @Auteur Rémi Angot
 */
-export function  fraction_simplifiee(n,d){ 
+export function fraction_simplifiee(n,d){ 
 	let p=pgcd(n,d);
 	let ns = n/p;
 	let ds = d/p;
@@ -1069,12 +1098,40 @@ export function  fraction_simplifiee(n,d){
 * Retourne le code LaTeX d'une fraction simplifiée ou d'un nombre entier 
 * @Auteur Rémi Angot
 */
-export function  tex_fraction_reduite(n,d){
+export function tex_fraction_reduite(n,d){
 	if (n%d==0) {
 		return n/d
 	} else {
 		return tex_fraction_signe(fraction_simplifiee(n,d)[0],fraction_simplifiee(n,d)[1]);
 	}
+}
+/**
+ * produit_de_deux_fractions(num1,den1,num2,den2) retourne deux chaines :
+ * la première est la fraction résultat, la deuxième est le calcul mis en forme Latex avec simplification éventuelle
+ * Applique une simplification si le numérateur de l'une est égal au dénominateur de l'autre.
+ */
+export function produit_de_deux_fractions(num1,den1,num2,den2) {
+	let num,den,tex_produit
+	if (num1==den2) {
+		tex_produit=`\\dfrac{\\cancel{${num1}}\\times ${num2}}{${den1}\\times\\cancel{${den2}}}`
+		num=num2
+		num1=1
+		den2=1
+		den=den1
+	}
+	else if (num2==den1) {
+		tex_produit=`\\dfrac{${num1}\\times \\cancel{${num2}}}{\\cancel{${den1}}\\times${den2}}`
+		num=num1
+		num2=1
+		den1=1
+		den=den2
+	}
+	else {
+		num=num1*num2
+		den=den1*den2
+		tex_produit=`\\dfrac{${num1}\\times ${num2}}{${den1}\\times${den2}}`
+	}
+	return [tex_fraction(num,den),tex_produit,[num1,den1,num2,den2]]
 }
 
 /**
@@ -1083,7 +1140,7 @@ export function  tex_fraction_reduite(n,d){
 * Le résultat est un string qui doit être entouré de $ pour le mode mathématiques
 * @Auteur Rémi Angot
 */
-export function  simplification_de_fraction_avec_etapes(num,den){
+export function simplification_de_fraction_avec_etapes(num,den){
 	// Est-ce que le résultat est simplifiable ?
 	let result = ''
 	let s = pgcd(num,den); 
@@ -1103,7 +1160,7 @@ export function  simplification_de_fraction_avec_etapes(num,den){
  * @auteur Jean-Claude Lhote
  */
 
-export function  produits_en_croix([[a,b],[c,d]]) { // écrit une chaine pour a*d=b*c
+export function produits_en_croix([[a,b],[c,d]]) { // écrit une chaine pour a*d=b*c
 	let result=``
 	result+=`$${a}\\times${d}=${b}\\times${c}$`
 	return result
@@ -1115,7 +1172,7 @@ export function  produits_en_croix([[a,b],[c,d]]) { // écrit une chaine pour a*
  * @auteur Jean-Claude Lhote
  */
 
-export function  quatrieme_proportionnelle(a,b,c,precision) { //calcul de b*c/a
+export function quatrieme_proportionnelle(a,b,c,precision) { //calcul de b*c/a
 let result=``
 if ((typeof a)=="number"&&(typeof b)=="number"&&(typeof c)=="number") {
 	if (a==0) { 
@@ -1139,7 +1196,7 @@ else {
  * @param {number} a 
  * @param {number} b 
  */
-export function  reduire_ax_plus_b(a,b) {
+export function reduire_ax_plus_b(a,b) {
 	let result=``
 	if (a!=0) if (a==1) result='x'
 						else if (a==-1) result='-x'
@@ -1154,7 +1211,7 @@ export function  reduire_ax_plus_b(a,b) {
 * Donne la liste des facteurs premiers d'un nombre
 * @Auteur Rémi Angot
 */
-export function  obtenir_liste_facteurs_premiers(n){
+export function obtenir_liste_facteurs_premiers(n){
 	// Algorithme de base où l'on divise par chacun des nombres premiers 
 	let liste = []
 	let liste_nombres_premiers = obtenir_liste_nombres_premiers()
@@ -1177,7 +1234,7 @@ export function  obtenir_liste_facteurs_premiers(n){
  * @Auteur Jean-Claude Lhote
  */
 
-export function  factorisation(n) {
+export function factorisation(n) {
 	let liste=obtenir_liste_facteurs_premiers(n)
 	let facto=[],index=0
 	for (let i=0;i<liste.length;) {
@@ -1203,7 +1260,7 @@ export function  factorisation(n) {
  * retourne le résulat [a,b] pour a²b=n
  * @Auteur Jean-Claude Lhote
  */
-export function  extraire_racine_carree(n) {
+export function extraire_racine_carree(n) {
 	let facto=factorisation(n)
 	let radical=1,facteur=1
 	for (let i=0;i<facto.length;i++) {
@@ -1224,7 +1281,7 @@ export function  extraire_racine_carree(n) {
  * retourne le code Latex de la racine carrée de n "réduite" 
  * @Auteur Jean-CLaude Lhote
  */
-export function  tex_racine_carree(n) {
+export function tex_racine_carree(n) {
 	let result=extraire_racine_carree(n)
 	if (result[1]==1) return `${result[0]}`
 	else if (result[0]==1) return `\\sqrt{${result[1]}}`
@@ -1236,7 +1293,7 @@ export function  tex_racine_carree(n) {
 * Le 2e argument facultatif permet de préciser l'arrondi souhaité
 * @Auteur Rémi Angot
 */
-export function  calcul(expression,arrondir=false){
+export function calcul(expression,arrondir=false){
 	if (!arrondir) {
 		return parseFloat(Algebrite.eval('float('+expression+')'))
 	} else {
@@ -1249,7 +1306,7 @@ export function  calcul(expression,arrondir=false){
 * Le 2e argument facultatif permet de préciser l'arrondi souhaité
 * @Auteur Rémi Angot
 */
-export function  nombreDecimal(expression,arrondir=false){
+export function nombreDecimal(expression,arrondir=false){
 	if (!arrondir) {
 		return string_nombre(calcul(expression))
 	} else {
@@ -1263,25 +1320,24 @@ export function  nombreDecimal(expression,arrondir=false){
 * Utilise Algebrite pour s'assurer qu'il n'y a pas d'erreur dans les calculs avec des décimaux et retourne un string avec la virgule comme séparateur décimal
 * @Auteur Rémi Angot
 */
-export function  tex_nombrec(expression){ 
+export function tex_nombrec(expression){ 
 	return tex_nombre(parseFloat(Algebrite.eval(expression)))
 }
 /**
  * renvoie le résultat de l'expression en couleur (vert=positif, rouge=négatif, noir=nul)
  * @param {string} expression l'expression à calculer
  */
-export function  tex_nombrecoul(nombre){ 
+export function tex_nombrecoul(nombre){ 
 	if (nombre>0) return mise_en_evidence(tex_nombrec(nombre),'green')
 	else if (nombre<0) return mise_en_evidence(tex_nombrec(nombre),'red')
 		else return mise_en_evidence(tex_nombrec(0),'black')
 }
 
-
 /**
  * prend une liste de nombres relatifs et la retourne avec les positifs au début et les négatifs à la fin.
  * @param {array} liste la liste de nombres à trier
  */
-export function  trie_positifs_negatifs(liste){
+export function trie_positifs_negatifs(liste){
 	let positifs=[]
 	let negatifs=[]
 	for (let i=0; i<liste.length;i++) {
@@ -1307,11 +1363,12 @@ export function somme_des_termes_par_signe(liste){
 	return [somme_des_positifs,somme_des_negatifs]
 }
 
+
 /**
 * Créé un string de nbsommets caractères dans l'ordre alphabétique et en majuscule qui ne soit pas dans la liste donnée en 2e argument
 * @Auteur Rémi Angot
 */
-export function  creerNomDePolygone(nbsommets,liste_a_eviter=[]){ 
+export function creerNomDePolygone(nbsommets,liste_a_eviter=[]){ 
 	let premiersommet = randint(65,90-nbsommets);
 	let polygone="";
 	for (let i=0;i<nbsommets;i++){
@@ -1338,7 +1395,7 @@ export function  creerNomDePolygone(nbsommets,liste_a_eviter=[]){
 * Vérifie dans un texte si un de ses caractères appartient à une liste à éviter
 * @Auteur Rémi Angot
 */
-export function  possedeUnCaractereInterdit(texte,liste_a_eviter) {
+export function possedeUnCaractereInterdit(texte,liste_a_eviter) {
 	let result = false
 	for (let mot_a_eviter of liste_a_eviter) {
 		for (let i = 0 ; i < mot_a_eviter.length; i++) {
@@ -1356,7 +1413,7 @@ export function  possedeUnCaractereInterdit(texte,liste_a_eviter) {
  * @Auteur Jean-Claude Lhote
  * 
  */
-export function  choisit_nombres_entre_m_et_n(m,n,combien,liste_a_eviter=[]){
+export function choisit_nombres_entre_m_et_n(m,n,combien,liste_a_eviter=[]){
 	let t
 	if (m>n) {
 		t=m;
@@ -1377,7 +1434,7 @@ export function  choisit_nombres_entre_m_et_n(m,n,combien,liste_a_eviter=[]){
  * les lettres à éviter sont données dans une chaine par exemple : 'QXY'
  * @Auteur Jean-Claude Lhote
  */
-export function  choisit_lettres_differentes(nombre,lettres_a_eviter,majuscule=true){
+export function choisit_lettres_differentes(nombre,lettres_a_eviter,majuscule=true){
 	let liste_a_eviter=[],lettres=[]
 	for (let l of lettres_a_eviter) {
 		liste_a_eviter.push(l.charCodeAt(0)-64)
@@ -1389,7 +1446,7 @@ export function  choisit_lettres_differentes(nombre,lettres_a_eviter,majuscule=t
 	}
 	return lettres
 }
-export function cesar  (word,decal){
+export function cesar(word,decal){
 	let mot='',code=65;
 	for (let x=0;x<word.length;x++) {
 		code=word.charCodeAt(x)%65
@@ -1399,10 +1456,9 @@ export function cesar  (word,decal){
 	return mot
 }
 
-export function codeCesar (mots,decal){
+export function codeCesar(mots,decal){
 	let motsCodes=[]
 	for (let x=0;x<mots.length;x++) {
-		console.log(mots[x])
 		motsCodes.push(cesar(mots[x],decal))
 	}
 	return motsCodes
@@ -1415,7 +1471,7 @@ export function codeCesar (mots,decal){
 * // 0 -> @ 1->A ; 2->B...
 * // 27->AA ; 28 ->AB ...
 */
-export function  lettre_depuis_chiffre(i){ 
+export function lettre_depuis_chiffre(i){ 
 	
 	let result=''
 	if (i<=26) {
@@ -1439,7 +1495,7 @@ export function  lettre_depuis_chiffre(i){
 * // 0 -> @ 1->a ; 2->b...
 * // 27->aa ; 28 ->ab ...
 */
-export function  lettre_minuscule_depuis_chiffre(i){ 
+export function lettre_minuscule_depuis_chiffre(i){ 
 	return lettre_depuis_chiffre(i).toLowerCase()
 }
 
@@ -1448,7 +1504,7 @@ export function  lettre_minuscule_depuis_chiffre(i){
 * @Example
 * //0h24 est accepté
 */
-export function  minToHoraire(minutes){	 
+export function minToHoraire(minutes){	 
 	var nbHour = parseInt(minutes / 60);
 	if (nbHour>23){
 		nbHour = nbHour-24
@@ -1466,7 +1522,7 @@ export function  minToHoraire(minutes){
 * @Example
 * //on écrira 24 minutes plutôt que 0h24
 */
-export function  minToHour(minutes){
+export function minToHour(minutes){
 	var nbHour = parseInt(minutes / 60);
 	if (nbHour>23){
 		nbHour = nbHour-24
@@ -1487,7 +1543,7 @@ export function  minToHour(minutes){
 * Renvoie un prénom féminin au hasard 
 * @Auteur Rémi Angot
 */
-export function  prenomF(){
+export function prenomF(){
 	return choice(['Manon','Julie','Aude','Corinne','Léa','Carine','Elsa','Lisa','Marina','Magalie','Nawel','Dalila','Nadia','Yasmine'])
 }
 
@@ -1495,7 +1551,7 @@ export function  prenomF(){
 * Renvoie un prénom masculin au hasard
 * @Auteur Rémi Angot
 */
-export function  prenomM(){
+export function prenomM(){
 	return choice(['Rémi','Benjamin','Guillaume','Christophe','Cyril','Kamel','Yazid','Mehdi','Karim','Bernard','Joachim','Jean-Claude'])
 }
 
@@ -1503,7 +1559,7 @@ export function  prenomM(){
 * Renvoie un prénom au hasard
 * @Auteur Rémi Angot
 */
-export function  prenom(){
+export function prenom(){
 	return choice([prenomF(),prenomM()])
 }
 
@@ -1514,7 +1570,7 @@ export function  prenom(){
 * @param nombre_des Combien de dés à chaque tirage ?
 * @auteur Jean-Claude Lhote
 */
-export function  tirer_les_des(nombre_tirages,nombre_faces,nombre_des) { 
+export function tirer_les_des(nombre_tirages,nombre_faces,nombre_des) { 
 	let tirages =[];
 	for (let i=0;i<=(nombre_faces-1)*nombre_des;i++) tirages.push([i+nombre_des,0]);
 		for (let i=0,resultat;i<nombre_tirages;i++) {
@@ -1531,7 +1587,7 @@ export function  tirer_les_des(nombre_tirages,nombre_faces,nombre_des) {
 * @param note_max
 * @auteur Jean-Claude Lhote
 */
-export function  liste_de_notes(nombre_notes,note_min,note_max) { 
+export function liste_de_notes(nombre_notes,note_min,note_max) { 
 	let notes =[];
 	for (let i=0;i<nombre_notes;i++) notes.push(randint(note_min,note_max));
 		return notes
@@ -1542,7 +1598,7 @@ export function  liste_de_notes(nombre_notes,note_min,note_max) {
 * @param n quantième du mois (janvier=1...)
 * @auteur Jean-Claude Lhote
 */
-export function  jours_par_mois(n){
+export function jours_par_mois(n){
 	let jours_mois=[31,28,31,30,31,30,31,31,30,31,30,31];
 	return jours_mois[n-1]
 }
@@ -1553,7 +1609,7 @@ export function  jours_par_mois(n){
 * @annee pour déterminer si elle est bissextile ou non 
 * @auteur Jean-Claude Lhote
 */
-export function  un_mois_de_temperature(base,mois,annee) { 
+export function un_mois_de_temperature(base,mois,annee) { 
 	let temperatures =[];
 	let nombre_jours=jours_par_mois(mois);
 	if (mois==2) {
@@ -1570,7 +1626,7 @@ export function  un_mois_de_temperature(base,mois,annee) {
 * @param n quantième du mois
 * @auteur Jean-Claude Lhote
 */
-export function  nom_du_mois(n) {
+export function nom_du_mois(n) {
 	let mois=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
 	return mois[n-1]
 }
@@ -1584,7 +1640,7 @@ export function  nom_du_mois(n) {
 * * L'espacement est généré avec spacing
 * @Auteur Rémi Angot
 */
-export function  tex_enumerate(liste,spacing){
+export function tex_enumerate(liste,spacing){
 	let result =''
 	if (liste.length>1) {
 		result = "\\begin{enumerate}\n"
@@ -1618,7 +1674,7 @@ export function  tex_enumerate(liste,spacing){
 * * L'espacement est généré avec spacing
 * @Auteur Rémi Angot
 */
-export function  tex_enumerate_sans_numero(liste,spacing){
+export function tex_enumerate_sans_numero(liste,spacing){
 	//return tex_enumerate(liste,spacing).replace('\\begin{enumerate}[label={}]','\\begin{enumerate}[label={}]')
 	return tex_enumerate(liste,spacing).replace('\\begin{enumerate}','\\begin{enumerate}[label={}]')
 }
@@ -1629,7 +1685,7 @@ export function  tex_enumerate_sans_numero(liste,spacing){
 * * `<br><br>` est remplacé par un saut de paragraphe et un medskip
 * @Auteur Rémi Angot
 */
-export function  tex_paragraphe(liste,spacing=false){
+export function tex_paragraphe(liste,spacing=false){
 	let result =''
 	if (spacing>1){
 		result = `\\begin{spacing}{${spacing}}\n`
@@ -1650,7 +1706,7 @@ export function  tex_paragraphe(liste,spacing=false){
 * * `<br><br>` est remplacé par un saut de paragraphe et un medskip
 * @Auteur Rémi Angot
 */
-export function  tex_introduction(texte){
+export function tex_introduction(texte){
 	return texte.replace(/<br><br>/g,'\n\n\\medskip\n').replace(/<br>/g,'\\\\\n')
 }
 
@@ -1662,7 +1718,7 @@ export function  tex_introduction(texte){
 * @param spacing interligne (line-height en css)
 * @Auteur Rémi Angot
 */
-export function  html_enumerate(liste,spacing){
+export function html_enumerate(liste,spacing){
 	let result='';
 
 	if (liste.length>1) {
@@ -1688,7 +1744,7 @@ export function  html_enumerate(liste,spacing){
 * @param spacing interligne (line-height en css)
 * @Auteur Rémi Angot
 */
-export function  enumerate(liste,spacing){
+export function enumerate(liste,spacing){
 	if (sortie_html) {
 		return html_enumerate(liste,spacing)
 	} else {
@@ -1703,7 +1759,7 @@ export function  enumerate(liste,spacing){
 * @param string
 * @Auteur Rémi Angot
 */
-export function  html_paragraphe(texte){
+export function html_paragraphe(texte){
 	if (texte.length>1) {
 		return `\n<p>${texte}</p>\n\n`		
 	} else {
@@ -1718,7 +1774,7 @@ export function  html_paragraphe(texte){
 * @param spacing interligne (line-height en css)
 * @Auteur Rémi Angot
 */
-export function  html_ligne(liste,spacing){
+export function html_ligne(liste,spacing){
 	let result = '';
 	if (spacing>1) {
 		result = `<div style="line-height: ${spacing};">\n`
@@ -1741,7 +1797,7 @@ export function  html_ligne(liste,spacing){
 * Renvoie un environnent LaTeX multicolonnes
 * @Auteur Rémi Angot
 */
-export function  tex_multicols(texte,nb_cols=2){
+export function tex_multicols(texte,nb_cols=2){
 	let result;
 	if (nb_cols > 1){
 		result = '\\begin{multicols}{' + nb_cols +'}\n' +
@@ -1756,7 +1812,7 @@ export function  tex_multicols(texte,nb_cols=2){
 * Renvoie la consigne en titre 4
 * @Auteur Rémi Angot
 */
-export function  html_consigne(consigne){
+export function html_consigne(consigne){
 	return '<h4>' + consigne + '</h4>\n\n'
 }
 
@@ -1764,7 +1820,7 @@ export function  html_consigne(consigne){
 * Renvoie \exo{consigne}
 * @Auteur Rémi Angot
 */
-export function  tex_consigne(consigne){
+export function tex_consigne(consigne){
 	return '\\exo{' + consigne.replace(/<br>/g,'\\\\') + '}\n\n'
 }
 
@@ -1772,7 +1828,7 @@ export function  tex_consigne(consigne){
 * Renvoie un nombre dans le format français (séparateur de classes)
 * @Auteur Rémi Angot
 */
-export function  tex_nombre(nb){
+export function tex_nombre(nb){
 	//Ecrit \nombre{nb} pour tous les nombres supérieurs à 1 000 (pour la gestion des espaces)
 	if (sortie_html) {
 		//return Intl.NumberFormat("fr-FR",{maximumFractionDigits:20}).format(nb).toString().replace(/\s+/g,'\\thickspace ').replace(',','{,}'); // .replace(',','{,}') servait à enlever l'espace disgracieux des décimaux mais ne passait qu'en mode LaTeX
@@ -1792,21 +1848,28 @@ export function  tex_nombre(nb){
 * Renvoie un nombre dans le format français (séparateur de classes) pour la partie entière comme pour la partie décimale
 * @Auteur Rémi Angot
 */
-export function  tex_nombre2(nb){
-	let nombre = tex_nombrec(nb);
+export function tex_nombre2(nb){
+	let nombre = tex_nombre(math.format(nb,{notation:'auto',lowerExp:-12,upperExp:12,precision:12}))
 	let rang_virgule = nombre.indexOf(',')
 	for (let i=rang_virgule+4; i<nombre.length; i+=3){
 		nombre = nombre.substring(0,i)+'\\thickspace '+nombre.substring(i)
 		i+=13 // comme on a ajouté un espace, il faut décaler l'indice de 1
 	}
-	return nombre
+	if (sortie_html){
+		return nombre
+	} else {
+		return tex_nombre(math.format(nb,{notation:'auto',lowerExp:-12,upperExp:12,precision:12}))
+	}
+}
+export function tex_nombrec2(expr,precision=8){
+	return math.format(math.evaluate(expr),{notation:'auto',lowerExp:-12,upperExp:12,precision:precision})
 }
 
 /**
  * Renvoie un espace insécable pour le mode texte suivant la sorite html ou Latex.
  * @Auteur Jean-Claude Lhote
  */
-export function  sp() {
+export function sp() {
 	if (sortie_html) return `&nbsp`
 	else return `~`
 }
@@ -1816,7 +1879,7 @@ export function  sp() {
 * Fonctionne sans le mode maths contrairement à tex_nombre()
 * @Auteur Rémi Angot
 */
-export function  nombre_avec_espace(nb){
+export function nombre_avec_espace(nb){
 	//Ecrit \nombre{nb} pour tous les nombres supérieurs à 1 000 (pour la gestion des espaces)
 	if (sortie_html) {
 		return Intl.NumberFormat("fr-FR",{maximumFractionDigits:20}).format(nb).toString().replace(/\s+/g,' ');
@@ -1836,7 +1899,7 @@ export function  nombre_avec_espace(nb){
 * Renvoie un nombre dans le format français (séparateur de classes) version sans Katex (pour les SVG)
 * @Auteur Jean-Claude Lhote
 */
-export function  string_nombre(nb){
+export function string_nombre(nb){
 	//Ecrit \nombre{nb} pour tous les nombres supérieurs à 1 000 (pour la gestion des espaces)
 	let nombre=nb.toString();
 	let partie_entiere=nombre.split('.')[0];
@@ -1859,7 +1922,7 @@ export function  string_nombre(nb){
 *
 * @Auteur Rémi Angot
 */
-export function  mise_en_evidence(texte,couleur="#f15929"){
+export function mise_en_evidence(texte,couleur="#f15929"){
 	if (sortie_html) {
 		return `\\mathbf{\\color{${couleur}}{${texte}}}`
 	} else {
@@ -1877,7 +1940,7 @@ export function  mise_en_evidence(texte,couleur="#f15929"){
 * @param {string} couleur en anglais ou code couleur hexadécimal par défaut c'est le orange de CoopMaths
 * @Auteur Rémi Angot
 */
-export function  texte_en_couleur(texte,couleur="#f15929"){
+export function texte_en_couleur(texte,couleur="#f15929"){
 	if (sortie_html) {
 		return `<span style="color:${couleur};">${texte}</span>`	
 	}
@@ -1897,7 +1960,7 @@ export function  texte_en_couleur(texte,couleur="#f15929"){
 * @param {string} couleur en anglais ou code couleur hexadécimal par défaut c'est le orange de CoopMaths
 * @Auteur Rémi Angot
 */
-export function  texte_en_couleur_et_gras(texte,couleur="#f15929"){
+export function texte_en_couleur_et_gras(texte,couleur="#f15929"){
 	if (sortie_html) {
 		return `<span style="color:${couleur};font-weight: bold;">${texte}</span>`	
 	}
@@ -1915,7 +1978,7 @@ export function  texte_en_couleur_et_gras(texte,couleur="#f15929"){
  *
  * @Auteur Rémi Angot
  */
-export function  couleurAleatoire() {
+export function couleurAleatoire() {
 	// let color = "#";
 	// for (let i = 0; i < 6; i++) {
 	//   color += choice([
@@ -1941,13 +2004,13 @@ export function  couleurAleatoire() {
 	return choice(['white', 'black', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow'])
   }
 
-  export function  arcenciel(i,fondblanc=true) {
+  export function arcenciel(i,fondblanc=true) {
 	  let couleurs
 	  if (fondblanc) couleurs=['violet','purple',  'blue', 'green', 'lime', 'orange', 'red']
 	  else couleurs=['violet','indigo',  'blue', 'green', 'yellow', 'orange', 'red']
 	  return couleurs[i%7]
   }
-  export function  texcolors(i,fondblanc=true) {
+  export function texcolors(i,fondblanc=true) {
 	  let couleurs=['black', 'blue', 'brown', 'cyan', 'darkgray', 'gray', 'green', 'lightgray', 'lime', 'magenta', 'olive', 'orange', 'pink', 'purple', 'red', 'teal', 'violet', 'white', 'yellow']
 	  if (fondblanc&&i%19>=17) i+=2
 	  return couleurs[i%19]
@@ -1958,7 +2021,7 @@ export function  couleurAleatoire() {
 * @param {string} texte à mettre en gras
 * @Auteur Rémi Angot
 */
-export function  texte_gras(texte){
+export function texte_gras(texte){
 	if (sortie_html) {
 		return `<b>${texte}</b>`	
 	}
@@ -1973,7 +2036,7 @@ export function  texte_gras(texte){
 * @param {string} URL
 * @Auteur Rémi Angot
 */
-export function  href(texte,lien){
+export function href(texte,lien){
 	if (sortie_html) {
 		return `<a target="_blank" href=${lien}> ${texte} </a>`	
 	} else {
@@ -1986,7 +2049,7 @@ export function  href(texte,lien){
 * Pour bien afficher les centimes avec 2 chiffres après la virgule
 * @Auteur Rémi Angot
 */
-export function  tex_prix(nb){
+export function tex_prix(nb){
 	//Remplace le . par la ,
 	let nombre = Number (nb);
 	let result ;
@@ -2004,14 +2067,14 @@ export function  tex_prix(nb){
 * Convertit en majuscule la première lettre
 * @Auteur Rémi Angot
 */
-export function  premiere_lettre_en_majuscule(text){return (text+'').charAt(0).toUpperCase()+text.substr(1);}
+export function premiere_lettre_en_majuscule(text){return (text+'').charAt(0).toUpperCase()+text.substr(1);}
 
 
 /**
 * Renvoie le nombre de chiffres de la partie décimale 
 * @Auteur Rémi Angot
 */
-export function  nombre_de_chiffres_dans_la_partie_decimale(nb){
+export function nombre_de_chiffres_dans_la_partie_decimale(nb){
 	if (String(nb).indexOf('.')>0){
 		return String(nb).split(".")[1].length
 	} else{
@@ -2024,7 +2087,7 @@ export function  nombre_de_chiffres_dans_la_partie_decimale(nb){
 * Écrit une fraction avec - devant si le numérateur ou le dénominateur est négatif
 * @Auteur Jean-Claude Lhote
 */
-export function  tex_fraction_signe(a,b){ 
+export function tex_fraction_signe(a,b){ 
 	if (b!=1) {
 		if (a*b>0){
 			return '\\dfrac{'+Math.abs(a)+'}{'+Math.abs(b)+'}'
@@ -2043,7 +2106,7 @@ export function  tex_fraction_signe(a,b){
 * Met de grandes parenthèses autour de la fraction a/b si besoin pour inclure une fraction dans une expresion en fonction du signe
 * @Auteur Jean-Claude Lhote
 */
-export function  tex_fraction_parentheses(a,b){ 
+export function tex_fraction_parentheses(a,b){ 
 	if (a*b>0) {return tex_fraction_signe(a,b)}
 		else {return '\\left('+tex_fraction_signe(a,b)+'\\right)'}
 	}
@@ -2052,17 +2115,26 @@ export function  tex_fraction_parentheses(a,b){
 * Retourne une liste de fractions irréductibles
 * @Auteur Jean-Claude Lhote
 */
-export function  obtenir_liste_fractions_irreductibles() {
+export function obtenir_liste_fractions_irreductibles() {
 	return  [[1,2],[1,3],[2,3],[1,4],[3,4],[1,5],[2,5],[3,5],[4,5],
 	[1,6],[5,6],[1,7],[2,7],[3,7],[4,7],[5,7],[6,7],[1,8],[3,8],[5,8],[7,8],
 	[1,9],[2,9],[4,9],[5,9],[7,9],[8,9],[1,10],[3,10],[7,10],[9,10]]
 }
 
 /**
+* Retourne une liste de fractions irréductibles de dénominateur égal à 2 3 5 7
+* @Auteur Mireille Gain
+*/
+export function obtenir_liste_fractions_irreductibles_faciles() {
+	return  [[1,2],[1,3],[2,3],[1,5],[2,5],[3,5],[4,5],
+	[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]]
+}
+
+/**
 * Retourne la liste des nombres premiers inférieurs à 300
 * @Auteur Rémi Angot
 */
-export function  obtenir_liste_nombres_premiers() {
+export function obtenir_liste_nombres_premiers() {
 	return  [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293];
 }
 
@@ -2070,7 +2142,7 @@ export function  obtenir_liste_nombres_premiers() {
 * Retourne le code LaTeX de la décomposition en produit de facteurs premiers d'un nombre
 * @Auteur Rémi Angot
 */
-export function  decomposition_facteurs_premiers(n) {
+export function decomposition_facteurs_premiers(n) {
 	let decomposition='';
 	let liste=obtenir_liste_facteurs_premiers(n);
 	for (let i in liste) {
@@ -2084,7 +2156,7 @@ export function  decomposition_facteurs_premiers(n) {
 * Retourne la liste des diviseurs d'un entier
 * @Auteur Rémi Angot
 */
-export function  liste_des_diviseurs(n) {
+export function liste_des_diviseurs(n) {
 	let k =2;
 	let liste = [1];
 	while (k<=n){
@@ -2101,7 +2173,7 @@ export function  liste_des_diviseurs(n) {
 * Retourne le code LaTeX d'une fraction a/b
 * @Auteur Rémi Angot
 */
-export function  tex_fraction(a,b){ 
+export function tex_fraction(a,b){ 
 	if (b!=1) {
 		if (Number.isInteger(a) && Number.isInteger(b)) {
 			return `\\dfrac{${tex_nombre(a)}}{${tex_nombre(b)}}`
@@ -2123,7 +2195,7 @@ export function  tex_fraction(a,b){
 * @Auteur Rémi Angot
 */
 
-export function  printlatex(e){
+export function printlatex(e){
 	return Algebrite.run(`printlatex(quote(${e}))`)
 }
 
@@ -2132,7 +2204,7 @@ export function  printlatex(e){
 * Écrit du texte en mode mathématiques
 * @Auteur Rémi Angot
 */
-export function  tex_texte(texte) {
+export function tex_texte(texte) {
 	return '~\\text{'+texte+'}'
 }
 
@@ -2140,7 +2212,7 @@ export function  tex_texte(texte) {
 * Retourne un environnement LaTeX itemize à partir d'une liste
 * @Auteur Rémi Angot
 */
-export function  itemize(tableau_de_texte){
+export function itemize(tableau_de_texte){
 	let texte = ''
 	if (sortie_html) {
 		texte = '<div>'
@@ -2159,6 +2231,103 @@ export function  itemize(tableau_de_texte){
 }
 
 
+/**
+* Récupère le code JS d'un exercice qui modifie les valeurs d'une figure MG32 et actualise la figure
+* @Auteur Rémi Angot
+*/
+export function MG32_modifie_figure(numero_figure) {
+	let code_pour_modifier_la_figure = exercice[numero_figure].MG32code_pour_modifier_la_figure
+	if (window.mtg32App.docs.length==1){
+		code_pour_modifier_la_figure = code_pour_modifier_la_figure.replace("display","updateDisplay")
+	}
+	let modification = new Function('numero_figure',code_pour_modifier_la_figure)
+	modification(numero_figure);
+}
+
+/**
+* Actualise toutes les figures MG32 avec les nouvelles valeurs
+* @Auteur Rémi Angot
+*/
+export function MG32_modifie_toutes_les_figures() {
+	for (let i = 0; i < liste_des_exercices.length; i++) {
+		if (exercice[i].type_exercice=='MG32'){
+			MG32_modifie_figure(i)
+		}
+	}
+}
+
+/**
+* Ajoute une figure MG32 dans le code HTML de la page
+* @Auteur Rémi Angot
+*/
+export function MG32_ajouter_figure(numero_de_l_exercice) {
+	if (window.mtg32App) {
+		for (var i = 0; i < mtg32App.docs.length; i++) {
+			mtg32App.removeDoc(mtg32App.docs[i].idDoc)
+		}	
+	}
+	MG32_tableau_de_figures.push(
+  // pour chaque figure on précise ici ses options
+  {
+  	idContainer: `MG32div${numero_de_l_exercice}`,
+  	svgOptions: {
+  		width: `${exercice[numero_de_l_exercice].taille_div_MG32[0]}`, 
+  		height: `${exercice[numero_de_l_exercice].taille_div_MG32[1]}`, 
+  		idSvg: `MG32svg${numero_de_l_exercice}`
+  	},
+  	mtgOptions: {
+		  fig: exercice[numero_de_l_exercice].MG32codeBase64,
+		  isEditable: exercice[numero_de_l_exercice].MG32editable
+	  }
+  }
+  )	
+
+	if (exercice[numero_de_l_exercice].MG32codeBase64corr) {
+		MG32_tableau_de_figures.push(
+  // pour chaque figure on précise ici ses options
+  {
+  	idContainer: `MG32divcorr${numero_de_l_exercice}`,
+  	svgOptions: {
+  		width: `${exercice[numero_de_l_exercice].taille_div_MG32[0]}`, 
+  		height: `${exercice[numero_de_l_exercice].taille_div_MG32[1]}`, 
+  		idSvg: `MG32svgcorr${numero_de_l_exercice}`
+  	},
+  	mtgOptions: {
+  		fig: exercice[numero_de_l_exercice].MG32codeBase64corr,
+  		isEditable: false
+  	}
+  }
+  )		
+	}
+}
+
+/**
+* Pour chaque figure on récupère une promesse de chargement, 
+* on lance tout en parallèle, 
+* et quand toutes seront résolues on continue
+* @Auteur Rémi Angot
+*/
+export function MG32_tracer_toutes_les_figures() {
+
+	(function verifie_div_MG32() {
+		const el = document.getElementsByClassName('MG32');
+		// Sélectionne les div de classe MG32
+		if (el.length) { // S'ils existent, on peut appeler MG32
+			Promise.all(MG32_tableau_de_figures.map(({idContainer, svgOptions, mtgOptions}) => mtgLoad(idContainer, svgOptions, mtgOptions)))
+		.then(results => {
+		    		// results est le tableau des valeurs des promesses résolues, avec la même instance du player pour chacune, la 1re valeur nous suffit donc
+		    		window.mtg32App = results[0]
+			    	// on peut l'utiliser…
+			    	MG32_modifie_toutes_les_figures()
+			    })
+		.catch(error => console.error(error))
+	} else {
+    		setTimeout(verifie_div_MG32, 300); // retente dans 300 milliseconds
+    	}
+    })();
+
+}
+
 
 /**
  * Trace un axe vertical gradué
@@ -2169,7 +2338,7 @@ export function  itemize(tableau_de_texte){
  * @param {number} DeltaY Nombre entier de graduations à faire sur la longueur de l'axe. 
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_Axe_vertical (mon_svg,start,end,absO,DeltaY,subY){
+export function SVG_Axe_vertical (mon_svg,start,end,absO,DeltaY,subY){
 	let droite = mon_svg.line(absO,start+2, absO, end)
 	droite.stroke({ color: 'black', width: 2, linecap: 'round' })
 	for (let i=0;i<DeltaY;i++){
@@ -2192,7 +2361,7 @@ export function  SVG_Axe_vertical (mon_svg,start,end,absO,DeltaY,subY){
  * @param {number} DeltaX Nombre entier de graduations à faire sur la longueur de l'axe. 
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_Axe_horizontal (mon_svg,start,end,ordO,DeltaX,subX){
+export function SVG_Axe_horizontal (mon_svg,start,end,ordO,DeltaX,subX){
 	let droite = mon_svg.line(start,ordO, end-2, ordO)
 	droite.stroke({ color: 'black', width: 2, linecap: 'round' })
 	for (let i=1;i<=DeltaX;i++){
@@ -2220,7 +2389,7 @@ export function  SVG_Axe_horizontal (mon_svg,start,end,ordO,DeltaX,subX){
  * @param {number} subY coefficient de fractionnement de la grille en ordonéée
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_grille (mon_svg,absO,ordO,tailleX,tailleY,DeltaX,DeltaY,subX,subY){
+export function SVG_grille (mon_svg,absO,ordO,tailleX,tailleY,DeltaX,DeltaY,subX,subY){
 	let line_grille;
 	for (let i=0;i<=DeltaX;i++){
 		line_grille = mon_svg.line(absO+i*(tailleX/DeltaX),0,absO+i*(tailleX/DeltaX),tailleY);
@@ -2261,7 +2430,7 @@ export function  SVG_grille (mon_svg,absO,ordO,tailleX,tailleY,DeltaX,DeltaY,sub
 * @param width largeur de la graduation
 * @Auteur Rémi Angot
 */
-export function  SVG_graduation(mon_svg,origine,pas,derniere_graduation,taille=10,y=50,couleur='black',width=5) {
+export function SVG_graduation(mon_svg,origine,pas,derniere_graduation,taille=10,y=50,couleur='black',width=5) {
 	for (let i = origine; i < derniere_graduation; i+=pas) {
 		let line = mon_svg.line(i, y-taille/2, i, y+taille/2)
 		line.stroke({ color: couleur, width: width, linecap: 'round' })
@@ -2276,7 +2445,7 @@ export function  SVG_graduation(mon_svg,origine,pas,derniere_graduation,taille=1
  * @param {number} opacite valeur d'opacité entre 0 et 1
  * @Auteur Rémi Angot
  */
-export function  SVG_label(mon_svg,liste_d_abscisses,y,couleur,opacite) {
+export function SVG_label(mon_svg,liste_d_abscisses,y,couleur,opacite) {
 	'use strict';
 	for (let i = 0; i < liste_d_abscisses.length; i++) {
 		let text;
@@ -2302,7 +2471,7 @@ export function  SVG_label(mon_svg,liste_d_abscisses,y,couleur,opacite) {
  * @param {string} couleur la couleur de la fraction
  * @Auteur Rémi Angot
  */
-export function  SVG_fraction(mon_svg,num,den,x,y,couleur) {
+export function SVG_fraction(mon_svg,num,den,x,y,couleur) {
 	'use strict';
 	let longueur=num.toString().length;
 	let line = mon_svg.line(x-longueur*5, y-7, x+longueur*5, y-7);
@@ -2335,7 +2504,7 @@ export function  SVG_fraction(mon_svg,num,den,x,y,couleur) {
  * @param {array} montrer_coord cas 1 : [false] rien n'est ajouté, cas 2 : [true, absAxeX, ordAxeY] trace des flèches jusqu'aux axes
  * @Auteur Rémi Angot et Jean-Claude Lhote
  */
-export function  SVG_tracer_point(mon_svg,x,y,nom,couleur,shiftxnom,shiftynom,montrer_coord) {
+export function SVG_tracer_point(mon_svg,x,y,nom,couleur,shiftxnom,shiftynom,montrer_coord) {
 	//creer un groupe pour la croix
 	let point = mon_svg.group()
 	let c1 = point.line(-3,3,3,-3)
@@ -2370,16 +2539,13 @@ export function  SVG_tracer_point(mon_svg,x,y,nom,couleur,shiftxnom,shiftynom,mo
  * @param {number} y l'ordonnée de la pointe
  * @Auteur Rémi Angot
  */
-export function  SVG_tracer_flecheH(mon_svg,x,y) {
+function SVG_tracer_flecheH(mon_svg,x,y) {
 	//creer un groupe pour la fleche
 	let fleche = mon_svg.group()
-	let c1 = fleche.line(-5,5,0,0)
+	let c1 = fleche.line(x-5,y-5,x,y)
 	c1.stroke({ color: 'black', width: 3, linecap: 'round' })
-	let c2 = fleche.line(-5,-5,0,0)
+	let c2 = fleche.line(x-5,y+5,x,y)
 	c2.stroke({ color: 'black', width: 3, linecap: 'round' })
-	//déplace la croix
-	fleche.move(x,y)
-	fleche.dmove(-5,-5)
 }
 /**
  * 
@@ -2388,7 +2554,7 @@ export function  SVG_tracer_flecheH(mon_svg,x,y) {
  * @param {number} y l'ordonnée de la pointe de la flèche
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_tracer_flecheV(mon_svg,x,y) {
+export function SVG_tracer_flecheV(mon_svg,x,y) {
 	//creer un groupe pour la fleche
 	let fleche = mon_svg.group()
 	let c1 = fleche.line(-5,5,0,0)
@@ -2411,7 +2577,7 @@ export function  SVG_tracer_flecheV(mon_svg,x,y) {
  * @param {number} pointilles longueur des pointillés et des espaces entre les pointillés
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_tracer_droite_flecheV(mon_svg,x1,y1,x2,y2,couleur,pointilles){
+export function SVG_tracer_droite_flecheV(mon_svg,x1,y1,x2,y2,couleur,pointilles){
 	let fleche = mon_svg.group()
 	let c1 = fleche.line(x1,y1,x2,y2)
 	c1.stroke({ color: couleur, width: 1, linecap: 'round',dasharray :pointilles,opacity: 0.5 })
@@ -2440,7 +2606,7 @@ export function  SVG_tracer_droite_flecheV(mon_svg,x1,y1,x2,y2,couleur,pointille
  * @param {number} pointilles longueur des pointillés et des espaces entre les pointillés
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_tracer_droite_flecheH(mon_svg,x1,y1,x2,y2,couleur,pointilles){
+export function SVG_tracer_droite_flecheH(mon_svg,x1,y1,x2,y2,couleur,pointilles){
 	let fleche = mon_svg.group()
 	let c1 = fleche.line(x1,y1,x2,y2)
 	c1.stroke({ color: couleur, width: 1, linecap: 'round',dasharray :pointilles,opacity: 0.5  })
@@ -2472,7 +2638,7 @@ export function  SVG_tracer_droite_flecheH(mon_svg,x1,y1,x2,y2,couleur,pointille
  * @param {string} nom le nom de la droite à tracer
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_Tracer_droite(mon_svg,tailleX,tailleY,Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom){
+export function SVG_Tracer_droite(mon_svg,tailleX,tailleY,Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom){
 	'use strict';
 	let k=0;
 	let Pente_r=Pente*(Xmax-Xmin)/(Ymax-Ymin); // Pente adaptée au ratio d'échelle des axes.
@@ -2513,13 +2679,15 @@ export function  SVG_Tracer_droite(mon_svg,tailleX,tailleY,Xmin,Xmax,Ymin,Ymax,O
  * @returns {string} Le code Latex à intégrer dans un environnement {tikzpicture}
  * @Auteur Jean-Claude Lhote et Rémi Angot
  */
-export function  Latex_Tracer_droite(Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom) {
+export function Latex_Tracer_droite(Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom) {
 	'use strict';
 	let k=0;
+//	let Pente_r=Pente*(Xmax-Xmin)/(Ymax-Ymin); // Pente adaptée au ratio d'échelle des axes.
 	while((k>Xmin)&((OrdX0+Pente*k)<Ymax)&((OrdX0+Pente*k)>Ymin)) k--;
 	let X1=k;
 	let Y1=OrdX0+Pente*k;
 	let DeltaX=Xmax-Xmin;
+//	let DeltaY=Ymax-Ymin;
 	let X2=X1+DeltaX
 	let Y2=Y1+DeltaX*Pente;
 	return `\n\t \\draw[color=${couleur},thick](${X1},${Y1})--(${X2},${Y2}) node[pos=.1,above] {$${nom}$};`;
@@ -2540,7 +2708,7 @@ export function  Latex_Tracer_droite(Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom
  * @returns Les coordonnées des axes dans le SVG
  * @Auteur Jean-Claude Lhote
  */
-export function  SVG_repere(mon_svg,Xmin,Xmax,Ymin,Ymax,subX,subY,tailleX,tailleY,grille){
+export function SVG_repere(mon_svg,Xmin,Xmax,Ymin,Ymax,subX,subY,tailleX,tailleY,grille){
 'use strict';
 			if(Xmin>0) Xmin=0;
 			if (Ymin>0) Ymin=0;
@@ -2575,7 +2743,7 @@ export function  SVG_repere(mon_svg,Xmin,Xmax,Ymin,Ymax,subX,subY,tailleX,taille
  * @returns {string} Renvoie le code Latex correspondant
  * @Auteur Jean-Claude Lhote
  */
-export function  Latex_repere(Xmin,Xmax,Ymin,Ymax,subX,subY,grille){
+export function Latex_repere(Xmin,Xmax,Ymin,Ymax,subX,subY,grille){
 	'use strict';
 	let result=``;				
 	result +=`\n\t \\tkzInit [xmin=${Xmin},xmax=${Xmax},xstep=1,ymin=${Ymin},ymax=${Ymax},ystep=1]`;
@@ -2596,7 +2764,7 @@ export function  Latex_repere(Xmin,Xmax,Ymin,Ymax,subX,subY,grille){
 * @param fraction booléen : true pour fractions, false pour décimaux
 * @Auteur Jean-Claude Lhote
 */
-export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,points_inconnus,points_connus,fraction){
+export function SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,points_inconnus,points_connus,fraction){
 	'use strict';
 	let arrondir=1+Math.round(Math.log10(pas1))
 	if (arrondir<1) arrondir=1;
@@ -2605,12 +2773,12 @@ export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,po
 	 let distance,valeur,nom
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
-	window.SVGExist[id_du_div] = setInterval(function () {
+	window.SVGExist[id_du_div] = setInterval(function() {
 		if ($(`#${id_du_div}`).length ) {
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
 			const mon_svg = SVG().addTo(`#${id_du_div}`).viewbox(0, 0, 800, 150).size('100%','100%')
 			// Droite 
-			let droite = mon_svg.line(100, 50, 750, 50)	
+			let droite = mon_svg.line(100, 50, 750, 50)
 			droite.stroke({ color: 'black', width: 2, linecap: 'round' })
 			// Graduation secondaire
 			SVG_graduation(mon_svg,100,longueur_pas2,750,5,50,'black',2)
@@ -2658,7 +2826,7 @@ export function  SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,po
 * @param fraction booléen : true pour fraction, false pour décimaux
 * @Auteur Jean-Claude Lhote
 */
-export function  Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnus,points_connus,fraction){
+export function Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnus,points_connus,fraction){
 	'use strict';
 	let result=`\\begin{tikzpicture}[scale=${zoom}]` ;
 	 let valeur
@@ -2713,7 +2881,7 @@ export function  Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnu
 * @author Rémi Angot
 */
 
-export function  tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5) {
+export function tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5) {
 	return `
 	\\pgfplotsset{width=10cm,
 			compat=1.9,
@@ -2752,7 +2920,7 @@ export function  tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5) {
  * Sinon, c'est le tableau qui sert à remplir la Matrice
  *  @Auteur Jean-Claude Lhote
  */
-export function  MatriceCarree(table){
+export function MatriceCarree(table){
 	let ligne
 	this.table=[]
 	if (typeof(table)=='number') {
@@ -2772,7 +2940,7 @@ export function  MatriceCarree(table){
  * Méthode : Calcule le déterminant de la matrice carrée
  * @Auteur Jean-Claude Lhote
  */
-	this.determinant=function () {
+	this.determinant=function() {
 		let n=this.dim // taille de la matrice = nxn
 		let determinant=0,M
 		for (let i=0;i<n;i++) { // on travaille sur la ligne du haut de la matrice :ligne 0 i est la colonne de 0 à n-1
@@ -2791,7 +2959,7 @@ export function  MatriceCarree(table){
  * (Utilisée dans le calcul du déterminant d'une matrice carrée.)
  * @Auteur Jean-Claude Lhote
  */
-	this.matrice_reduite=function (l,c){
+	this.matrice_reduite=function(l,c){
 		let  resultat=[],ligne
 		for (let i=0;i<this.table.length;i++) {
 			if (i!=l) {
@@ -2807,7 +2975,7 @@ export function  MatriceCarree(table){
 	/**
 	 * Méthode : m=M.cofacteurs() retourne la matrice des cofacteurs de M utilisée dans l'inversion de M.
 	 */
-	 this.cofacteurs = function  () { // renvoie la matrice des cofacteurs. 
+	 this.cofacteurs = function () { // renvoie la matrice des cofacteurs. 
 		let n = this.dim, resultat = [], ligne, M
 		if (n > 2) {
 			for (let i = 0; i < n; i++) {
@@ -2828,7 +2996,7 @@ export function  MatriceCarree(table){
 	/**
 	 * Méthode : m=M.transposee() retourne la matrice transposée de M utilisée pour l'inversion de M
 	 */
-	 this.transposee=function () { // retourne la matrice transposée
+	 this.transposee=function() { // retourne la matrice transposée
 		let n=this.dim,resultat=[],ligne
 		for (let i=0;i<n;i++) {
 			ligne=[]
@@ -2843,7 +3011,7 @@ export function  MatriceCarree(table){
 	 * m=M.multiplieParReel(k) Multiplie tous les éléments de la matrice par k. Utilisée pour l'inversion de M
 	 * @param {*} k 
 	 */
-	 this.multiplieParReel=function (k){ // retourne k * la matrice
+	 this.multiplieParReel=function(k){ // retourne k * la matrice
 		let n=this.dim,resultat=[],ligne
 		for (let i=0;i<n;i++) {
 			ligne=[]
@@ -2859,7 +3027,7 @@ export function  MatriceCarree(table){
 	 * Méthode : Calcule le produit d'une matrice nxn par un vecteur 1xn (matrice colonne): retourne un vecteur 1xn.
 	 * 
 	 */
-	 this.multiplieVecteur = function  (V) { // Vecteur est un simple array pour l'instant
+	 this.multiplieVecteur = function (V) { // Vecteur est un simple array pour l'instant
 		let n = this.dim, resultat=[], somme
 		if (n == V.length) {
 			for (let i = 0; i < n; i++) {
@@ -2876,7 +3044,7 @@ export function  MatriceCarree(table){
 	/**
 	 * Méthode : m=M.inverse() Retourne la matrice inverse de M. Utilisation : résolution de systèmes linéaires 
 	 */
-	 this.inverse=function () { // retourne la matrice inverse (si elle existe)
+	 this.inverse=function() { // retourne la matrice inverse (si elle existe)
 		let d=this.determinant()
 		if (!egal(d,0)) {
 			return this.cofacteurs().transposee().multiplieParReel(calcul(1/d))
@@ -2887,7 +3055,7 @@ export function  MatriceCarree(table){
 	 * Méthode : m=M.multiplieMatriceCarree(P) : retourne m = M.P
 	 *
 	 */
-	 this.multiplieMatriceCarree=function (M){
+	 this.multiplieMatriceCarree=function(M){
 		let n=this.dim,resultat=[],ligne,somme
 		for (let i=0;i<n;i++) {
 			ligne=[]
@@ -2906,7 +3074,7 @@ export function  MatriceCarree(table){
  * Crée une nouvelle instance de la classe MatriceCarree à partir d'un tableau.
  * 
  */
-export function  matriceCarree(table){
+export function matriceCarree(table){
 	return new MatriceCarree(table)
 }
 
@@ -2917,7 +3085,7 @@ export function  matriceCarree(table){
  * 
  * @Auteur Jean-Claude Lhote
  */
-export function  resol_sys_lineaire_2x2(x1,x2,fx1,fx2,c) {
+export function resol_sys_lineaire_2x2(x1,x2,fx1,fx2,c) {
 	let matrice=matriceCarree([[x1**2,x1],[x2**2,x2]])
 	let determinant=matrice.determinant();
 	let [a,b]=matrice.cofacteurs().transposee().multiplieVecteur([fx1-c,fx2-c])
@@ -2933,7 +3101,7 @@ export function  resol_sys_lineaire_2x2(x1,x2,fx1,fx2,c) {
  * @Auteur Jean-Claude Lhote
  */
 
-export function  resol_sys_lineaire_3x3(x1,x2,x3,fx1,fx2,fx3,d) {
+export function resol_sys_lineaire_3x3(x1,x2,x3,fx1,fx2,fx3,d) {
 	let matrice=matriceCarree([[x1**3,x1**2,x1],[x2**3,x2**2,x2],[x3**3,x3**2,x3]]) 
 	let y1=fx1-d, y2=fx2-d, y3=fx3-d;
 	let determinant=matrice.determinant()
@@ -2953,7 +3121,7 @@ export function  resol_sys_lineaire_3x3(x1,x2,x3,fx1,fx2,fx3,d) {
  * sont des entiers compris eux aussi entre -10 et 10
  * @Auteur Jean-Claude Lhote
  */
-export function  crible_polynome_entier() {
+export function crible_polynome_entier() {
 let trouve =false
 let coefs=[[]]
 for (let i=0,x1,x2,x3,fx1,fx2,fx3,d;;i++) {
@@ -2980,7 +3148,7 @@ if (trouve) return coefs;
  * retourne [] si il n'y en a pas, sinon retourne [[x1,f(x1)],[x2,f(x2)] ne précise pas si il s'agit d'un minima ou d'un maxima.
  * @Auteur Jean-Claude Lhote
  */
-export function  cherche_min_max_f ([a,b,c,d]) { 
+export function cherche_min_max_f ([a,b,c,d]) { 
 	let delta=4*b*b-12*a*c
 	if (delta<=0) return [];
 	let x1=(-2*b-Math.sqrt(delta))/(6*a)
@@ -2991,7 +3159,7 @@ export function  cherche_min_max_f ([a,b,c,d]) {
  * retourne les coefficients d'un polynome de degré 3 dont la dérivée s'annule en  x1 et x2 et tel que f(x1)=y1 et f(x2)=y2.
  * @Auteur Jean-Claude Lhote
  */
-export function  cherche_polynome_deg3_a_extrema_fixes(x1,x2,y1,y2) {
+export function cherche_polynome_deg3_a_extrema_fixes(x1,x2,y1,y2) {
 	let M=matriceCarree([[x1**3,x1**2,x1,1],[x2**3,x2**2,x2,1],[3*x1**2,2*x1,1,0],[3*x2**2,2*x2,1,0]])
 	let R=[y1,y2,0,0]
 	if (!egal(M.determinant(),0)) return M.inverse().multiplieVecteur(R)
@@ -3005,7 +3173,7 @@ export function  cherche_polynome_deg3_a_extrema_fixes(x1,x2,y1,y2) {
  * @param e exposant 
  * @author Sébastien Lozano
  */	
-export function  simpExp(b,e) {
+export function simpExp(b,e) {
 	switch (e) {
 		case 1 : 
 			return ` ${b}`;
@@ -3025,7 +3193,7 @@ export function  simpExp(b,e) {
  * @param n {number} exposant 
  * @author Erwan Duplessy
  */	
-export function  puissance(b,n) {
+export function puissance(b,n) {
 	switch (b) {
 		case 0:
 			return `0`;
@@ -3051,7 +3219,7 @@ export function  puissance(b,n) {
 	}
 }
 
-export function  ecriturePuissance(a, b, n) {
+export function ecriturePuissance(a, b, n) {
 	switch (a) {
 		case 0:
 			return `$0$`;
@@ -3073,36 +3241,39 @@ export function  ecriturePuissance(a, b, n) {
  * @param e exposant 
  * @author Sébastien Lozano
  */	
-export function  simpNotPuissance(b,e) {
+export function simpNotPuissance(b,e) {
+	// on switch sur la base
 	switch (b) {
-		case -1 : 
+		case -1 : // si la base vaut -1 on teste la parité de l'exposant
 			if (e%2==0) {
 				return ` 1`;
-				break;
+				//break;
 			} else {
 				return ` -1`;
-				break;
+				//break;
 			};
-		case 1 : 
+			break;
+		case 1 : // si la base vaut 1 on renvoit toujours 1
 			return ` 1`;
 			break;
-		default : 
+		default : // sinon on switch sur l'exposant
 			switch (e) {
-				case 0 :
+				case 0 : // si l'exposant vaut 0 on ranvoit toujours 1
 					return `1`;
 					break;
-				case 1 :
+				case 1 : // si l'exposant vaut 1 on renvoit toujours la base 
 					return ` ${b}`;
 					break;
-				default :
-					if (b<0 && e%2==0) {
+				default : // sinon on teste le signe de la base et la parité de l'exposant
+					if (b<0 && e%2==0) { // si la base est négative et que l'exposant est pair, le signe est inutile
 						return ` ${b*-1}^{${e}}`;
-						break;
+						//break;
 					} else {
-						//return ` ${b}^{${e}}`;
-						return ` `;
-						break;
+						return ` ${b}^{${e}}`;
+						//return ` `;
+						//break;
 					};
+					break;
 			};
 	};
 };
@@ -3115,7 +3286,7 @@ export function  simpNotPuissance(b,e) {
  * @param couleur
  * @author Sébastien Lozano
  */		
-export function  eclatePuissance(b,e,couleur) {
+export function eclatePuissance(b,e,couleur) {
 	switch (e) {
 		case 0 :
 			return `\\mathbf{\\color{${couleur}}{1}}`;
@@ -3139,7 +3310,7 @@ export function  eclatePuissance(b,e,couleur) {
  * @param e exposant 
  * @author Rémi Angot
  */		
-export function  puissanceEnProduit(b,e) {
+export function puissanceEnProduit(b,e) {
 	switch (e) {
 		case 0 :
 			return `1`;
@@ -3165,7 +3336,7 @@ export function  puissanceEnProduit(b,e) {
  * @param couleur2
  * @Auteur Sébastien Lozano
  */	
-export function  reorganiseProduitPuissance(b1,b2,e,couleur1,couleur2) {
+export function reorganiseProduitPuissance(b1,b2,e,couleur1,couleur2) {
 	switch (e) {
 		case 0 :
 			return `1`;
@@ -3190,11 +3361,23 @@ export function  reorganiseProduitPuissance(b1,b2,e,couleur1,couleur2) {
 * @param icone 
 * @Auteur Rémi Angot
 */	
-export function  creer_modal(numero_de_l_exercice,contenu,label_bouton,icone) {
+export function creer_modal(numero_de_l_exercice,contenu,label_bouton,icone) {
 	let HTML = `<button class="ui right floated mini compact button" onclick="$('#modal${numero_de_l_exercice}').modal('show');"><i class="large ${icone} icon"></i>${label_bouton}</button>
 		<div class="ui modal" id="modal${numero_de_l_exercice}">
 		${contenu}
 		</div>`
+	return HTML;
+}
+/**
+* Fonction créant le bouton d'aide utilisée par les différentes fonctions modal_ type de contenu
+* @param numero_de_l_exercice
+* @param contenu code HTML 
+* @param icone 
+* @Auteur Rémi Angot
+*/	
+export function creerBoutonMathalea2d(numero_de_l_exercice,fonction,label_bouton="Aide",icone="info circle") {
+	let HTML = `<button class="ui toggle left floated mini compact button" id = "btnMathALEA2d_${numero_de_l_exercice}" onclick="${fonction}"><i class="large ${icone} icon"></i>${label_bouton}</button>`
+
 	return HTML;
 }
 
@@ -3206,7 +3389,7 @@ export function  creer_modal(numero_de_l_exercice,contenu,label_bouton,icone) {
 * @param icone Nom de l'icone (par défaut c'est info circle icon), liste complète sur https://semantic-ui.com/elements/icon.html
 * @Auteur Rémi Angot
 */	
-export function  modal_texte_court(numero_de_l_exercice,texte,label_bouton="Aide",icone="info circle"){
+export function modal_texte_court(numero_de_l_exercice,texte,label_bouton="Aide",icone="info circle"){
 	let contenu = `<div class="header">${texte}</div>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
 }
@@ -3222,7 +3405,7 @@ export function  modal_texte_court(numero_de_l_exercice,texte,label_bouton="Aide
 * @param icone Nom de l'icone (par défaut c'est youtube icon), liste complète sur https://semantic-ui.com/elements/icon.html
 * @Auteur Rémi Angot
 */	
-export function  modal_youtube(numero_de_l_exercice,id_youtube,texte,label_bouton="Aide - Vidéo",icone="youtube"){
+export function modal_youtube(numero_de_l_exercice,id_youtube,texte,label_bouton="Aide - Vidéo",icone="youtube"){
 	let contenu = `<div class="header">${texte}</div><div class="content"><p align="center"><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/${id_youtube}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p></div>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
 }
@@ -3236,7 +3419,7 @@ export function  modal_youtube(numero_de_l_exercice,id_youtube,texte,label_bouto
 * @param icone Nom de l'icone (par défaut c'est info circle icon), liste complète sur https://semantic-ui.com/elements/icon.html
 * @Auteur Rémi Angot
 */	
-export function  modal_texte_long(numero_de_l_exercice,titre,texte,label_bouton="Aide",icone="info circle"){
+export function modal_texte_long(numero_de_l_exercice,titre,texte,label_bouton="Aide",icone="info circle"){
 	let contenu = `<div class="header">${titre}</div>`
 	contenu += `<div class="content">${texte}</div>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
@@ -3251,7 +3434,7 @@ export function  modal_texte_long(numero_de_l_exercice,titre,texte,label_bouton=
 * @param icone Nom de l'icone (par défaut c'est info circle icon), liste complète sur https://semantic-ui.com/elements/icon.html
 * @Auteur Rémi Angot
 */	
-export function  modal_url(numero_de_l_exercice,url,label_bouton="Aide",icone="info circle"){
+export function modal_url(numero_de_l_exercice,url,label_bouton="Aide",icone="info circle"){
 	let contenu = `<iframe width="100%" height="600"  src="${url}" frameborder="0" ></iframe>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
 }
@@ -3265,7 +3448,7 @@ export function  modal_url(numero_de_l_exercice,url,label_bouton="Aide",icone="i
 * @param icone Nom de l'icone (par défaut c'est file pdf icon), liste complète sur https://semantic-ui.com/elements/icon.html
 * @Auteur Rémi Angot
 */	
-export function  modal_pdf(numero_de_l_exercice,url_pdf,texte="Aide",label_bouton="Aide - PDF",icone="file pdf"){
+export function modal_pdf(numero_de_l_exercice,url_pdf,texte="Aide",label_bouton="Aide - PDF",icone="file pdf"){
 	let contenu = `<div class="header">${texte}</div><div class="content"><p align="center"><embed src=${url_pdf} width=90% height=500 type='application/pdf'/></p></div>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
 }
@@ -3279,7 +3462,7 @@ export function  modal_pdf(numero_de_l_exercice,url_pdf,texte="Aide",label_bouto
  * @param icone Nom de l'icone (par défaut c'est file video outline icon), liste complète sur https://semantic-ui.com/elements/icon.html
  * @Auteur Sébastien Lozano
  */	
-export function  modal_video(id_du_modal,url_video,texte,label_bouton="Vidéo",icone="file video outline"){
+export function modal_video(id_du_modal,url_video,texte,label_bouton="Vidéo",icone="file video outline"){
 	//let contenu = `<div class="header">${texte}</div><div class="content"><p align="center"><iframe width="560" height="315" src="${url_video}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p></div>`
 	let contenu = `
 	<div class="header">${texte}</div>
@@ -3301,7 +3484,7 @@ export function  modal_video(id_du_modal,url_video,texte,label_bouton="Vidéo",i
  * @param {string} label_bouton = ce qui est écrit en titre de l'image 
  * @param {string} icone 
  */
-export function  modal_image(numero_de_l_exercice,url_image,texte,label_bouton="Illustration",icone="image"){
+export function modal_image(numero_de_l_exercice,url_image,texte,label_bouton="Illustration",icone="image"){
 	let contenu = `<div class="header">${texte}</div><div class="image content"><img class="ui centered medium image" src="${url_image}"></div>`
 	return creer_modal(numero_de_l_exercice,contenu,label_bouton,icone)
 }
@@ -3311,7 +3494,7 @@ export function  modal_image(numero_de_l_exercice,url_image,texte,label_bouton="
  * @param {integer} n 
  * @Auteur Sébastien Lozano
  */
-export function  liste_diviseurs(n) {
+export function liste_diviseurs(n) {
 	'use strict';
 	let i = 2;
 	let diviseurs = [1];
@@ -3341,7 +3524,7 @@ export function  liste_diviseurs(n) {
  * @author Sébastien Lozano
  */
 
-export function  tikz_machine_maths(nom,etape1,etape2,etape3,x_ligne1,x_ligne2,y_ligne1,y_ligne2) {
+export function tikz_machine_maths(nom,etape1,etape2,etape3,x_ligne1,x_ligne2,y_ligne1,y_ligne2) {
 	// tous les textes sont en mode maths !!!
 	'use strict';
 	return `
@@ -3377,7 +3560,7 @@ export function  tikz_machine_maths(nom,etape1,etape2,etape3,x_ligne1,x_ligne2,y
  * attention mode maths pour les chaines
  * @author Sébastien Lozano
  */
-export function  tikz_machine_diag(nom,x_ant,etapes_expressions){
+export function tikz_machine_diag(nom,x_ant,etapes_expressions){
 	'use strict';
 	var x_init = -10;
 	var saut = 0;
@@ -3511,7 +3694,7 @@ export function  tikz_machine_diag(nom,x_ant,etapes_expressions){
  * @param {string} textePopup 
  * @Auteur Sébastien Lozano
  */
-export function  katex_Popup(texte,titrePopup,textePopup) {
+export function katex_Popup(texte,titrePopup,textePopup) {
 	'use strict';
 	let contenu=``
 	if (sortie_html){
@@ -3527,7 +3710,7 @@ export function  katex_Popup(texte,titrePopup,textePopup) {
 		return `\\textbf{${texte}} \\footnote{\\textbf{${titrePopup}} ${textePopup}}`
 	}
 };
-export function  katex_Popuptest(texte,titrePopup,textePopup) {
+export function katex_Popuptest(texte,titrePopup,textePopup) {
 	'use strict';
 	let contenu=``
 	if (sortie_html){
@@ -3549,7 +3732,7 @@ export function  katex_Popuptest(texte,titrePopup,textePopup) {
   * @author Sébastien Lozano 
   * source --> http://www.finalclap.com/faq/257-javascript-supprimer-remplacer-accent
   */
-export function  sansAccent(str){
+export function sansAccent(str){
 	'use strict';
     var accent = [
         /[\300-\306]/g, /[\340-\346]/g, // A, a
@@ -3580,7 +3763,7 @@ export function  sansAccent(str){
 * @param {string} textePopup = Le texte dévoilé par le bouton ou l'url de l'image.
 * @Auteur Jean-claude Lhote & Rémi Angot & Sebastien Lozano
 **/
-// function  katex_Popup2(numero,type,texte,titrePopup,textePopup) {
+// function katex_Popup2(numero,type,texte,titrePopup,textePopup) {
 // 	'use strict';
 // 	switch (type) { 
 // 		case 0 : return katex_Popuptest(texte,titrePopup,textePopup)
@@ -3619,7 +3802,7 @@ export function katex_Popup2(numero,type,texte,titrePopup,textePopup) {
  * @param {number} k valeur numérique
  * @Auteur Sébastien Lozano
  */	
-export function  num_alpha(k) {
+export function num_alpha(k) {
 	'use strict';
 	if (sortie_html) return '<span style="color:#f15929; font-weight:bold">'+String.fromCharCode(97+k)+'/</span>';
 	//else return '\\textcolor [HTML] {f15929} {'+String.fromCharCode(97+k)+'/}';
@@ -3633,7 +3816,7 @@ export function  num_alpha(k) {
  * @param {string} couleur couleur
  * @Auteur Sébastien Lozano
  */
-export function  SVG_fleche_machine_maths(groupe,chemin,couleur) {
+export function SVG_fleche_machine_maths(groupe,chemin,couleur) {
 	'use strict';
 	return groupe.path(chemin).fill(couleur).stroke({ color: couleur, width: 1, linecap: 'round', linejoin:'null'});
 };
@@ -3644,7 +3827,7 @@ export function  SVG_fleche_machine_maths(groupe,chemin,couleur) {
  * @param {string} couleur couleur
  * @Auteur Sébastien Lozano
  */	
-export function  SVG_chemin(groupe,chemin,couleur) {
+export function SVG_chemin(groupe,chemin,couleur) {
 	'use strict';
 	return groupe.path(chemin).fill('none').stroke({ color: couleur, width: 1, linecap: 'round', linejoin:'null'});
 };
@@ -3659,12 +3842,12 @@ export function  SVG_chemin(groupe,chemin,couleur) {
  * @param {array} etapes_expressions tableau contenant les opérations et les expressions algébriques des étapes
  * @Auteur Sébastien Lozano
  */
-export function  SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_expressions) {
+export function SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_expressions) {
 	'use strict';
 	let interligne = 10;//w/80; //h/10; // unité d'espacement
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
-	window.SVGExist[id_du_div] = setInterval(function () {
+	window.SVGExist[id_du_div] = setInterval(function() {
 		
 		if ($(`#${id_du_div}`).length ) {
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
@@ -3751,7 +3934,7 @@ export function  SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_ex
   * @param {string} f_weight
   * @author Sébastien Lozano 
   */ 
- export function  my_svg_font(font,interligne,ancre,f_style,f_weight){
+ export function my_svg_font(font,interligne,ancre,f_style,f_weight){
 	'use strict';
 	return {family:  font,
 		size: interligne,
@@ -3781,7 +3964,7 @@ export function  SVG_machine_diag_3F1_act_mono(id_du_div,w,h,nom,x_ant,etapes_ex
  * @param {string} y_ligne2 image ligne2
  * @author Sébastien Lozano
  */	
-export function  SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_ligne1,x_ligne2,y_ligne1,y_ligne2) {
+export function SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_ligne1,x_ligne2,y_ligne1,y_ligne2) {
 	'use strict';
 	let interligne = 15; // pour un interligne uniforme 
 	let prop_font = my_svg_font('Helvetica',interligne,'start','normal','normal');
@@ -3790,7 +3973,7 @@ export function  SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_lign
 					
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
-	window.SVGExist[id_du_div] = setInterval(function () {
+	window.SVGExist[id_du_div] = setInterval(function() {
 
 		if ($(`#${id_du_div}`).length ) {
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
@@ -3933,7 +4116,7 @@ export function  SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_lign
  * @author Sébastien Lozano
  */
 
- export function  tex_cadre_par_orange(texte) {
+ export function tex_cadre_par_orange(texte) {
 	 'use strict';
 	 //\\definecolor{orangeCoop}{rgb}{0.9450980392156862,0.34901960784313724,0.1607843137254902}
 	 let sortie = `
@@ -3957,12 +4140,12 @@ export function  SVG_machine_maths(id_du_div,w,h,nom,etape1,etape2,etape3,x_lign
  * @param {array} etapes_expressions tableau contenant les opérations et les expressions algébriques des étapes
  * @author Sébastien Lozano
  */
-export function  SVG_machine_diag_3F12(id_du_div,w,h,nom,x_ant,etapes_expressions) {
+export function SVG_machine_diag_3F12(id_du_div,w,h,nom,x_ant,etapes_expressions) {
 	'use strict';
 	let interligne = 10;//w/80; //h/10; // unité d'espacement
 	if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 	// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
-	window.SVGExist[id_du_div] = setInterval(function () {
+	window.SVGExist[id_du_div] = setInterval(function() {
 		
 		if ($(`#${id_du_div}`).length ) {
 			$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
@@ -4083,7 +4266,7 @@ export function  SVG_machine_diag_3F12(id_du_div,w,h,nom,x_ant,etapes_expression
  * @author Sébastien Lozano 
  */
 
-export function  machine_maths_video(url_video) {
+export function machine_maths_video(url_video) {
 	'use strict';
 	let video =`
 	<div style="text-align:center"> 
@@ -4100,7 +4283,7 @@ export function  machine_maths_video(url_video) {
  * détecte si le navigateur et safari ou chrome et renvoie un booléen
  * @author Sébastien Lozano 
  */
-export function  detect_safari_chrome_browser(){
+export function detect_safari_chrome_browser(){
 	'use strict';
 	var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
 	// var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
@@ -4119,7 +4302,7 @@ export function  detect_safari_chrome_browser(){
 * @param {integer} n Ce multiple sera supérieur ou égal à n
 * @author Rémi Angot
 */
-export function  premierMultipleSuperieur(k,n){
+export function premierMultipleSuperieur(k,n){
 	let result = n
 	if (Number.isInteger(k)&&Number.isInteger(n)) {
 		while (result%k!=0){
@@ -4135,7 +4318,7 @@ export function  premierMultipleSuperieur(k,n){
 		}
 	}
 }
-export function  premierMultipleInferieur(k,n){
+export function premierMultipleInferieur(k,n){
 	let result=premierMultipleSuperieur(k,n)
 	if (result!=n) return result-k
 	else return n
@@ -4146,7 +4329,7 @@ export function  premierMultipleInferieur(k,n){
 * @param {number} borneSup
 * @author Sébastien Lozano
 */
-export function  liste_nb_premiers_strict_jusqua(borneSup) {
+export function liste_nb_premiers_strict_jusqua(borneSup) {
 	'use strict';
 	// tableau contenant les 300 premiers nombres premiers
 	let liste_300 = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293];
@@ -4164,7 +4347,7 @@ export function  liste_nb_premiers_strict_jusqua(borneSup) {
  * @param {number} n 
  * @author Sébastien Lozano
  */
-export function  crible_eratosthene_n(n) {
+export function crible_eratosthene_n(n) {
 	'use strict';
 	var tab_entiers = []; // pour tous les entiers de 2 à n
 	var test_max = Math.sqrt(n+1); // inutile de tester au dela de racine de n
@@ -4203,7 +4386,7 @@ export function  crible_eratosthene_n(n) {
  * @author Sébastien Lozano
  */
 
- export function  premiers_entre_bornes(min,max) {
+ export function premiers_entre_bornes(min,max) {
 	'use strict';
 	// on crée les premiers jusque min
 	let premiers_a_suppr = crible_eratosthene_n(min-1);
@@ -4221,7 +4404,7 @@ export function  crible_eratosthene_n(n) {
  * @author Sébastien Lozano
  */
 
-export function  texte_ou_pas(texte) {
+export function texte_ou_pas(texte) {
 	'use strict';
 	let bool = randint(0,1);
 	if (bool==0) {
@@ -4316,7 +4499,7 @@ export function tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
  * @param {string} titre
  * @author Sébastien Lozano 
  */
-export function  warn_message(texte,couleur,titre) {
+export function warn_message(texte,couleur,titre) {
 	'use strict';
 	if( typeof(titre) == 'undefined' ){
         titre = ``;
@@ -4347,7 +4530,7 @@ export function  warn_message(texte,couleur,titre) {
  * @author Sébastien Lozano
  */
 
-export function  info_message({titre,texte,couleur}) {
+export function info_message({titre,texte,couleur}) {
 	//'use strict';
 	if (sortie_html) {
 		return `
@@ -4376,7 +4559,7 @@ export function  info_message({titre,texte,couleur}) {
  * @author Sébastien Lozano
  */
 
-export function  lampe_message({titre,texte,couleur}) {
+export function lampe_message({titre,texte,couleur}) {
 	//'use strict';
 	// if (sortie_html) {
 	// 	return `
@@ -4413,12 +4596,12 @@ export function  lampe_message({titre,texte,couleur}) {
  * @param {number} h hauteur du conteneur
  * @author Sébastien Lozano
  */
-export function  SVG_engrenages(id_du_div,w,h) {
+export function SVG_engrenages(id_du_div,w,h) {
 	'use strict';
 	if (sortie_html) {
 		if (!window.SVGExist) {window.SVGExist = {}} // Si SVGExist n'existe pas on le créé
 		// SVGExist est un dictionnaire dans lequel on stocke les listenner sur la création des div
-		window.SVGExist[id_du_div] = setInterval(function () {
+		window.SVGExist[id_du_div] = setInterval(function() {
 			
 			if ($(`#${id_du_div}`).length ) {
 				$(`#${id_du_div}`).html("");//Vide le div pour éviter les SVG en doublon
@@ -4446,7 +4629,7 @@ export function  SVG_engrenages(id_du_div,w,h) {
  * @param {number} n 
  * @author Sébastien Lozano
  */
-export function  decomp_fact_prem_array(n) {
+export function decomp_fact_prem_array(n) {
 	let decomposition=[];
 	let liste=obtenir_liste_facteurs_premiers(n);
 	for (let i in liste) {
@@ -4467,7 +4650,7 @@ export function  decomp_fact_prem_array(n) {
  * * @param {number} a3  un des angles du triangle
  * @author Sébastien Lozano
  */
-export function  Triangles(l1,l2,l3,a1,a2,a3) {
+export function Triangles(l1,l2,l3,a1,a2,a3) {
 	'use strict';
 	var self = this;
 
@@ -4487,7 +4670,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * les strings sont EN MODE MATHS le premier caractère du string est un $
 	 * @example si triangle est une instance de la classe Triangle() triangle.getNom() renvoie le string '$AMI$' si AMI est le nom tiré au hasard 
 	 */
-	function  getNom() {
+	function getNom() {
 		return '$'+self.nom+'$';
 	}
 
@@ -4496,7 +4679,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * les strings sont EN MODE MATHS le premier caractère du string est un $
 	 * @example si triangle est une instance de la classe Triangle() triangle.getCotes() renvoie le tableau de strings ['$[AM]$','$[MI]$','$[IA]$'] dans cet ordre si AMI est le nom tiré au hasard  
 	 */
-	function  getCotes() {
+	function getCotes() {
 		let cotes = [];
 		let triangle = self.nom;
 		let sommets = triangle.split('');
@@ -4512,7 +4695,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * les strings sont EN MODE MATHS le premier caractère du string est un $
 	 * @example si triangle est une instance de la classe Triangle() triangle.getCotes() renvoie le tableau de strings ['$AM$','$MI$','$IA$'] dans cet ordre si AMI est le nom tiré au hasard  
 	 */
-	function  getLongueurs() {
+	function getLongueurs() {
 		let longueurs = [];
 		let triangle = self.nom;
 		let sommets = triangle.split('');
@@ -4526,7 +4709,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	/**
 	 * @return {array} Renvoie un tableau avec les valeurs des longueurs des côtés du triangle passées en paramètre à l'instance de la classe
 	 */
-	 function  getLongueursValeurs() {		
+	 function getLongueursValeurs() {		
 		if ((typeof self.l1 == "undefined") || (typeof self.l2 == "undefined") || (typeof self.l3 == "undefined")) {
 			//return false;
 			return ['L\'une des longueurs de l\'objet triangle n\'est pas définie'];
@@ -4544,7 +4727,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * @return {array} Renvoie un tableau de strings avec les noms des angles du triangle.
 	 * * les strings sont EN MODE MATHS le premier caractère du string est un $
 	 */
-	 function  getAngles() {
+	 function getAngles() {
 		let angles = [];
 		let triangle = self.nom;
 		let sommets = triangle.split('');
@@ -4558,7 +4741,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	/**
 	 * @return {array} Renvoie un tableau avec les valeurs des angles du triangle passées en paramètre à l'instance de la classe
 	 */
-	function  getAnglesValeurs() {		
+	function getAnglesValeurs() {		
 		if ((typeof self.a1 == "undefined") || (typeof self.a2 == "undefined") || (typeof self.a3 == "undefined")) {
 			//return false;
 			return ['L\'un des angles de l\'objet triangle n\'est pas définie'];
@@ -4575,7 +4758,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * @return {array} Renvoie un tableau de strings avec les noms des sommets du triangle.
 	 * * les strings sont EN MODE MATHS le premier caractère du string est un $
 	 */
-	function  getSommets(math=true) {
+	function getSommets(math=true) {
 		let triangle = self.nom;
 		let sommets = triangle.split('');
 		if (math==true) {
@@ -4594,7 +4777,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * triangle.l3 = 4
 	 * * triangle.getPerimetre() renvoie 9
 	 */
-	function  getPerimetre() {
+	function getPerimetre() {
 		if ((typeof self.l1 == "undefined") || (typeof self.l2 == "undefined") || (typeof self.l3 == "undefined")) {
 			//return false;
 			return 'L\'une des longueurs de l\'objet triangle n\'est pas définie';
@@ -4616,13 +4799,13 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * triangle.l3 = 4
 	 * * triangle.isTrueTriangleLongueurs() renvoie true
 	 */
-	function  isTrueTriangleLongueurs() {
+	function isTrueTriangleLongueurs() {
 		if ((typeof self.l1 == "undefined") || (typeof self.l2 == "undefined") || (typeof self.l3 == "undefined")) {
 			return false;
 			//return 'L\'une des longueurs de l\'objet triangle n\'est pas définie';
 		}
 		let longueurs = [self.l1,self.l2,self.l3];
-		longueurs.sort(function (a,b){
+		longueurs.sort(function(a,b){
 			return calcul(a-b);
 		});
 		if (longueurs[2] < calcul(longueurs[0]+longueurs[1])) {
@@ -4645,13 +4828,13 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * triangle.l3 = 4
 	 * * triangle.isTrueTriangleLongueurs() renvoie false
 	 */
-	function  isPlatTriangleLongueurs() {
+	function isPlatTriangleLongueurs() {
 		if ((typeof self.l1 == "undefined") || (typeof self.l2 == "undefined") || (typeof self.l3 == "undefined")) {
 			//return 'L\'une des longueurs de l\'objet triangle n\'est pas définie';
 			return false;
 		}
 		let longueurs = [self.l1,self.l2,self.l3];
-		longueurs.sort(function (a,b){
+		longueurs.sort(function(a,b){
 			return calcul(a-b);
 		});
 		if (longueurs[2] == calcul(longueurs[0]+longueurs[1])) {
@@ -4675,7 +4858,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * triangle.isTrueTriangleAngles() renvoie true
 	 */
 
-	function  isTrueTriangleAngles() {
+	function isTrueTriangleAngles() {
 		// si l'un des angles n'est pas defini ça ne va pas
 		if ((typeof self.a1 == "undefined") || (typeof self.a2 == "undefined") || (typeof self.a3 == "undefined")) {
 			return false;
@@ -4711,7 +4894,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 	 * * triangle.a3 = 60
 	 * * triangle.isTrueTriangleAngles() renvoie false
 	 */
-	function  isPlatTriangleAngles() {
+	function isPlatTriangleAngles() {
 		if ((typeof self.a1 == "undefined") || (typeof self.a2 == "undefined") || (typeof self.a3 == "undefined")) {
 			return false;
 			//return 'L\'une des longueurs de l\'objet triangle n\'est pas définie';
@@ -4727,7 +4910,17 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
 		};
 	};
 
-;
+	/**
+	 * Méthode non finalisée
+	 */
+	function isQuelconque() {
+		// Vérifier que le triangle existe !!!
+		if ( ( ((self.l1!=self.l2) && (self.l1!=self.l3) && (self.l2!=self.l3) ) || ( (self.a1!=self.a2) && (self.a1!=self.a3) && (self.a2!=self.a3) ) ) && ( (self.a1 != 90) || (self.a2 != 90) || (self.a3 != 90) ) ) {
+			return true
+		} else {
+			return false;
+		};
+	};
 	
 	this.l1 = l1;
 	this.l2 = l2;
@@ -4757,7 +4950,7 @@ export function  Triangles(l1,l2,l3,a1,a2,a3) {
  * @param {...any} relatifs est un paramètre du reste
  * @author Sébastien Lozano
  */
-export function  Relatif(...relatifs) {
+export function Relatif(...relatifs) {
 	//'use strict'; pas de use strict avec un paramètre du reste
 	this.relatifs = relatifs;
 
@@ -4767,11 +4960,11 @@ export function  Relatif(...relatifs) {
 	 * @return {array} Renvoie un tableau de -1 ou 1
 	 * @example getSigneNumber(-1,-2,8,-9,4) renvoie [-1,-1,1,-1,1]
 	 */
-	function  getSigneNumber() {		
+	function getSigneNumber() {		
 		let signes = [];
 		try {
 			// port du string interdit !			
-			 relatifs.forEach(function (element) {
+			 relatifs.forEach(function(element) {
 				if (typeof element == 'string') {
 					throw new TypeError(`${element} est un string !`);
 				};
@@ -4783,7 +4976,7 @@ export function  Relatif(...relatifs) {
 			if (relatifs.length == 0) {
 				throw new Error(`C'est mieux avec quelques nombres !`)
 			};
-			 relatifs.forEach(function (element){
+			 relatifs.forEach(function(element){
 				if (element < 0) {
 					signes.push(-1);
 				};
@@ -4806,10 +4999,10 @@ export function  Relatif(...relatifs) {
 	 * @return {array} Renvoie un tableau de strings valant 'négatif' ou 'positif'
 	 * @example getSigneNumber(-1,-2,8,-9,4) renvoie le tableau de strings [négatif,négatif,positif,négatif,positif]
 	*/
-	function  getSigneString() {
+	function getSigneString() {
 		let signesString = [];
 		let signes = getSigneNumber();
-		 signes.forEach(function (element){
+		 signes.forEach(function(element){
 			if (element == -1) {
 				signesString.push('négatif');
 			};
@@ -4827,11 +5020,11 @@ export function  Relatif(...relatifs) {
 	 * @example getSigneProduitNumber(1,-4,-7) renvoie 1
 	 */
 
-	function  getSigneProduitNumber(...n) {
+	function getSigneProduitNumber(...n) {
 		let produit = 1;
 		try {
 			// port du string interdit !			
-			 n.forEach(function (element) {
+			 n.forEach(function(element) {
 				if (typeof element == 'string') {
 					throw new TypeError(`${element} est un string !`);
 				};
@@ -4843,7 +5036,7 @@ export function  Relatif(...relatifs) {
 			if (n.length == 0) {
 				throw new Error(`C'est mieux avec quelques nombres !`)
 			};
-			 n.forEach(function (element){
+			 n.forEach(function(element){
 				produit = produit * element;	
 			});		
 			if ( produit < 0 ) {
@@ -4866,7 +5059,7 @@ export function  Relatif(...relatifs) {
 	 * @example getSigneProduitNumber(1,-4,-7) renvoie le string positif
 	 */
 
-	function  getSigneProduitString(...n) {
+	function getSigneProduitString(...n) {
 		let produit = getSigneProduitNumber(...n);
 			if ( produit == -1 ) {
 				return 'négatif';
@@ -4885,11 +5078,11 @@ export function  Relatif(...relatifs) {
 	 * @example getCardNegatifs([4,-5,7,7,-8,-9]) renvoie 3
 	 */
 
-	function  getCardNegatifs([...n]) {
+	function getCardNegatifs([...n]) {
 		let card = 0;
 		try {
 			// port du string interdit !			
-			 n.forEach(function (element) {
+			 n.forEach(function(element) {
 				if (typeof element == 'string') {
 					throw new TypeError(`${element} est un string !`);
 				};
@@ -4901,7 +5094,7 @@ export function  Relatif(...relatifs) {
 			if (n.length == 0) {
 				throw new Error(`C'est mieux avec quelques nombres !`)
 			};
-			 n.forEach(function (element){
+			 n.forEach(function(element){
 				if (element < 0) {
 					card = card +1;
 				};
@@ -4920,7 +5113,7 @@ export function  Relatif(...relatifs) {
 	 * @example orth_facteurs_negatifs(0) ou orth_facteurs_negatifs(1) renvoie 'facteur negatif'
 	 * @example orth_facteurs_negatifs(7) renvoie 'facteurs negatifs'
 	 */
-	function  orth_facteurs_négatifs(n) {
+	function orth_facteurs_négatifs(n) {
 		if (n>=2) {
 			return `facteurs négatifs`;
 		} else {
@@ -4934,10 +5127,10 @@ export function  Relatif(...relatifs) {
 	 * @example setRegleProduitFacteurs([1,-2,-8,5]) renvoie le string 'Il y a 2 facteurs négatifs, le nombre de facteurs négatifs est pair donc le produit est positif.'
 	 */
 
-	function  setRegleSigneProduit(...n) {
+	function setRegleSigneProduit(...n) {
 		try {
 			// port du string interdit !			
-			 n.forEach(function (element) {
+			 n.forEach(function(element) {
 				if (typeof element == 'string') {
 					throw new TypeError(`${element} est un string !`);
 				};
@@ -4977,10 +5170,10 @@ export function  Relatif(...relatifs) {
 	 * @example setRegleProduitQuotient([1,-2],[-8,5]) renvoie le string 'La somme des facteurs négatifs du numérateur et des facteurs négatifs du dénominateur vaut 2, ce nombre est pair donc le quotient est positif.'
 	 */
 
-	function  setRegleSigneQuotient(...n) {
+	function setRegleSigneQuotient(...n) {
 		try {
 			// port du string interdit !			
-			 n.forEach(function (element) {
+			 n.forEach(function(element) {
 				if (typeof element == 'string') {
 					throw new TypeError(`${element} est un string !`);
 				};
@@ -5030,7 +5223,7 @@ export function  Relatif(...relatifs) {
  * @author Sébastien Lozano
  */
 
- export function  ListeFraction() {
+ export function ListeFraction() {
 	 //'use strict'; pas de use strict avec un paramètre du reste
 	 /**
 	  * @constant {array} denominateurs_amis tableau de tableaux de dénominateurs qui vont bien ensemble pour les calculs
@@ -5045,9 +5238,9 @@ export function  Relatif(...relatifs) {
 	 * @return {array} renvoie un tableau avec les numérateurs et les dénominateurs triés selon la croissance des quotients [n_frac_min,d_frac_min,...,n_frac_max,d_frac_max]
 	 * @example sortFraction(1,2,1,5,1,4,1,3) renvoie [1,5,1,4,1,3,1,2] 
 	 */
-	function  sortFractions(...fractions) {
+	function sortFractions(...fractions) {
 		try {		
-			fractions.forEach(function (element) {
+			fractions.forEach(function(element) {
 				if (typeof element != 'number') {
 					throw new TypeError(`${element} n'est pas un nombre !`);
 				};
@@ -5089,9 +5282,9 @@ export function  Relatif(...relatifs) {
 	 * @return {number} renvoie le ppcm des nombres entiers passés dans le paramètre du reste n
 	 * @example ppcm(2,6,4,15) renvoie 60
 	 */
-	function  ppcm([...n]) {
+	function ppcm([...n]) {
 		try {
-			 n.forEach(function (element) {
+			 n.forEach(function(element) {
 				if (typeof element != 'number') {
 					throw new TypeError(`${element} n'est pas un nombre !`);
 				};
@@ -5116,9 +5309,9 @@ export function  Relatif(...relatifs) {
 	 * * Les fractions ne sont pas réduites
 	 * @example reduceSameDenominateur(1,2,1,5,2,3) renvoie [15,30,6,30,20,30]
 	 */
-	 function  reduceSameDenominateur(...fractions) {
+	 function reduceSameDenominateur(...fractions) {
 		try {		
-		 fractions.forEach(function (element) {
+		 fractions.forEach(function(element) {
 				if (typeof element != 'number') {
 					throw new TypeError(`${element} n'est pas un nombre !`);
 				};
@@ -5154,24 +5347,6 @@ export function  Relatif(...relatifs) {
 		};
 	};
 
-	/**
-	 * **ATTENTION Fonction clonée dans la boîte à outils**
-	* @return Retourne le numérateur et le dénominateur de la fraction passée en argument sous la forme (numérateur,dénominateur)réduite au maximum dans un tableau [numérateur,dénominateur]
-	* @author Rémi Angot
-	*/
-	 function  fraction_simplifiee(n,d){ 
-		let p=pgcd(n,d);
-		let ns = n/p;
-		let ds = d/p;
-		if (ns<0 && ds<0) {
-			[ns,ds] = [-ns,-ds]
-		}
-		if (ns>0 && ds<0) {
-			[ns,ds] = [-ns,-ds]
-		}
-		return [ns,ds];
-	}
-
 	this.sortFractions = sortFractions;
 	this.reduceSameDenominateur = reduceSameDenominateur;
 	this.denominateurs_amis = denominateurs_amis;
@@ -5185,10 +5360,9 @@ export function  Relatif(...relatifs) {
   * @param {integer} a 
   * @param {integer} b 
   */
- export function  fraction (a,b) {
+ export function fraction (a,b) {
     return new Fraction(a,b)
 }
-
 
 /**
  * @class
@@ -5198,7 +5372,7 @@ export function  Relatif(...relatifs) {
  * @author Jean-Claude Lhote et Sébastien Lozano
  */
 
-export function  Fraction(num,den) {
+function Fraction(num,den) {
 	/**
 	 * @property {integer} numérateur optionnel, par défaut la valeur vaut 0
 	 */
@@ -5218,48 +5392,48 @@ export function  Fraction(num,den) {
 	 * @return {object} La fraction "complexifiée" d'un rapport k
 	 * @param {number} k Le nombre par lequel, le numérateur et le dénominateur sont multipliés.
 	 */
-	 this.fractionEgale = function (k){
+	 this.fractionEgale = function(k){
 		return fraction(calcul(this.numIrred*k),calcul(this.denIrred*k))
 	}   
-	 this.simplifie=function () {
+	 this.simplifie=function() {
 		return fraction(this.numIrred,this.denIrred)
 	}
 	/**
 	 * @return {object} L'opposé de la fraction
 	 */
-     this.oppose = function (){
+     this.oppose = function(){
         return fraction(-this.num,this.den)
 	}
 	/**
 	 * @return {object]} L'opposé de la fracion réduite
 	 */
-     this.opposeIrred = function (){
+     this.opposeIrred = function(){
         return fraction(-this.numIrred,this.denIrred)
     }
 	/**
 	 * @return {object]} L'inverse de la fraction
 	 */
-     this.inverse = function (){
+     this.inverse = function(){
         return fraction(this.den,this.num)
 	}
 	/**
 	 * @return {object} L'inverse de la fraction simplifiée
 	 */
-     this.inverseIrrred = function (){
+     this.inverseIrrred = function(){
         return fraction(this.denIrred,this.numIrred)
 	}
 	/**
 	 * @return {object} La somme des fractions
 	 * @param {object} f2 La fraction qui s'ajoute
 	 */
-     this.sommeFraction =function (f2) {
+     this.sommeFraction =function(f2) {
         return fraction(this.num*f2.den+f2.num*this.den,this.den*f2.den)
 	}
 	/**
 	 * @return {object} La somme de toutes les fractions
 	 * @param  {...any} fractions Liste des fractions à ajouter à la fraction
 	 */
-     this.sommeFractions = function (...fractions){
+     this.sommeFractions = function(...fractions){
         let s=fraction(this.num,this.den)
         for (let f of fractions) {
             s=s.sommeFraction(f)
@@ -5270,11 +5444,11 @@ export function  Fraction(num,den) {
 	 * @return {object} Le produit des deux fractions
 	 * @param {object} f2  LA fraction par laquelle est multipliée la fraction
 	 */
-     this.produitFraction = function (f2) {
+     this.produitFraction = function(f2) {
 
         return fraction(this.num*f2.num,this.den*f2.den)
 	}
-	 this.texProduitFraction = function (f2) {
+	 this.texProduitFraction = function(f2) {
 			return `${tex_fraction(this.num,this.den)}\\times ${tex_fraction(f2.num,f2.den)}=${tex_fraction(this.num+`\\times`+f2.num,this.den+`\\times`+f2.den)}=${tex_fraction(this.num*f2.num,this.den*f2.den)}`
 	} 
 
@@ -5282,14 +5456,14 @@ export function  Fraction(num,den) {
 	 * @return {object} La puissance n de la fraction
 	 * @param {integer} n l'exposant de la fraction 
 	 */
-     this.puissanceFraction = function (n) {
+     this.puissanceFraction = function(n) {
         return fraction(this.num**n,this.den**n)
 	}
 	/**
 	 * @param  {...any} fractions Les fractions qui multiplient la fraction
 	 * @return Le produit des fractions
 	 */
-     this.produitFractions = function (...fractions){
+     this.produitFractions = function(...fractions){
         let p=fraction(this.num,this.den)
         for (let f of fractions) {
             p=p.produitFraction(f)
@@ -5300,14 +5474,14 @@ export function  Fraction(num,den) {
 	 * @param {object} f2 est la fracion qui est soustraite de la fraction
 	 * @return {objet} La différence des deux fractions
 	 */
-     this.differenceFraction = function (f2) {
+     this.differenceFraction = function(f2) {
         return this.sommeFraction(f2.oppose())
 	}
 
 /**
  * @return {object}  Renvoie une fraction avec comme dénominateur une puissance de 10 ou 'NaN' si la fraction n'a pas de valeur décimale
  */
-	 this.fractionDecimale = function (){
+	 this.fractionDecimale = function(){
 		let den=this.denIrred
 		let liste=obtenir_liste_facteurs_premiers(den)
 		let n2=0,n5=0
@@ -5323,20 +5497,20 @@ export function  Fraction(num,den) {
 	/**
 	 * @return {number} La valeur décimale de la fraction
 	 */
-	 this.valeurDecimale = function (){
+	 this.valeurDecimale = function(){
 		if (this.fractionDecimale()!='NaN') return calcul(this.fractionDecimale().num/this.fractionDecimale().den)
 		else return `Ce n\'est pas un nombre décimal`
 	}
 	/**
 	 * @return {string} Code Latex de la fraction
 	 */
-	 this.texFraction = function (){
+	 this.texFraction = function(){
 		return tex_fraction_signe(this.num,this.den)
 	}
 	/**
 	 * @return {string} code Latex de lafraction simplifiée
 	 */
-	 this.texFractionSimplifiee = function (){
+	 this.texFractionSimplifiee = function(){
 		return tex_fraction_signe(this.numIrred,this.denIrred)
 	}
     /**
@@ -5344,7 +5518,7 @@ export function  Fraction(num,den) {
      * @param {integer} n entier par lequel multiplier la fraction 
      * @return {object} fraction multipliée par n
      */
-     this.multiplieEntier = function (n) {
+     this.multiplieEntier = function(n) {
         return fraction(n*this.num,this.den);
     };
 
@@ -5353,35 +5527,35 @@ export function  Fraction(num,den) {
      * @param {integer} n entier par lequel multiplier la fraction 
      * @return {object} fraction multipliée par n simplifiée
      */
-     this.multiplieEntierIrred = function (n) {
+     this.multiplieEntierIrred = function(n) {
         return fraction(fraction_simplifiee(n*this.num,this.den)[0],fraction_simplifiee(n*this.num,this.den)[1]);
 	};
 	/**
 	 * @return fraction divisée par n
 	 * @param {integer} n entier qui divise la fraction 
 	 */
-	 this.entierDivise=function (n){
+	 this.entierDivise=function(n){
 		return fraction(this.num,n*this.den)
 	}
 	/**
 	 * @return fraction divisée par n et réduite si possible
 	 * @param {integer} n entier qui divise la fraction 
 	 */
-	 this.entierDiviseIrred=function (n){
+	 this.entierDiviseIrred=function(n){
 		return fraction(fraction(this.num,n*this.den).numIrred,fraction(this.num,n*this.den).denIrred)
 	}
 	/**
 	 * @return {object} la fraction augmentée de n
 	 * @param {integer} n entier à ajouter à la fraction 
 	 */
-	 this.ajouteEntier=function (n){
+	 this.ajouteEntier=function(n){
 		return fraction(this.num+this.den*n,this.den)
 	}
 /**
  * @return {object} n moins la fraction
  * @param {integer} n l'entier duqel on soustrait la fraction 
  */
-	 this.entierMoinsFraction=function (n){
+	 this.entierMoinsFraction=function(n){
 		return (fraction(n*this.den-this.num,this.den))
 	}
     /**
@@ -5390,11 +5564,11 @@ export function  Fraction(num,den) {
      * @param {*} type 'gateau' ou 'segment' ou 'barre'
 	 * @Auteur Jean-Claude Lhote
      */
-	 this.representationIrred = function  (x, y, rayon, depart = 0, type = 'gateau', couleur = 'gray',unite0=0,unite1=1,scale=1,label="") {
+	 this.representationIrred = function (x, y, rayon, depart = 0, type = 'gateau', couleur = 'gray',unite0=0,unite1=1,scale=1,label="") {
 		let objets = [], n, num, k, dep, s, a, O, C
 		n = quotientier(this.numIrred, this.denIrred)
 		num = this.numIrred
-		let unegraduation=function (x,y,couleur='black',epaisseur=1){
+		let unegraduation=function(x,y,couleur='black',epaisseur=1){
 			let A=point(x,y+0.2)
 			let B=point(x,y-0.2)
 			let g=segment(A,B)
@@ -5538,11 +5712,11 @@ export function  Fraction(num,den) {
 	 * les arguments unite0 et unite1 servent pour la représentation 'segment'. On peut ainsi choisir les délimiteurs de l'unité, ce sont habituellement 0 et 1, à ce moment la, chaque entier est affiché sous sa graduation.
 	 * Si ce sont des variable de type string, il n'y a que ces deux étiquettes qui sont écrites.
 	 */
-	 this.representation = function  (x, y, rayon, depart = 0, type = 'gateau', couleur = 'gray',unite0=0,unite1=1,scale=1,label="") {
+	 this.representation = function (x, y, rayon, depart = 0, type = 'gateau', couleur = 'gray',unite0=0,unite1=1,scale=1,label="") {
 		let objets = [], n, num, k, dep, s, a, O, C
 		n = quotientier(this.num, this.den)
 		num = this.num
-		 let unegraduation=function (x,y,couleur='black',epaisseur=1){
+		 let unegraduation=function(x,y,couleur='black',epaisseur=1){
 			let A=point(x,y+0.2)
 			let B=point(x,y-0.2)
 			let g=segment(A,B)
@@ -5562,7 +5736,7 @@ export function  Fraction(num,den) {
 				}
 				dep = rotation(point(x + rayon + k * 2 * (rayon + 0.5), y), O, 90-depart * 360 / this.den)
 				for (let j = 0; j < Math.min(this.den, num); j++) {
-					a = arc(dep, O,- 360 / this.den, true, couleur)
+					a = arc(dep, O,- 360 / this.den, true,couleur)
 					a.opacite = 0.3
 					dep = rotation(dep, O, -360 / this.den)
 					objets.push(a)
@@ -5682,7 +5856,7 @@ export function  Fraction(num,den) {
 
 
 }
-export function  nombreEnLettres(nb,type=1) {
+export function nombreEnLettres(nb,type=1) {
 	let partie_entiere,partie_decimale,nbstring,nb_dec,decstring
 	if (estentier(nb)) return partieEntiereEnLettres(nb)
 	else {
@@ -5719,7 +5893,7 @@ export function  nombreEnLettres(nb,type=1) {
 
  * 
  */
-export function  partieEntiereEnLettres(nb) {
+export function partieEntiereEnLettres(nb) {
 	let dictionnaire = {
 0 : "zéro",
 "000" : "",
@@ -6988,7 +7162,7 @@ export function Trouver_solution_mathador(
   }
 
 // Gestion du fichier à télécharger
-export function  telechargeFichier(text,filename) {
+export function telechargeFichier(text,filename) {
 	var element = document.createElement('a');
 	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 	element.setAttribute('download', filename);
@@ -7008,7 +7182,7 @@ export function  telechargeFichier(text,filename) {
 * @param {string} Le titre de l'entête 
 * @author Rémi Angot
 */
-export function  intro_LaTeX(entete = "Exercices",liste_packages) {
+export function intro_LaTeX(entete = "Exercices",liste_packages) {
 	if (entete=='') {entete='Exercices'}
 		return `\\documentclass[12pt]{article}
 \\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
@@ -7076,7 +7250,7 @@ ${preambule_personnalise(liste_packages)}
 * Renvoie un texte avec le préambule d'un fichier LaTeX avec le style CoopMaths
 * @author Rémi Angot
 */
-	export function  intro_LaTeX_coop(liste_packages){
+	export function intro_LaTeX_coop(liste_packages){
 
 		let intro_LaTeX_coop = `\\documentclass[12pt]{article}
 \\usepackage[left=1.5cm,right=1.5cm,top=4cm,bottom=2cm]{geometry}
@@ -7247,7 +7421,7 @@ ${preambule_personnalise(liste_packages)}
 
 
 
-export function  preambule_personnalise(liste_packages){
+export function preambule_personnalise(liste_packages){
 	let result = ''
 	for (let packages of liste_packages){
 		switch (packages) {
