@@ -21,9 +21,27 @@ function liste_de_question_to_contenu(argument) {
 		if (document.getElementById('supprimer_reference').checked == true) {
 			argument.contenu = tex_consigne(argument.consigne) + vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
 		} else {
-			argument.contenu = `\\marginpar{\\footnotesize ${argument.id}}` + tex_consigne(argument.consigne) + vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
+			argument.contenu = tex_consigne(argument.consigne) + `\n\\marginpar{\\footnotesize ${argument.id}}` +  vspace + tex_introduction(argument.introduction) + tex_multicols(tex_enumerate(argument.liste_questions,argument.spacing),argument.nb_cols)
 		}
 		argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
+	}
+	
+}
+function liste_de_choses_a_imprimer(argument) {
+	if (sortie_html) {
+		argument.contenu =  html_ligne(argument.liste_questions,argument.spacing)
+		argument.contenu_correction = ""	
+	} else {
+		let vspace = '';
+		if (argument.vspace) {
+			vspace = `\\vspace{${argument.vspace} cm}\n`
+		}
+		if (document.getElementById('supprimer_reference').checked == true) {
+			argument.contenu = tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		} else {
+			argument.contenu = `\n\\marginpar{\\footnotesize ${argument.id}}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		}
+		argument.contenu_correction = ""
 	}
 	
 }
@@ -43,7 +61,7 @@ function liste_de_question_to_contenu_sans_numero(argument) {
 		if (document.getElementById('supprimer_reference').checked == true) {
 			argument.contenu = tex_consigne(argument.consigne) + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 		} else {
-			argument.contenu = `\\marginpar{\\footnotesize ${argument.id}}` + tex_consigne(argument.consigne) + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+			argument.contenu = tex_consigne(argument.consigne) + `\n\\marginpar{\\footnotesize ${argument.id}}` + tex_introduction(argument.introduction) + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 		}
 		// argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate_sans_numero(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
 		argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_paragraphe(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
@@ -63,7 +81,7 @@ function liste_de_question_to_contenu_sans_numero_et_sans_consigne(argument) {
 	if (document.getElementById('supprimer_reference').checked == true) {
 		argument.contenu = tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 	} else {
-		argument.contenu = `\\marginpar{\\footnotesize ${argument.id}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
+		argument.contenu = `\n\\marginpar{\\footnotesize ${argument.id}` + tex_multicols(tex_paragraphe(argument.liste_questions,argument.spacing),argument.nb_cols)
 	}
 		// argument.contenu_correction = tex_consigne(argument.consigne_correction) + tex_multicols(tex_enumerate_sans_numero(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
 	argument.contenu_correction =  tex_multicols(tex_paragraphe(argument.liste_corrections,argument.spacing_corr),argument.nb_cols_corr)	
@@ -182,10 +200,8 @@ class NombreDecimal {
 			nombre=calcul(-nombre)
 		}
 		else this.signe=`+`
-		console.log(nombre)
 		this.exposant=Math.floor(Math.log10(nombre))
 		nombre=nombre/10**this.exposant
-		console.log(nombre)
 		this.mantisse=[]
 		for (let k=0;k<16;k++) {
 			if (egal(Math.ceil(nombre)-nombre,0,0.00001)) {
@@ -196,7 +212,6 @@ class NombreDecimal {
 				this.mantisse.push(Math.floor(nombre))
 				nombre=(nombre-this.mantisse[k])*10
 			}
-			console.log(nombre)
 			if (egal(nombre,0,0.001)) break
 		}
 		
@@ -602,6 +617,7 @@ function filtreDictionnaire(dict,sub) {
 * @Auteur Rémi Angot
 */
 function combinaison_listes(liste,taille_minimale){
+	if (liste.length==0) return []
 	l = shuffle(liste);
 	while (l.length<taille_minimale){
 		l = l.concat(shuffle(liste))
@@ -1088,7 +1104,34 @@ function tex_fraction_reduite(n,d){
 		return tex_fraction_signe(fraction_simplifiee(n,d)[0],fraction_simplifiee(n,d)[1]);
 	}
 }
-
+/**
+ * produit_de_deux_fractions(num1,den1,num2,den2) retourne deux chaines :
+ * la première est la fraction résultat, la deuxième est le calcul mis en forme Latex avec simplification éventuelle
+ * Applique une simplification si le numérateur de l'une est égal au dénominateur de l'autre.
+ */
+function produit_de_deux_fractions(num1,den1,num2,den2) {
+	let num,den,tex_produit
+	if (num1==den2) {
+		tex_produit=`\\dfrac{\\cancel{${num1}}\\times ${num2}}{${den1}\\times\\cancel{${den2}}}`
+		num=num2
+		num1=1
+		den2=1
+		den=den1
+	}
+	else if (num2==den1) {
+		tex_produit=`\\dfrac{${num1}\\times \\cancel{${num2}}}{\\cancel{${den1}}\\times${den2}}`
+		num=num1
+		num2=1
+		den1=1
+		den=den2
+	}
+	else {
+		num=num1*num2
+		den=den1*den2
+		tex_produit=`\\dfrac{${num1}\\times ${num2}}{${den1}\\times${den2}}`
+	}
+	return [tex_fraction(num,den),tex_produit,[num1,den1,num2,den2]]
+}
 /**
 *
 * Simplifie une fraction en montrant les étapes
@@ -1412,7 +1455,6 @@ cesar=function (word,decal){
 codeCesar=function(mots,decal){
 	let motsCodes=[]
 	for (let x=0;x<mots.length;x++) {
-		console.log(mots[x])
 		motsCodes.push(cesar(mots[x],decal))
 	}
 	return motsCodes
@@ -1803,13 +1845,20 @@ function tex_nombre(nb){
 * @Auteur Rémi Angot
 */
 function tex_nombre2(nb){
-	let nombre = tex_nombrec(nb);
+	let nombre = tex_nombre(math.format(nb,{notation:'auto',lowerExp:-12,upperExp:12,precision:12}))
 	let rang_virgule = nombre.indexOf(',')
 	for (let i=rang_virgule+4; i<nombre.length; i+=3){
 		nombre = nombre.substring(0,i)+'\\thickspace '+nombre.substring(i)
 		i+=13 // comme on a ajouté un espace, il faut décaler l'indice de 1
 	}
-	return nombre
+	if (sortie_html){
+		return nombre
+	} else {
+		return tex_nombre(math.format(nb,{notation:'auto',lowerExp:-12,upperExp:12,precision:12}))
+	}
+}
+function tex_nombrec2(expr,precision=8){
+	return math.format(math.evaluate(expr),{notation:'auto',lowerExp:-12,upperExp:12,precision:precision})
 }
 
 /**
@@ -1953,7 +2002,7 @@ function couleurAleatoire() {
 
   function arcenciel(i,fondblanc=true) {
 	  let couleurs
-	  if (fondblanc) couleurs=['violet','indigo',  'blue', 'green', 'lime', 'orange', 'red']
+	  if (fondblanc) couleurs=['violet','purple',  'blue', 'green', 'lime', 'orange', 'red']
 	  else couleurs=['violet','indigo',  'blue', 'green', 'yellow', 'orange', 'red']
 	  return couleurs[i%7]
   }
@@ -2066,6 +2115,15 @@ function obtenir_liste_fractions_irreductibles() {
 	return  [[1,2],[1,3],[2,3],[1,4],[3,4],[1,5],[2,5],[3,5],[4,5],
 	[1,6],[5,6],[1,7],[2,7],[3,7],[4,7],[5,7],[6,7],[1,8],[3,8],[5,8],[7,8],
 	[1,9],[2,9],[4,9],[5,9],[7,9],[8,9],[1,10],[3,10],[7,10],[9,10]]
+}
+
+/**
+* Retourne une liste de fractions irréductibles de dénominateur égal à 2 3 5 7
+* @Auteur Mireille Gain
+*/
+function obtenir_liste_fractions_irreductibles_faciles() {
+	return  [[1,2],[1,3],[2,3],[1,5],[2,5],[3,5],[4,5],
+	[1,7],[2,7],[3,7],[4,7],[5,7],[6,7]]
 }
 
 /**
@@ -2478,13 +2536,10 @@ function SVG_tracer_point(mon_svg,x,y,nom,couleur,shiftxnom,shiftynom,montrer_co
 function SVG_tracer_flecheH(mon_svg,x,y) {
 	//creer un groupe pour la fleche
 	let fleche = mon_svg.group()
-	let c1 = fleche.line(-5,5,0,0)
+	let c1 = fleche.line(x-5,y-5,x,y)
 	c1.stroke({ color: 'black', width: 3, linecap: 'round' })
-	let c2 = fleche.line(-5,-5,0,0)
+	let c2 = fleche.line(x-5,y+5,x,y)
 	c2.stroke({ color: 'black', width: 3, linecap: 'round' })
-	//déplace la croix
-	fleche.move(x,y)
-	fleche.dmove(-5,-5)
 }
 /**
  * 
@@ -3127,6 +3182,52 @@ function simpExp(b,e) {
 };
 
 /**
+ * Fonction pour écrire des notations scientifique de la forme a * b ^ n
+ * @param a {number} mantisse
+ * @param b {number} base
+ * @param n {number} exposant 
+ * @author Erwan Duplessy
+ */	
+function puissance(b,n) {
+	switch (b) {
+		case 0:
+			return `0`;
+			break;
+		case 1:
+			return `1`;
+			break;
+		case -1:
+			if (b%2==0) {
+				return `1`;
+				break;
+			} else {
+				return `-1`;
+				break;
+			};
+		default:
+			if (b<0) {
+				return `(${b})^{${n}}`;
+			} else {
+				return `${b}^{${n}}`;				
+			}
+			break;
+	}
+}
+
+function ecriturePuissance(a, b, n) {
+	switch (a) {
+		case 0:
+			return `$0$`;
+			break;
+		case 1:
+			return `$${puissance(b,n)}$`;
+			break;
+		default:
+			return `$${String(Math.round(a*1000)/1000).replace('.','{,}')} \\times ${puissance(b,n)}$`.replace('.','{,}');
+	}
+}
+
+/**
  * Fonction pour simplifier les notations puissance dans certains cas
  * si la base vaut 1 ou -1 quelque soit l'exposant, retourne 1 ou -1,
  * si la base est négative on teste la parité de l'exposant pour alléger la notation sans le signe
@@ -3136,39 +3237,41 @@ function simpExp(b,e) {
  * @author Sébastien Lozano
  */	
 function simpNotPuissance(b,e) {
+	// on switch sur la base
 	switch (b) {
-		case -1 : 
+		case -1 : // si la base vaut -1 on teste la parité de l'exposant
 			if (e%2==0) {
 				return ` 1`;
-				break;
+				//break;
 			} else {
 				return ` -1`;
-				break;
+				//break;
 			};
-		case 1 : 
+			break;
+		case 1 : // si la base vaut 1 on renvoit toujours 1
 			return ` 1`;
 			break;
-		default : 
+		default : // sinon on switch sur l'exposant
 			switch (e) {
-				case 0 :
+				case 0 : // si l'exposant vaut 0 on ranvoit toujours 1
 					return `1`;
 					break;
-				case 1 :
+				case 1 : // si l'exposant vaut 1 on renvoit toujours la base 
 					return ` ${b}`;
 					break;
-				default :
-					if (b<0 && e%2==0) {
+				default : // sinon on teste le signe de la base et la parité de l'exposant
+					if (b<0 && e%2==0) { // si la base est négative et que l'exposant est pair, le signe est inutile
 						return ` ${b*-1}^{${e}}`;
-						break;
+						//break;
 					} else {
-						//return ` ${b}^{${e}}`;
-						return ` `;
-						break;
+						return ` ${b}^{${e}}`;
+						//return ` `;
+						//break;
 					};
+					break;
 			};
 	};
 };
-
 
 /**
  * Fonction pour écrire en couleur la forme éclatée d'une puissance
@@ -3257,6 +3360,18 @@ function creer_modal(numero_de_l_exercice,contenu,label_bouton,icone) {
 		<div class="ui modal" id="modal${numero_de_l_exercice}">
 		${contenu}
 		</div>`
+	return HTML;
+}
+/**
+* Fonction créant le bouton d'aide utilisée par les différentes fonctions modal_ type de contenu
+* @param numero_de_l_exercice
+* @param contenu code HTML 
+* @param icone 
+* @Auteur Rémi Angot
+*/	
+function creerBoutonMathalea2d(numero_de_l_exercice,fonction,label_bouton="Aide",icone="info circle") {
+	let HTML = `<button class="ui toggle left floated mini compact button" id = "btnMathALEA2d_${numero_de_l_exercice}" onclick="${fonction}"><i class="large ${icone} icon"></i>${label_bouton}</button>`
+
 	return HTML;
 }
 
@@ -4304,10 +4419,19 @@ function texte_ou_pas(texte) {
 /**
  * Crée un tableau avec un nombre de lignes et de colonnes déterminées par la longueur des tableaux des entetes passés en paramètre
  * Les contenus sont en mode maths par défaut, il faut donc penser à remplir les tableaux en utilisant éventuellement la commande \\text{}
- * @param {array} tab_entetes_colonnes contient les entetes des colonnes
+ * tab_C_L(['coin','A','B'],['1','2'],['A1','B1','A2','B2']) affiche le tablleau ci-dessous
+ * ------------------
+ * | coin | A  | B  |
+ * ------------------
+ * |  1   | A1 | B1 |
+ * ------------------
+ * |  2   | A2 | B2 |
+ * ------------------
+* @param {array} tab_entetes_colonnes contient les entetes des colonnes
  * @param {array} tab_entetes_lignes contient les entetes des lignes
  * @param {array} tab_lignes contient les elements de chaque ligne
  * @author Sébastien Lozano
+ * 
  */
 function tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	'use strict';
@@ -4329,17 +4453,38 @@ function tab_C_L(tab_entetes_colonnes,tab_entetes_lignes,tab_lignes) {
 	tableau_C_L +=`}\n`;
 					
 	tableau_C_L += `\\hline\n`
-	tableau_C_L += tab_entetes_colonnes[0];
+	if (typeof tab_entetes_colonnes[0]=='number') {
+		tableau_C_L += tex_nombre(tab_entetes_colonnes[0]);
+	}
+	else
+	{
+		tableau_C_L += tab_entetes_colonnes[0];		
+	}
 	for (let k=1;k<C;k++) {
-		tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;
+		if (typeof tab_entetes_colonnes[k]=='number') {
+				tableau_C_L += ` & `+tex_nombre(tab_entetes_colonnes[k])+``;
+		}
+		else {
+			tableau_C_L += ` & `+tab_entetes_colonnes[k]+``;		
+		}
 	};
 	tableau_C_L += `\\\\\n`;
 	tableau_C_L += `\\hline\n`;
 	// on construit toutes les lignes
 	for (let k=0;k<L;k++) {
-		tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		if (typeof tab_entetes_lignes[k]=='number'){
+			tableau_C_L += ``+tex_nombre(tab_entetes_lignes[k])+``;
+		}
+		else {
+			tableau_C_L += ``+tab_entetes_lignes[k]+``;
+		}
 		for (let m=1;m<C;m++) {
-			tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			if (typeof tab_lignes[(C-1)*k+m-1]== 'number') {
+				tableau_C_L += ` & `+tex_nombre(tab_lignes[(C-1)*k+m-1]);
+			}
+			else {
+				tableau_C_L += ` & `+tab_lignes[(C-1)*k+m-1];
+			}
 		};
 		tableau_C_L += `\\\\\n`;
 		tableau_C_L += `\\hline\n`;	
@@ -5278,7 +5423,7 @@ function Fraction(num,den) {
 	this.fractionEgale = function(k){
 		return fraction(calcul(this.numIrred*k),calcul(this.denIrred*k))
 	}   
-	this.simpsimplifie=function() {
+	this.simplifie=function() {
 		return fraction(this.numIrred,this.denIrred)
 	}
 	/**
