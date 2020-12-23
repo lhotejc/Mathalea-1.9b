@@ -361,8 +361,8 @@ var liste_des_exercices_disponibles = {
   "betaSVG": AfficherSVG,
   //"betaExoZero" : Exercice_zero_mathalea2d,
   "betaExoConstruction" : Exercice_constructions_basiques,
-  P001: Code_LaTeX_personnalise,
-  // 'P002': LaTeX_static,
+  "P001": Code_LaTeX_personnalise,
+  // "P002": LaTeX_static,
   "P003": feuille_d_axes_gradues,
   "P004": Feuille_de_zooms,
   "P005": Feuille_de_grilles,
@@ -370,8 +370,8 @@ var liste_des_exercices_disponibles = {
   "P007" : Pavages_mathalea2d,
   "cours": Questions_de_cours,
   "LaTeX": Code_LaTeX_personnalise,
-  // 'Perso' : HTML_personnalise,
-  // 'TsvgjsKatex' : tests_SVGJS_KATEX,  
+  // "Perso" : HTML_personnalise,
+  // "TsvgjsKatex" : tests_SVGJS_KATEX,  
 };
 
 //Pour modifier les exercices lorsqu'ils sont en mode diaporama
