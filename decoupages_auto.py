@@ -58,7 +58,7 @@ def getAllRefsAlreadyClean(niveau):
 # On renvoie le code et le numero de la ligne avant le second /**
 # et la ref de l'exo s'il na pas était traité sinon chaine vide
 # Dans un tableau
-def getCodeEx(debut_du_scan,path_to_file,niv,nivAlready):    
+def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):    
     file = open(path_to_file,"r")
     content = file.readlines()[debut_du_scan:]
     compteur = 0
@@ -89,22 +89,41 @@ def getCodeEx(debut_du_scan,path_to_file,niv,nivAlready):
     return [code,tab[1]-1,reference]
     # print(code)
     # print(tab)
-        
+
+
+# Récupérer toutes les lignes sur lesquelles on a /**
+# qui correspondent au début du code à récupérer
+# dans un fichier donné
+def getAllNbLineBeginCode(path_to_file):
+    file = open(path_to_file,"r")
+    content = file.readlines()
+    compteur = 0
+    tab=[]
+    for line in content:
+        compteur+=1
+        if "/**" in line:
+            tab.append(compteur)
+    file.close()
+    return tab
+
+# Écrire le code dans un fichier si l'exo n'existe pas
+
 if __name__ == '__main__':
     #print(getAllRefClean())
     #print(getAllRefCleanNiv(['6']))
     #print(getAllRefsAlreadyClean('Profs'))
     # deb = 0
-    # print(getCodeEx(deb,"./include/mathalea_exercices.js"))
+    # print(getCodeRefEx(deb,"./include/mathalea_exercices.js"))
     # print("=======================================================================")
     # print("=======================================================================")
-    # debsuiv=getCodeEx(deb,"./include/mathalea_exercices.js")[1]
-    # print(getCodeEx(debsuiv,"./include/mathalea_exercices.js"))
+    # debsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]
+    # print(getCodeRefEx(debsuiv,"./include/mathalea_exercices.js"))
     # print("=======================================================================")
     # print("=======================================================================")
-    # debsuivsuiv=getCodeEx(deb,"./include/mathalea_exercices.js")[1]+getCodeEx(debsuiv,"./include/mathalea_exercices.js")[1]
-    # print(getCodeEx(debsuivsuiv,"./include/mathalea_exercices.js"))
-    print(getCodeEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
-    #print(getCodeEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
+    # debsuivsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]+getCodeEx(debsuiv,"./include/mathalea_exercices.js")[1]
+    # print(getCodeRefEx(debsuivsuiv,"./include/mathalea_exercices.js"))
+    # print(getCodeRefEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
+    # print(getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
+    print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
 
     
