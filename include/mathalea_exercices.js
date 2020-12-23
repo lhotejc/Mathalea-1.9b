@@ -11412,28 +11412,6 @@ function Pavages_et_demi_tour() {
   this.sup = 2;
 }
 /**
- * Exercice en html seulement. Symétrie axiale dans un pavage.
- * @Auteur Jean-Claude Lhote
- * référence 6G25-2
- */
-function Pavages_et_symetries() {
-  Pavages_et_transformations.call(this);
-  this.titre =
-    "Trouver l'image d'une figure par une symétrie axiale dans un pavage carré (sortie Latex Impossible)";
-  this.sup = 1;
-}
-/**
- * Exercice en html seulement. Translations dans un pavage.
- * @Auteur Jean-Claude Lhote
- * référence 4G11-1
- */
-function Pavages_et_translation() {
-  Pavages_et_transformations.call(this);
-  this.titre =
-    "Trouver l'image d'une figure par une translation dans un pavage (sortie Latex Impossible)";
-  this.sup = 3;
-}
-/**
  * Exercice en html seulement. Rotationss dans un pavage.
  * @Auteur Jean-Claude Lhote
  * référence 3G12-1
