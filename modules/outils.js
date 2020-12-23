@@ -1292,6 +1292,22 @@ export function  trie_positifs_negatifs(liste){
 }
 
 /**
+* Renvoie un tableau (somme des termes positifs, somme des termes négatifs)
+* @Auteur Rémi Angot
+*/
+export function somme_des_termes_par_signe(liste){
+	let somme_des_positifs = 0, somme_des_negatifs = 0;
+	for (var i = 0; i < liste.length; i++) {
+		if (liste[i]>0){
+			somme_des_positifs += liste[i]
+		} else {
+			somme_des_negatifs += liste[i]
+		}
+	}
+	return [somme_des_positifs,somme_des_negatifs]
+}
+
+/**
 * Créé un string de nbsommets caractères dans l'ordre alphabétique et en majuscule qui ne soit pas dans la liste donnée en 2e argument
 * @Auteur Rémi Angot
 */
