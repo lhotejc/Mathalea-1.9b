@@ -281,8 +281,8 @@ var liste_des_exercices_disponibles = {
   // 'P002': LaTeX_static,
   "cours": Questions_de_cours,
   "LaTeX": Code_LaTeX_personnalise,
-  // 'Perso' : HTML_personnalise,
-  // 'TsvgjsKatex' : tests_SVGJS_KATEX,  
+  // "Perso" : HTML_personnalise,
+  // "TsvgjsKatex" : tests_SVGJS_KATEX,  
 };
 
 //Pour modifier les exercices lorsqu'ils sont en mode diaporama
