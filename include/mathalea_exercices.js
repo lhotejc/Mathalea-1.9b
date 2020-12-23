@@ -49,12 +49,7 @@ var liste_des_exercices_disponibles = {
   "6C33": Priorites,
   //"6C99" : separation6C,
   //"6C99" : separation6C,
-  "6D10": Conversions_de_durees,
-  "6D101": Heures_decimales,
-  "6D11": Somme_de_durees,
-  "6D12": Calculs_de_durees_ou_d_horaires,
   "6G10": Notation_segment_droite_demi_droite,
-  "6G10-1": Description_segment_droite_demi_droite,
   "6G10-2": Utiliser_le_codage_pour_decrire_6e,
   "6G11": Tracer_des_perpendiculaires,
   "6G12": Tracer_des_paralleles,
@@ -83,13 +78,11 @@ var liste_des_exercices_disponibles = {
   "6M11-2": Perimetre_ou_aire_de_figures_composees,
   "6M10": Reglages_6M10,
   "6M12": Reglages_6M12,
-  "6M20": Aire_de_triangles,
   "6M22": Reglages_6M22,
   "6M22-1": Perimetre_aire_disques,
   "6M22-2": Perimetre_aire_et_portions_de_disques,
   "6M23": Exercice_conversions_aires,
   "6M25": Connaitre_formules_de_perimetre_et_aires,
-  "6M30": Calcul_de_volumes_6e,
   "6M31": Exercice_conversions_volumes,
   "6M31-2": Unites_de_volumes_et_de_capacite,
   "6N10": Ecrire_nombres_entiers,
@@ -99,16 +92,12 @@ var liste_des_exercices_disponibles = {
   "6N10-4": Ecrire_nombres_entiers_formates,
   "6N10-5" : Exercice_labyrinthe_numeration,
   "6N11": Lire_abscisse_entiere,
-  "6N11-2": Placer_un_point_abscisse_entiere,
   "6N11-3": Encadrer_un_entier_par_deux_entiers_consecutifs,
   "6N11-4": Ranger_ordre_croissant_decroissant,
   "6N12": Multiplier_entier_par_10_100_1000,
   "6N13": Exercice_6N13,
-  "6N14": Representer_une_fraction,
   "6N20": Exercice_fractions_decomposer,
-  "6N20-1": Encadrer_fraction_entre_2_entiers,
   "6N20-2": Exercice_fractions_differentes_ecritures,
-  "6N21": Lire_abscisse_fractionnaire,
   "6N22-1": Rapports_sur_un_segment,
   "6N22-2": Ajouter_des_fractions_d_unite,
   "6N23": Exercice_ecriture_decimale_a_partir_de_fraction_decimale,
@@ -119,8 +108,6 @@ var liste_des_exercices_disponibles = {
   "6N23-4": Nombre_decimal_oralise_de_differentes_manieres,
   "6N24": Exercice_6N24,
   "6N24-1": Exercice_multiplier_ou_diviser_un_nombre_entier_par_10_100_1000,
-  "6N30": Lire_abscisse_decimale,
-  "6N30-1": Lire_abscisse_decimale_bis,
   "6N30-2": Placer_points_sur_axe,
   "6N31": Comparer_decimaux,
   "6N31-1": Encadrer_un_decimal_par_deux_entiers_consecutifs,
@@ -197,7 +184,6 @@ var liste_des_exercices_disponibles = {
   "5L14-6": Determiner_derniere_operation_exp_num,
   "5L15": Tester_une_egalite,
   "5M10": Aire_du_parallelogramme,
-  "5M20": Calcul_de_volumes_5e,
   "5P10": Tableaux_et_proportionnalite,
   "5R10-0": Trouver_oppose,
   "5R11": Lire_abscisse_relative,
@@ -239,7 +225,6 @@ var liste_des_exercices_disponibles = {
   "4C32-1": Calculs_avec_puissances_de_dix,
   "4C33-1": Puissances_d_un_relatif_1,
   "4C33-3": Puissances_d_un_relatif_2,
-  "4L10": Exercice_developper,
   "4L10-1": Reductions_pieges_classiques,
   "4L13-0": Mettre_en_equation_sans_resoudre,
   "4L13-1": Forme_litterale_introduire_une_lettre,
@@ -248,7 +233,6 @@ var liste_des_exercices_disponibles = {
   "4L14-2": Tester_si_un_nombre_est_solution_d_une_equation_deg2,
   "4L15-0": Trouver_erreur_resol_eq_deg1,
   "4L15-1": Equations_fractions,
-  "4L20": Exercice_equation1,
   "4C21-1": Exercice_additionner_des_fractions,
   "4C21": Exercice_additionner_ou_soustraire_des_fractions,
   "4C22-1": Exercice_trouver_l_inverse,
@@ -276,102 +260,29 @@ var liste_des_exercices_disponibles = {
   "4G40": Exercice_Trigo_longueurs_4e,
   "4G41": Exercice_Trigo_angles_4e,
   "4G51": Representer_un_solide_4e,
-  "4G53": Calcul_de_volumes_4e,
-  "3A10": DivisionEuclidienne_multiplesDiviseurs_Criteres,
-  "3A11": Premier_ou_pas,
-  "3A11-1": Premier_ou_pas_critere_par7_par11,
-  "3A11-2": Decomposition_facteurs_premiers,
-  "3A11-3": Lister_Diviseurs_Par_Decomposition_facteurs_premiers,
-  "3A12": Fractions_irreductibles,
-  "3A13": PPCM_Engrenages,
-  "3G43": Calcul_de_volumes_3e,
-  "3L10": Oppose_expression,
-  "3L10-1": Parentheses_precedes_de_moins_ou_plus,
-  "3L11": Exercice_developper,
-  "3L11-1": Double_distributivite,
-  "3L11-2": Reduction_si_possible,
-  "3L11-3": Distributivite_simple_double_reduction,
-  "3L11-4": Factoriser_par_nombre_ou_x,
-  "3L11-5": identites_calculs,
-  "3L12-1": Developper_Identites_remarquables3,
-  "3L12": Factoriser_Identites_remarquables3,
-  "3L13": Exercice_equation1, //identique à 4L20
-  "3L13-1": Exercice_equation1_2,
-  "3L13-2": Eq_resolvantes_Thales,
-  "3L14": Resoudre_une_equation_produit_nul,
-  "3L14-1": Resoudre_une_equation_produit_nul_niv2,
-  "3L15": Resoudre_une_equation_x2_egal_A,
-  "3P10": Evolutions_en_pourcentage,
-  "3P10-1": Coefficient_evolution,
-  "3G10-1": Transformations_du_plan_et_coordonnees,
   "3G10-2": Transformations_3e,
-  "3G10-3": Construire_rotation_point_3e,
-  "3G11": Construire_homothetie_point_3e,
-  "3G12" : Pavage_et_rotation2d,
   "3G12-1": Pavages_et_rotation,
   "3G20": Thales2D_3e,
   "3G20-2": Exercice_Thales,
-  "3G20-1": Problemes_Thales,
   "3G21": Reciproque_Thales,
-  "3G22": Agrandissement_reduction,
-  "3G23": TrianglesSemblables,
   "3G30": Exercice_Trigo_longueurs,
   "3G31": Exercice_Trigo_angles,
-  "3F1-act": fonction_notion_vocabulaire,
-  "3F10": Image_antecedent_depuis_tableau_ou_fleche,
-  "3F12": fonctions_calculs_d_images,
-  "3F12-2": Image_fonction_algebrique,
-  "3F12-3": Tableau_de_valeurs,
-  "3F12-4": Image_graphique,
-  "3F13": Antecedent_graphique,
   "3F13-1": Antecedent_et_image_graphique,
   "3F13-2": Premier_escape_game_mathalea,
-  "3F21": Lecture_expression_fonctions_lineaires,
   "3F21-1": Lecture_expression_fonctions_affines,
   "3S15": Calculer_des_etendues,
-  "3S20": fonctions_probabilite2,
   "beta3L11-5": identites_calculs,
   "beta3Algo1": Instruction_conditionelle,
-  "2N10": Existence_d_une_racine_carree,
-  "2N10-1": proprietes_racine_carree,
-  "2N11": Extraire_un_carre_parfait_d_une_racine_carree,
-  "2N11-1": Simplifier_une_somme_de_racines_carrees,
-  "2N12": Double_distributivité_avec_racine_carree,
-  "2N12-1": identites_remarquables_et_racine_carree,
-  "2N20": ensemble_de_nombres,
-  "2N21": parite,
-  "2N22": valeur_absolue,
-  "2N23": valeur_absolue_et_equation,
-  "2N24": intervalles_de_R,
-  "2N25": union_et_intersection_intervalles_de_R,
-  "2G10": Distance,
-  "2G11": Milieu,
-  "2G12": Nature_polygone,
-  "2L10": Developper_Identites_remarquables2,
-  "2L11": Factoriser_Identites_remarquables2,
-  "1N10": Terme_d_une_suite_definie_explicitement,
-  "1N11": Terme_d_une_suite_definie_par_recurrence,
-  "1E10": Calcul_discriminant,
-  "1E11": Resoudre_equation_degre_2,
-  "1E12": Trouver_equation_parabole,
-  "1F10": CalculsDeDerives,
-  "PEA11": Passer_d_une_base_a_l_autre,
-  "PEA11-1": Passer_de_la_base_12_ou_16_a_la_10,
   "betaTESTseb": Tests_du_Seb,
   "betaSVG": AfficherSVG,
   //"betaExoZero" : Exercice_zero_mathalea2d,
   "betaExoConstruction" : Exercice_constructions_basiques,
   P001: Code_LaTeX_personnalise,
   // 'P002': LaTeX_static,
-  "P003": feuille_d_axes_gradues,
-  "P004": Feuille_de_zooms,
-  "P005": Feuille_de_grilles,
-  "P006" : Nombre_a_placer,
-  "P007" : Pavages_mathalea2d,
   "cours": Questions_de_cours,
   "LaTeX": Code_LaTeX_personnalise,
-  // 'Perso' : HTML_personnalise,
-  // 'TsvgjsKatex' : tests_SVGJS_KATEX,  
+  // "Perso" : HTML_personnalise,
+  // "TsvgjsKatex" : tests_SVGJS_KATEX,  
 };
 
 //Pour modifier les exercices lorsqu'ils sont en mode diaporama
@@ -10120,257 +10031,6 @@ function Pavages_et_reflexion() {
 }
 
 /**
- * Calcul de volumes (cube et pavé droit).
- * @Auteur Jean-Claude Lhote // modifié par Mireille Gain pour y ajouter les décimaux
- * référence 6M30
- */
-
-function Calcul_de_volumes() {
-  "use strict";
-  Exercice.call(this); // Héritage de la classe Exercice()
-  this.titre = "Calculs de volumes";
-  this.consigne = "Calculer, en détaillant, le volume des solides donnés.";
-  this.nb_questions = 4;
-  this.nb_cols = 1;
-  this.nb_cols_corr = 1;
-  this.sup = 1;
-
-  let type_de_questions_disponibles;
-
-  this.nouvelle_version = function (numero_de_l_exercice) {
-    if (this.classe == 6) type_de_questions_disponibles = [1, 2];
-    // sixième : cube et pavé droit
-    else if (this.classe == 5) type_de_questions_disponibles = [1, 2, 3, 4];
-    // cinquième : on ajoute les prismes et le cylindre
-    else if (this.classe == 4)
-      type_de_questions_disponibles = [1, 2, 3, 4, 5, 6];
-    // Quatrième : on ajoute pyramides et cones
-    else type_de_questions_disponibles = [1, 2, 3, 4, 5, 6, 7]; // Troisième : on ajoute les boules.
-    let liste_type_de_questions = combinaison_listes(
-      type_de_questions_disponibles,
-      this.nb_questions
-    ); // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
-
-    this.liste_questions = []; // Liste de questions
-    this.liste_corrections = []; // Liste de questions corrigées
-    let liste_unites = [
-      [`~\\text{m}`, `~\\text{m}^3`],
-      [`~\\text{dm}`, `~\\text{dm}^3`],
-      [`~\\text{cm}`, `~\\text{cm}^3`],
-      [`~\\text{mm}`, `~\\text{mm}^3`],
-    ];
-    let partieDecimale1, partieDecimale2, partieDecimale3;
-    if (this.sup2) {
-      partieDecimale1 = calcul(randint(1, 9) / 10 * randint(0, 1));
-      partieDecimale2 = calcul(randint(1, 9) / 10 * randint(0, 1));
-      partieDecimale3 = calcul(randint(1, 9) / 10 * randint(0, 1));
-    }
-    else {
-      partieDecimale1 = 0;
-      partieDecimale2 = 0;
-      partieDecimale3 = 0;
-    }
-    for (
-      let i = 0, texte, texte_corr, L, l, h, c, r, A, j, cpt = 0;
-      i < this.nb_questions && cpt < 50;
-    ) {
-      switch (liste_type_de_questions[i]) {
-        case 1: // cube
-          c = calcul(randint(2, 10) + partieDecimale1);
-          j = randint(0, 3); // pour le choix de l'unité
-          texte = `Un cube de $${tex_nombre(c)} ${liste_unites[j][0]}$ d'arête.`;
-          texte_corr = `$\\mathcal{V}= c^3 =c \\times c \\times c = ${tex_nombre(c)}${liste_unites[j][0]
-            }\\times${tex_nombre(c)}${liste_unites[j][0]}\\times${tex_nombre(c)}${liste_unites[j][0]
-            }=${tex_nombrec(c * c * c)}${liste_unites[j][1]}$`;
-          break;
-        case 2: // pavé droit
-          if (this.sup == 1) {
-            //sans conversion
-            j = randint(0, 3); // pour le choix de l'unité
-            l = calcul(randint(2, 5) + partieDecimale1);
-            h = calcul(randint(3, 6) + partieDecimale2);
-            L = calcul(randint(6, 10) + partieDecimale3);
-            texte = `Un pavé droit de $${tex_nombre(l)}${liste_unites[j][0]}$ de largeur, de $${tex_nombre(L)}${liste_unites[j][0]}$ de longueur et de $${tex_nombre(h)}${liste_unites[j][0]}$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}= l \\times L \\times h = ${tex_nombre(l)}${liste_unites[j][0]
-              }\\times${tex_nombre(L)}${liste_unites[j][0]}\\times${tex_nombre(h)}${liste_unites[j][0]
-              }=${tex_nombrec(l * L * h)}${liste_unites[j][1]}$`;
-          } else {
-            // avec conversion
-            j = randint(1, 2); // pour le choix de l'unité  centrale
-            l = calcul(randint(2, 5) + partieDecimale1);
-            h = calcul(randint(3, 6) * 10 + partieDecimale2);
-            L = arrondi(randint(6, 10) / 10, 1);
-            texte = `Un pavé droit de $${tex_nombre(l)}${liste_unites[j][0]
-              }$ de largeur, de $${tex_nombre(L)}${liste_unites[j - 1][0]
-              }$ de longueur et de $${tex_nombre(h)}${liste_unites[j + 1][0]}$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}= l \\times L \\times h = ${tex_nombre(l)}${liste_unites[j][0]
-              }\\times${tex_nombre(L)}${liste_unites[j - 1][0]}\\times${tex_nombre(h)}${liste_unites[j + 1][0]
-              }=${l}${liste_unites[j][0]}\\times${tex_nombrec(L * 10)}${liste_unites[j][0]
-              }\\times${tex_nombrec(h / 10)}${liste_unites[j][0]}=${tex_nombrec(
-                arrondi(l * L * h)
-              )}${liste_unites[j][1]}$`;
-          }
-          break;
-        case 3: // Cylindre
-          if (this.sup == 1) {
-            //sans conversion
-            j = randint(0, 3); // pour le choix de l'unité
-            r = randint(2, 10);
-            h = randint(2, 15);
-            texte = `Un cylindre de $${r}${liste_unites[j][0]
-              }$ de rayon et de $${tex_nombre(h)}${liste_unites[j][0]
-              }$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}=\\pi \\times R ^2 \\times h =\\pi\\times\\left(${r}${liste_unites[j][0]
-              }\\right)^2\\times${h}${liste_unites[j][0]}=${tex_nombrec(
-                r * r * h
-              )}\\pi${liste_unites[j][1]}\\approx${tex_nombrec(
-                arrondi(r * r * h * Math.PI, 1)
-              )}${liste_unites[j][1]}$`;
-          } else {
-            j = randint(2, 3); // pour le choix de l'unité
-            r = randint(2, 10);
-            h = randint(20, 150);
-            texte = `Un cylindre de $${r}${liste_unites[j][0]
-              }$ de rayon et de $${tex_nombrec(h / 10)}${liste_unites[j - 1][0]
-              }$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}=\\pi \\times R ^2 \\times h =\\pi\\times\\left(${r}${liste_unites[j][0]
-              }\\right)^2\\times${tex_nombrec(h / 10)}${liste_unites[j - 1][0]
-              }=\\pi\\times${r * r}${liste_unites[j][0]}^2\\times${h}${liste_unites[j][0]
-              }=${tex_nombrec(r * r * h)}\\pi${liste_unites[j][1]
-              }\\approx${tex_nombrec(calcul(r * r * h * Math.PI, 1))}${liste_unites[j][1]
-              }$`;
-          }
-          break;
-        case 4: // prisme droit
-          if (this.sup == 1) {
-            //sans conversion
-            j = randint(0, 3); // pour le choix de l'unité
-            c = calcul(randint(2, 10) + partieDecimale3);
-            h = randint(2, 5);
-            l = randint(6, 10);
-            texte = `Un prisme droit de hauteur $${l}${liste_unites[j][0]}$ et dont les bases sont des triangles de base $${tex_nombre(c)}${liste_unites[j][0]}$ et de hauteur correspondante $${h}${liste_unites[j][0]}$.`;
-            texte_corr = `$\\mathcal{V}=\\mathcal{B} \\times h=\\dfrac{${tex_nombre(c)}${liste_unites[j][0]
-              }\\times${tex_nombre(h)}${liste_unites[j][0]}}{2}\\times${tex_nombre(l)}${liste_unites[j][0]
-              }=${tex_nombrec(arrondi(calcul((c * h * l) / 2), 1))}${liste_unites[j][1]
-              }$`;
-          } else {
-            j = randint(1, 2); // pour le choix de l'unité
-            c = calcul(randint(2, 10) + partieDecimale3);
-            h = randint(30, 50);
-            l = arrondi(randint(5, 15) / 10, 1);
-            texte = `Un prisme droit de hauteur $${l}${liste_unites[j - 1][0]
-              }$ et dont les bases sont des triangles de base $${tex_nombre(c)}${liste_unites[j][0]
-              }$ et de hauteur correspondante $${h}${liste_unites[j + 1][0]}$.`;
-            texte_corr = `$\\mathcal{V}=\\mathcal{B} \\times h=\\dfrac{${c}${liste_unites[j][0]
-              }\\times${h}${liste_unites[j + 1][0]}}{2}\\times${tex_nombrec(l)}${liste_unites[j - 1][0]
-              }=\\dfrac{${c}${liste_unites[j][0]}\\times${tex_nombrec(
-                calcul(h / 10)
-              )}${liste_unites[j][0]}}{2}\\times${l * 10}${liste_unites[j][0]
-              }=${tex_nombrec(calcul((c * h * l) / 2))}${liste_unites[j][1]}$`;
-          }
-          break;
-        case 5: // cone
-          if (this.sup == 1) {
-            //sans conversion
-            j = randint(0, 3); // pour le choix de l'unité
-            r = randint(2, 10);
-            h = randint(2, 15);
-            texte = `Un cône de $${r}${liste_unites[j][0]
-              }$ de rayon et de $${tex_nombre(h)}${liste_unites[j][0]
-              }$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}=\\dfrac{1}{3} \\times \\mathcal{B} \\times h=\\dfrac{1}{3}\\times\\pi\\times\\left(${r}${liste_unites[j][0]
-              }\\right)^2\\times${h}${liste_unites[j][0]}=${tex_fraction(
-                r * r * h,
-                3
-              )}\\pi${liste_unites[j][1]}\\approx${tex_nombrec(
-                arrondi((r * r * h * Math.PI) / 3)
-              )}${liste_unites[j][1]}$`;
-          } else {
-            j = randint(2, 3); // pour le choix de l'unité
-            r = randint(2, 10);
-            h = randint(20, 150);
-            texte = `Un cône de $${r}${liste_unites[j][0]
-              }$ de rayon et de $${tex_nombrec(h / 10)}${liste_unites[j - 1][0]
-              }$ de hauteur.`;
-            texte_corr = `$\\mathcal{V}=\\dfrac{1}{3} \\times \\mathcal{B} \\times h=\\dfrac{1}{3}\\times\\pi\\times\\left(${r}${liste_unites[j][0]
-              }\\right)^2\\times${tex_nombrec(calcul(h / 10))}${liste_unites[j - 1][0]
-              }=\\dfrac{1}{3}\\times\\pi\\times\\left(${r}${liste_unites[j][0]
-              }\\right)^2\\times${tex_nombrec(h)}${liste_unites[j][0]
-              }=${tex_fraction(r * r * h, 3)}\\pi\\approx${tex_nombrec(
-                calcul((r * r * h * Math.PI) / 3, 1)
-              )}${liste_unites[j][1]}$`;
-          }
-          break;
-        case 6: // pyramide
-          if (this.sup == 1) {
-            //sans conversion
-            j = randint(0, 3); // pour le choix de l'unité
-            c = calcul(randint(2, 10) + partieDecimale2);
-            h = randint(2, 5);
-            l = randint(6, 10);
-            texte = `Une pyramide de hauteur $${h}${liste_unites[j][0]}$ et dont la base  est un carré de $${tex_nombre(c)}${liste_unites[j][0]}$ de côté.`;
-            texte_corr = `$\\mathcal{V}=\\dfrac{1}{3} \\times \\mathcal{B} \\times h=\\dfrac{1}{3}\\times\\left(${tex_nombre(c)}${liste_unites[j][0]}\\right)^2\\times${h}${liste_unites[j][0]}`;
-            if (calcul((c * c * h) / 3, false) == arrondi((c * c * h) / 3, 1))
-              texte_corr += `=${tex_nombrec(
-                arrondi(calcul((c * c * h) / 3), 1)
-              )}${liste_unites[j][1]}$`;
-            else
-              texte_corr += `\\approx${tex_nombrec(
-                arrondi(calcul((c * c * h) / 3), 1)
-              )}${liste_unites[j][1]}$`;
-          } else {
-            j = randint(1, 2); // pour le choix de l'unité
-            c = calcul(randint(2, 10) + partieDecimale2);
-            h = randint(30, 50);
-            l = arrondi(randint(5, 15) / 10, 1);
-            texte = `Une pyramide de hauteur $${tex_nombrec(h / 10)}${liste_unites[j - 1][0]
-              }$ et dont la base  est un carré de $${tex_nombre(c)}${liste_unites[j][0]
-              }$ et de hauteur correspondante $${h}${liste_unites[j + 1][0]}$.`;
-            texte_corr = `$\\mathcal{V}=\\dfrac{1}{3} \\times \\mathcal{B} \\times h=\\dfrac{1}{3}\\times\\left(${tex_nombre(c)}${liste_unites[j][0]
-              }\\right)^2\\times${tex_nombrec(h / 10)}${liste_unites[j - 1][0]
-              }=\\dfrac{1}{3}\\times${c * c}${liste_unites[j][0]
-              }^2\\times${tex_nombrec(h)}${liste_unites[j][0]}`;
-            if (calcul((c * c * h) / 3, false) == arrondi((c * c * h) / 3, 1))
-              texte_corr += `=${tex_nombrec(
-                arrondi(calcul((c * h * c) / 3), 1)
-              )}${liste_unites[j][1]}$`;
-            else
-              texte_corr += `\\approx${tex_nombrec(
-                arrondi(calcul((c * h * c) / 3), 1)
-              )}${liste_unites[j][1]}$`;
-          }
-          break;
-        case 7: // boule
-          j = randint(0, 3); // pour le choix de l'unité
-          r = randint(2, 10);
-          texte = `Une boule de $${r}${liste_unites[j][0]}$ de rayon.`;
-          texte_corr = `$\\mathcal{V}=\\dfrac{4}{3} \\times \\pi \\times R^3=\\dfrac{4}{3}\\times\\pi\\times\\left(${r}${liste_unites[j][0]
-            }\\right)^3=${tex_fraction(calcul(4 * r * r * r), 3)}\\pi${liste_unites[j][1]
-            }\\approx${tex_nombrec(
-              arrondi(calcul((4 * Math.PI * r * r * r) / 3), 1)
-            )}${liste_unites[j][1]}$`;
-          break;
-      }
-      if (this.liste_questions.indexOf(texte) == -1) {
-        // Si la question n'a jamais été posée, on en crée une autre
-        this.liste_questions.push(texte);
-        this.liste_corrections.push(texte_corr);
-        i++;
-      }
-      cpt++;
-    }
-    liste_de_question_to_contenu(this);
-  };
-  this.besoin_formulaire_numerique = [
-    "Niveau de difficulté",
-    2,
-    "1 : Sans conversions\n2 : Avec des conversions",
-  ];
-  this.besoin_formulaire2_case_a_cocher = ["Avec des décimaux", false];
-}
-
-
-/**
  * Transformations : trouvers un point numéroté par une des transformations du plan. Fonction générale utilisée sur tous les niveaux
  * @Auteur Jean-Claude Lhote
  * Pas de version LaTeX
@@ -11439,12 +11099,6 @@ function Lecture_expression_fonctions_lineaires() {
   this.titre = "Déterminer une fonction linéaire";
   this.lineaire = true;
 }
-// 3L14-1
-function Resoudre_une_equation_produit_nul_niv2() {
-  Resoudre_une_equation_produit_nul.call(this);
-  this.titre = "Résoudre une équation produit nul (niveau 2)";
-  this.sup = 2;
-}
 // Référence 6C21
 
 function Divisions_euclidiennes_niv2() {
@@ -11504,32 +11158,6 @@ function Transformations_3e() {
   this.titre = `Trouver l'image d'un point par une transformation choisie aléatoirement`;
   this.pas_de_version_LaTeX = true;
 }
-// Référence 6M30
-function Calcul_de_volumes_6e() {
-  this.sup = 1;
-  this.classe = 6;
-  Calcul_de_volumes.call(this);
-}
-
-// 5M20
-function Calcul_de_volumes_5e() {
-  this.sup = 1;
-  this.classe = 5;
-  Calcul_de_volumes.call(this);
-}
-// 4G53
-function Calcul_de_volumes_4e() {
-  this.sup = 1;
-  this.classe = 4;
-  Calcul_de_volumes.call(this);
-}
-// 3G43
-function Calcul_de_volumes_3e() {
-  this.sup = 1;
-  this.classe = 3;
-  Calcul_de_volumes.call(this);
-}
-
 
 function Exercice_6N13() {
   this.sup = 1;
@@ -11575,14 +11203,6 @@ function Reglages_6N34() {
   this.titre = "Conversions avec tous les préfixes de milli à tera.";
 }
 
-// 4G30-1
-function Thales_4eme() {
-  //Dans cette version, pas de configuration papillon reservée aux 3èmes.
-  Exercice_Thales.call(this);
-  this.titre = "Calculer des longueurs avec la propriété de Thalès (MG32)"
-  this.quatrieme = true;
-  sortie_html ? this.spacing = 1.5 : this.spacing = 1;
-}
 // 4G31
 function Reciproque_Thales_4eme() {
   Reciproque_Thales.call(this);
@@ -17427,89 +17047,4 @@ jQuery(document).ready(function () {
   });
 });
 
-/** 
- * * Exo test pour quand j'en ai besoin
- * * pas de numéro
- * * Tests
- * @author Erwan DUPLESSY
- */
 
-function AfficherSVG() {
-  //"use strict";
-  Exercice.call(this); // Héritage de la classe Exercice()
-
-  this.titre = "Test d'affichage d'icone SVG";
-  this.consigne = `On utilise awesomefont. `;
-  this.nb_questions = 1;
-  this.nb_questions_modifiable = false;
-  this.nb_cols = 1;
-  this.nb_cols_corr = 1;
-  sortie_html ? this.spacing = 1 : this.spacing = 1;
-  sortie_html ? this.spacing_corr = 2 : this.spacing_corr = 1;
-
-  this.nouvelle_version = function () {
-    this.liste_questions = []; // Liste de questions
-    this.liste_corrections = []; // Liste de questions corrigées    
-
-    texte = `Directement dans le html avec la font : `;
-    texte += `
-        <i class="orange users icon"></i>
-        <i class="yellow users icon"></i>
-        <i class="olive users icon"></i>
-        <i class="green users icon"></i>
-        <i class="teal users icon"></i>
-        <i class="blue users icon"></i>
-        <i class="violet users icon"></i>
-        <i class="purple users icon"></i>
-        <i class="pink users icon"></i>
-        <i class="brown users icon"></i><br>
-        <i class="grey users icon"></i>
-        <i class="black users icon"></i>
-        <i class="horizontally flipped cloud icon"></i>
-        <i class="vertically flipped cloud icon"></i>
-        <i class="clockwise rotated cloud icon"></i>
-        <i class="counterclockwise rotated cloud icon"></i>
-        <i class="chess icon"></i>
-        <i class="orange chess bishop icon"></i>
-        <i class="chess board icon"></i>
-        <i class="chess king icon"></i>
-        <i class="chess knight icon"></i>
-        <i class="chess pawn icon"></i>
-        <i class="chess queen icon"></i>
-        <i class="chess rook icon"></i>
-        <i class="square full icon"></i>`;
-
-    texte += `<br> Ou bien en SVG. Attention à l'utilisation des repères de coordonnées !<br>`;
-    texte += `<svg xmlns="http://www.w3.org/2000/svg">
-      <!-- Font Awesome Free 5.15.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) -->
-      <defs>
-        <symbol id="plane" viewBox="0 0 576 512">
-         <path d="M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z"/>
-        </symbol>
-      </defs>
-      </svg>`;
-
-    texte += `
-    <svg width="50%" viewBox="0 0 300 300" style="border: 3px solid #333333;">
-      <use preserveAspectRatio="xMidYMid meet" viewBox="-50 50 50 50" height="100" width="100" x="0" y="0" fill="red" transform="rotate(0 0 0)"xlink:href="#plane"/>
-      <use width="35" x="70" y="0" transform="rotate(15, 70, 70)" xlink:href="#plane"/>
-      <use xlink:href="#plane" transform="rotate(-30 70 70)" width="35" x="70" y="0" />
-       <use width="38" x="92" y="80" xlink:href="#plane"/>
-      <use width="23" x="50" y="30" xlink:href="#plane"/ fill-opacity="0%" stroke="green" stroke-width="8">   
-      <use width="50" x="0" y="0" fill="blue" xlink:href="#plane"/>
-      <use width="50" x="0" y="0" fill="blue" xlink:href="#Port"/>
-    </svg>`;
-
-    //let element = document.getElementById('#exercices')
-    let draw = SVG().addTo('body').size('50%', '50%');
-    draw.rect(100, 100).attr({ fill: '#f06' });
-    draw.use('plane').move(20, 20).size(50, 50);
-    draw.use('plane').move(70, 20).size(50, 50).rotate(90);
-
-    texte_corr = ``;
-    this.liste_questions.push(texte);
-    this.liste_corrections.push(texte_corr);
-    liste_de_question_to_contenu(this); //Espacement de 2 em entre chaque question.
-
-  }
-}

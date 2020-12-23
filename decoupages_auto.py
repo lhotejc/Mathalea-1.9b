@@ -3,10 +3,226 @@
 
 import os
 import re # Pour la gestion des expressions régulières
+from collections import namedtuple # pour les tuples nommés utile ?
 
-def main():
-    print("Tests préliminaires fork and co !")
-    
+# Récupèrer toutes les références des exos dans include/mathalea_exercices.js dans un tableau
+def getAllRefsClean():
+    # Ouvrir le fichier
+    allRefs = open('./include/mathalea_exercices.js','r')
+    # Garder la partie du fichier avec les rérérences
+    part = allRefs.readlines()[2:374] 
+    # Tableau pour les références néttoyées
+    allRefsClean = []    
+    temp = []   
+    # Suprimmer une partie des lignes
+    for elt in part:        
+        temp.append(elt.rstrip(',\n'))
+    # Garder la référence qui se trouve entre les " "
+    for elt in temp:
+        allRefsClean.append(re.search('(\".+\")',elt).group().strip('\"'))
+    # Fermer le fichier        
+    allRefs.close()    
+    return allRefsClean
+
+# Récupérer seulement certaines références dans un tableau
+# On passe un tableau en entrée
+# CM,c3,6, 5, 4, 3, 2, 1,PE, P0 
+def getAllRefsCleanNiv(niveaux):
+    sortie = []
+    # toutes les ref
+    allRefsClean = getAllRefsClean()
+    for ref in allRefsClean:
+        #print(ref[0])
+        for niv in niveaux:
+            #print(niv)
+            if ref[0] == niv or (ref[0]==niv[0] and ref[1]==niv[1]):
+                sortie.append(ref)
+    return sortie
+
+# Récupérer toutes les ref des exos déjà traités pour un niveau dans un tableau
+# On passe une chaine 1e,2e,3e,4e,5e,6e,PE,Profs,...
+def getAllRefsAlreadyClean(niveau):
+    path = './exercices/'+niveau
+    allRefsAlreadyClean = []
+    # Récupérer les noms des fichiers déjà présents dans le dossier
+    if os.path.exists(path):
+        allRefsAlready = os.listdir(path)
+        # Nettoyer les chaines de .js
+        for elt in allRefsAlready:
+            allRefsAlreadyClean.append(elt.replace(".js",""))
+    return allRefsAlreadyClean
+
+# Récupérer le code d'un exercice pour un niveau dans une chaine
+# On passe le numero de la ligne du début du scan, le chemin vers le fichier,
+# le niveau et le nom du dossier contenant déjà la fichiers traités
+# On renvoie le code et le numero de la ligne avant le second /**
+# et la ref de l'exo s'il na pas était traité sinon chaine vide
+# Dans un tableau
+def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):    
+    file = open(path_to_file,"r")
+    content = file.readlines()[debut_du_scan-1:]
+    compteur = 0
+    tab=[]
+    for line in content:
+        compteur+=1
+        if (len(tab)==2):            
+            break
+        if "/**" in line:
+            tab.append(compteur)
+    #print(tab)
+    code = content[tab[0]-1:tab[1]-1]
+    file.close()
+    # On va récupérer la ref du code
+    # on récupére toutes ref restant à traiter
+    allRefsLeftClean = []
+    allRefsAlreadyClean = getAllRefsAlreadyClean(nivAlready)
+    allRefsCleanNiv = getAllRefsCleanNiv(niv)
+    for ref in allRefsCleanNiv:
+        if ref not in allRefsAlreadyClean:
+            allRefsLeftClean.append(ref)
+    # Initialiser reference à -1 pour pouvoir savoir si un exo est déjà traité ou non            
+    reference = -1
+    for elt in code:              
+        for ref in allRefsLeftClean:            
+            if elt.count(ref) == 1:
+                reference = ref
+
+    return [code,tab[1]-1,reference]
+    # print(code)
+    # print(tab)
+
+
+# Récupérer toutes les lignes sur lesquelles on a /**
+# qui correspondent au début du code à récupérer
+# dans un fichier donné
+def getAllNbLineBeginCode(path_to_file):
+    file = open(path_to_file,"r")
+    content = file.readlines()
+    compteur = 0
+    tab=[]
+    for line in content:
+        compteur+=1
+        if "/**" in line:
+            tab.append(compteur)
+    file.close()
+    return tab
+
+# Écrire le code dans un fichier si l'exo n'existe pas
+# le nom du fichier, le tableau contenant le code à écrire, le niveau
+def writeToFile(filename,code,niv):
+    path_to_write = "./exercices/"+niv+"_to_clean/"
+    if not os.path.exists(path_to_write):
+        os.mkdir(path_to_write)
+    file = open(path_to_write+filename+".js","w")
+    entete = open("./exercices/entete.js","r")
+    enteteContent = entete.readlines()
+    file.writelines(enteteContent)
+    file.writelines(code)
+    file.close()
+    entete.close()
+
+# Remplacer la premier occurence de function
+# le fichier existe puisqu'on l'a généré
+def firstFunctionReplace(path_to_file):
+    readFile = open(path_to_file,"r")
+    fileContent = readFile.readlines()
+    outFile = open(path_to_file,"w")
+    #print("ddd")
+    compteur=0
+    ok = False
+    for line in fileContent:
+        if "function" in line and ok == False:
+            #print(line)
+            newLine = line.replace("function","export default function")
+            outFile.write(newLine)
+            #print(newLine)
+            compteur+=1
+            ok = True
+        else:
+            outFile.write(line)
+    readFile.close()
+    outFile.close()
+
+# ajouter un /** */ sur la dernière ligne du fichier à traiter s'il n'y en a pas
+def addEndSymb(path_to_file):
+    readFile = open(path_to_file,"r")
+    readFileLines = readFile.readlines()
+    readFile.close()
+    if readFileLines[len(readFileLines)-1] != "/** */":
+        appendFile = open(path_to_file,"a")
+        appendFile.write("/** */")
+        appendFile.close()
 
 if __name__ == '__main__':
-    main()
+    #print(getAllRefClean())
+    #print(getAllRefCleanNiv(['6']))
+    #print(getAllRefsAlreadyClean('Profs'))
+    # deb = 0
+    # print(getCodeRefEx(deb,"./include/mathalea_exercices.js"))
+    # print("=======================================================================")
+    # print("=======================================================================")
+    # debsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]
+    # print(getCodeRefEx(debsuiv,"./include/mathalea_exercices.js"))
+    # print("=======================================================================")
+    # print("=======================================================================")
+    # debsuivsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]+getCodeEx(debsuiv,"./include/mathalea_exercices.js")[1]
+    # print(getCodeRefEx(debsuivsuiv,"./include/mathalea_exercices.js"))
+    # print(getCodeRefEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
+    # print(getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
+    # print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
+    # writeToFile('test',['test\n','test\n','test\n'],'6e')
+    # exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
+    # writeToFile(exo[2],exo[0],'6e')
+    # firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
+############################################################################################
+# Niveau 6eme
+############################################################################################
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine6 = getAllNbLineBeginCode("./include/mathalea_exercices.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    #addEndSymb("./include/mathalea_exercices.js")
+    #print(nbLine6)
+    tab_exo6 = []
+    for nbl in nbLine6:
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine6[len(nbLine6)-1]:
+            #print("nbl : "+str(nbl))
+            #print(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2])            
+            if getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2] != -1:
+                tab_exo6.append(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e'))
+    #print(tab_exo6)
+    # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
+    for exo in tab_exo6:
+        writeToFile(exo[2],exo[0],'6e')
+        firstFunctionReplace("./exercices/6e_to_clean/"+exo[2]+".js")
+############################################################################################
+# Niveau 5eme
+############################################################################################
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine5 = getAllNbLineBeginCode("./include/mathalea_exercices_5e.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    addEndSymb("./include/mathalea_exercices_5e.js")
+    print(nbLine5)
+    tab_exo5 = []
+    for nbl in nbLine5:
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine5[len(nbLine5)-1]:
+            if getCodeRefEx(nbl,"./include/mathalea_exercices_5e.js",['5'],'5e')[2] != -1:
+                tab_exo5.append(getCodeRefEx(nbl,"./include/mathalea_exercices_5e.js",['5'],'5e'))
+    #print(tab_exo5)
+    # On ecrit maintenant tous les exos dans le dossier 5e_to_clean
+    for exo in tab_exo5:
+        writeToFile(exo[2],exo[0],'5e')
+        firstFunctionReplace("./exercices/5e_to_clean/"+exo[2]+".js")    
+    #print(getCodeRefEx(8520,"./include/mathalea_exercices_5e.js",['5'],'5e')[2])
+
+
+    
+
+    
+
+
+    
+
+
+    
