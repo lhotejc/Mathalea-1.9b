@@ -1276,7 +1276,6 @@ export function  tex_nombrecoul(nombre){
 		else return mise_en_evidence(tex_nombrec(0),'black')
 }
 
-
 /**
  * prend une liste de nombres relatifs et la retourne avec les positifs au début et les négatifs à la fin.
  * @param {array} liste la liste de nombres à trier
