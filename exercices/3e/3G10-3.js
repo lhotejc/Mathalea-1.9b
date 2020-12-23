@@ -9,7 +9,7 @@ import {point,tracePoint,labelPoint,arcPointPointAngle,dansLaCibleCarree,cibleCa
  */
 export default function Construire_rotation_point_3e() {
 	Exercice.call(this); // Héritage de la classe Exercice()
-	this.titre = "Construire l\'image d'un point par une rotation avec cible auto-corrective";
+	this.titre = "Construire l'image d'un point par une rotation avec cible auto-corrective";
 	this.consigne = "";
 	this.nb_questions = 1;
 	this.nb_questions_modifiable = false;
@@ -17,6 +17,7 @@ export default function Construire_rotation_point_3e() {
 	this.nb_cols_corr = 1;
 	this.sup = 3;
 	this.nouvelle_version = function () {
+		let nontrouve,assezloin,cible
 		let angle = randint(-8, 8, 0) * 10;
 		this.liste_questions = []; // Liste de questions
 		this.liste_corrections = []; // Liste de questions corrigées
@@ -28,7 +29,7 @@ export default function Construire_rotation_point_3e() {
 		};
 		// On prépare la figure...
 		let O = point(0, 0, 'O');
-		let noms = choisit_lettres_differentes(nbpoints, 'QO', majuscule = true);
+		let noms = choisit_lettres_differentes(nbpoints, 'QO',true);
 		this.consigne = `Construire l'image des points $${noms[0]}$`;
 		for (let i = 1; i < nbpoints - 1; i++) {
 			this.consigne += `, $${noms[i]}$`;
@@ -95,7 +96,7 @@ export default function Construire_rotation_point_3e() {
 			yMax = Math.max(yMax, N[i].y + 3, M[i].y + 3);
 		}
 
-		fenetreMathalea2d = [xMin, yMin, xMax, yMax];
+		let fenetreMathalea2d = [xMin, yMin, xMax, yMax];
 
 		this.liste_questions.push(mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 1 }, objets_enonce));
 		this.liste_corrections.push(texte_corr + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_correction));

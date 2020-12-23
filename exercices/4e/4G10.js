@@ -8,6 +8,6 @@ import Transformations from '../6e/Transformations.js'
 export default function Transformations_4e() {
   Transformations.call(this);
   this.sup = 3;
-  this.titre = `Trouver l'image d'un point par une symétrie axiale ou centrale ou par une translation`;
+  this.titre = "Trouver l'image d'un point par une symétrie axiale ou centrale ou par une translation";
   this.pas_de_version_LaTeX = true;
 }

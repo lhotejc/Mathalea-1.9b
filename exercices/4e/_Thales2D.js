@@ -7,7 +7,7 @@ import {point,pointSurSegment,pointAdistance,polygone,triangle2points2longueurs,
  * @Auteur Rémi Angot
  * Utilisée dans 4G30 et 3G20
 */
-export function Thales2D() {
+export default function Thales2D() {
   Exercice.call(this); // Héritage de la classe Exercice()
   this.titre = "Calculer des longueurs avec le théorème de Thalès";
   this.consigne = "";

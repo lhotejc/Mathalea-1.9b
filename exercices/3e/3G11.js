@@ -1,5 +1,5 @@
 import Exercice from '../ClasseExercice.js';
-import {liste_de_question_to_contenu,randint,calcul,choisit_lettres_differentes,lettre_depuis_chiffre,arcenciel} from "/modules/outils.js"
+import {liste_de_question_to_contenu,randint,calcul,choisit_lettres_differentes,lettre_depuis_chiffre,arcenciel,tex_nombre} from "/modules/outils.js"
 import {point,tracePoint,labelPoint,segment,dansLaCibleCarree,cibleCarree,homothetie,longueur,mathalea2d} from "/modules/2d.js"
 /**
 * Construction d'images par homothétie avec dispositif d'auto-correction aléatoire
@@ -9,7 +9,7 @@ import {point,tracePoint,labelPoint,segment,dansLaCibleCarree,cibleCarree,homoth
 */
 export default function Construire_homothetie_point_3e() {
 	Exercice.call(this); // Héritage de la classe Exercice()
-	this.titre = "Construire l\'image d'un point par une homothetie avec cible auto-corrective";
+	this.titre = "Construire l'image d'un point par une homothetie avec cible auto-corrective";
 	this.consigne = "";
 	this.nb_questions = 1;
 	this.nb_questions_modifiable = false;
@@ -17,7 +17,8 @@ export default function Construire_homothetie_point_3e() {
 	this.nb_cols_corr = 1;
 	this.sup = 3;
 	this.nouvelle_version = function () {
-		let k = randint(-4, 4, [0, -1, 1]) / 2;
+		let nontrouve,assezloin,cible,s
+		let k = randint(-4, 4, [0, -2, 2]) / 2;
 		this.liste_questions = []; // Liste de questions
 		this.liste_corrections = []; // Liste de questions corrigées
 		let result = [0, 0], texte_corr = "", nbpoints = parseInt(this.sup);
@@ -28,13 +29,13 @@ export default function Construire_homothetie_point_3e() {
 		};
 		// On prépare la figure...
 		let O = point(0, 0, 'O');
-		let noms = choisit_lettres_differentes(nbpoints, 'QO', majuscule = true);
+		let noms = choisit_lettres_differentes(nbpoints, 'QO',  true);
 		this.consigne = `Construire l\'image des points $${noms[0]}$`;
 		for (let i = 1; i < nbpoints - 1; i++) {
 			this.consigne += `, $${noms[i]}$`;
 		}
 		this.consigne += ` et $${noms[nbpoints - 1]}$ par l\'homothétie de centre $O$`;
-		this.consigne += ` et de rapport $${k}$.`;
+		this.consigne += ` et de rapport $${tex_nombre(k)}$.`;
 		let cibles = [], M = [], N = [], objets_enonce = [], objets_correction = []; //cibles, M point marqués, N symétrique de M
 		let cellules = [];
 		let xMin, yMin, xMax, yMax;
@@ -80,7 +81,12 @@ export default function Construire_homothetie_point_3e() {
 			M.push(homothetie(N[i], O, 1 / k, noms[i]));
 			objets_enonce.push(tracePoint(M[i]), labelPoint(M[i]), cibles[i]);
 			objets_correction.push(tracePoint(M[i], N[i]), labelPoint(M[i], N[i]), cibles[i]);
-			s = segment(M[i], N[i]);
+			if (k<0) {
+				s = segment(M[i], N[i]);
+			}
+			else {
+				s = segment(O, N[i]);
+			}
 			s.color = arcenciel(i);
 			objets_correction.push(s);
 			texte_corr += `$${noms[i]}\'$, l\'image du point $${noms[i]}$ est dans la case ${cellules[i]} de la grille ${i + 1}.<br>`;
@@ -93,7 +99,7 @@ export default function Construire_homothetie_point_3e() {
 			yMax = Math.max(yMax, N[i].y + 3, M[i].y + 3);
 		}
 
-		fenetreMathalea2d = [xMin, yMin, xMax, yMax];
+		let fenetreMathalea2d = [xMin, yMin, xMax, yMax];
 
 		this.liste_questions.push(mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_enonce));
 		this.liste_corrections.push(texte_corr + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_correction));
