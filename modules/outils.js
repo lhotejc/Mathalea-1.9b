@@ -1515,10 +1515,10 @@ export function  prenom(){
 */
 export function  tirer_les_des(nombre_tirages,nombre_faces,nombre_des) { 
 	let tirages =[];
-	for (i=0;i<=(nombre_faces-1)*nombre_des;i++) tirages.push([i+nombre_des,0]);
+	for (let i=0;i<=(nombre_faces-1)*nombre_des;i++) tirages.push([i+nombre_des,0]);
 		for (let i=0,resultat;i<nombre_tirages;i++) {
 			resultat=0;
-			for (j=0;j<nombre_des;j++) resultat+=randint(1,nombre_faces); 
+			for (let j=0;j<nombre_des;j++) resultat+=randint(1,nombre_faces); 
 				tirages [resultat-nombre_des][1]++;
 		}
 		return tirages
@@ -1532,7 +1532,7 @@ export function  tirer_les_des(nombre_tirages,nombre_faces,nombre_des) {
 */
 export function  liste_de_notes(nombre_notes,note_min,note_max) { 
 	let notes =[];
-	for (i=0;i<nombre_notes;i++) notes.push(randint(note_min,note_max));
+	for (let i=0;i<nombre_notes;i++) notes.push(randint(note_min,note_max));
 		return notes
 }
 
