@@ -60,7 +60,7 @@ def getAllRefsAlreadyClean(niveau):
 # Dans un tableau
 def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):    
     file = open(path_to_file,"r")
-    content = file.readlines()[debut_du_scan:]
+    content = file.readlines()[debut_du_scan-1:]
     compteur = 0
     tab=[]
     for line in content:
@@ -69,6 +69,7 @@ def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):
             break
         if "/**" in line:
             tab.append(compteur)
+    #print(tab)
     code = content[tab[0]-1:tab[1]-1]
     file.close()
     # On va récupérer la ref du code
@@ -79,7 +80,7 @@ def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):
     for ref in allRefsCleanNiv:
         if ref not in allRefsAlreadyClean:
             allRefsLeftClean.append(ref)
-    # Initialiser reference à -1 pour pouvoir savoir si un axo est déjà traité ou non            
+    # Initialiser reference à -1 pour pouvoir savoir si un exo est déjà traité ou non            
     reference = -1
     for elt in code:              
         for ref in allRefsLeftClean:            
@@ -131,16 +132,26 @@ def firstFunctionReplace(path_to_file):
     ok = False
     for line in fileContent:
         if "function" in line and ok == False:
-            print(line)
+            #print(line)
             newLine = line.replace("function","export default function")
             outFile.write(newLine)
-            print(newLine)
+            #print(newLine)
             compteur+=1
             ok = True
         else:
             outFile.write(line)
     readFile.close()
     outFile.close()
+
+# ajouter un /** */ sur la dernière ligne du fichier à traiter s'il n'y en a pas
+def addEndSymb(path_to_file):
+    readFile = open(path_to_file,"r")
+    readFileLines = readFile.readlines()
+    readFile.close()
+    if readFileLines[len(readFileLines)-1] != "/** */":
+        appendFile = open(path_to_file,"a")
+        appendFile.write("/** */")
+        appendFile.close()
 
 if __name__ == '__main__':
     #print(getAllRefClean())
@@ -159,10 +170,40 @@ if __name__ == '__main__':
     # print(getCodeRefEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
     # print(getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
     # print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
-    writeToFile('test',['test\n','test\n','test\n'],'6e')
-    exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
-    writeToFile(exo[2],exo[0],'6e')
-    firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
+    # writeToFile('test',['test\n','test\n','test\n'],'6e')
+    # exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
+    # writeToFile(exo[2],exo[0],'6e')
+    # firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
+############################################################################################
+# Niveau 6eme
+############################################################################################
+    # On récupère toutes les lignes avec /** au début dans le fichier    
+    nbLine6 = getAllNbLineBeginCode("./include/mathalea_exercices.js")
+    # On ajoute un /** et un */ à la fin du fichier car on a besoin de deux /** pour délimiter le code
+    #addEndSymb("./include/mathalea_exercices.js")
+    #print(nbLine6)
+    tab_exo6 = []
+    for nbl in nbLine6:
+        #print(nbl)
+        #print(nbl != nbLine6[len(nbLine6)-1])
+        # On traite tout sauf pour la dernière valeur du tableau ! Puisque c'est la dernière
+        if nbl != nbLine6[len(nbLine6)-1]:
+            #print("nbl : "+str(nbl))
+            #print(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2])            
+            if getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e')[2] != -1:
+                tab_exo6.append(getCodeRefEx(nbl,"./include/mathalea_exercices.js",['6'],'6e'))
+    #print(tab_exo6)
+    for exo in tab_exo6:
+        writeToFile(exo[2],exo[0],'6e')
+        firstFunctionReplace("./exercices/6e_to_clean/"+exo[2]+".js")
+
+
+    # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
+
+    #print(getCodeRefEx(17071,"./include/mathalea_exercices.js",['6'],'6e')[2])            
+
+
+    
 
 
     
