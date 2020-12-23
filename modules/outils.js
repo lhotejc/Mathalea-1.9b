@@ -2539,7 +2539,7 @@ export function SVG_tracer_point(mon_svg,x,y,nom,couleur,shiftxnom,shiftynom,mon
  * @param {number} y l'ordonnée de la pointe
  * @Auteur Rémi Angot
  */
-export function SVG_tracer_flecheH(mon_svg,x,y) {
+function SVG_tracer_flecheH(mon_svg,x,y) {
 	//creer un groupe pour la fleche
 	let fleche = mon_svg.group()
 	let c1 = fleche.line(x-5,y-5,x,y)
@@ -2682,12 +2682,12 @@ export function SVG_Tracer_droite(mon_svg,tailleX,tailleY,Xmin,Xmax,Ymin,Ymax,Or
 export function Latex_Tracer_droite(Xmin,Xmax,Ymin,Ymax,OrdX0,Pente,couleur,nom) {
 	'use strict';
 	let k=0;
-	let Pente_r=Pente*(Xmax-Xmin)/(Ymax-Ymin); // Pente adaptée au ratio d'échelle des axes.
+//	let Pente_r=Pente*(Xmax-Xmin)/(Ymax-Ymin); // Pente adaptée au ratio d'échelle des axes.
 	while((k>Xmin)&((OrdX0+Pente*k)<Ymax)&((OrdX0+Pente*k)>Ymin)) k--;
 	let X1=k;
 	let Y1=OrdX0+Pente*k;
 	let DeltaX=Xmax-Xmin;
-	let DeltaY=Ymax-Ymin;
+//	let DeltaY=Ymax-Ymin;
 	let X2=X1+DeltaX
 	let Y2=Y1+DeltaX*Pente;
 	return `\n\t \\draw[color=${couleur},thick](${X1},${Y1})--(${X2},${Y2}) node[pos=.1,above] {$${nom}$};`;
@@ -2787,7 +2787,7 @@ export function SVG_reperage_sur_un_axe(id_du_div,origine,longueur,pas1,pas2,poi
 			SVG_tracer_flecheH(mon_svg,750,50)
 			// Nombres visibles
 			SVG_label(mon_svg,[[string_nombre(origine),100,50]],2,'black',1);
-			for (i=0;i<points_connus.length;i++) {
+			for (let i=0;i<points_connus.length;i++) {
 				valeur=string_nombre(points_connus[i][0]);					 
 				distance=calcul(longueur_pas1*points_connus[i][1]+longueur_pas2*points_connus[i][2]);
 				SVG_label(mon_svg,[[valeur,100+distance,50]],2,'black',1)
@@ -2881,7 +2881,7 @@ export function Latex_reperage_sur_un_axe(zoom,origine,pas1,pas2,points_inconnus
 * @author Rémi Angot
 */
 
-export function tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5,xstep=1,ystep=1) {
+export function tex_graphique(f,xmin=-5,xmax=5,ymin=-5,ymax=5) {
 	return `
 	\\pgfplotsset{width=10cm,
 			compat=1.9,
