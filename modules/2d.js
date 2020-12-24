@@ -165,7 +165,7 @@ function TracePoint(...points) {
   };
   this.tikz = function () {
     let objetstikz=[],s1,s2,p1,p2,c
-    let tailletikz=this.taille/20/scale;
+    let tailletikz=this.taille/20/mathalea.scale;
     for (let A of points) {
       if (A.constructor == Point) {
         if (this.style=='x'){
@@ -265,8 +265,8 @@ function TracePointSurDroite(A, O) {
     return s.svg(coeff)
   }
   this.tikz=function(){
-    let A1=pointSurSegment(this.lieu,this.direction,this.taille/scale)
-    let A2=pointSurSegment(this.lieu,this.direction,-this.taille/scale)
+    let A1=pointSurSegment(this.lieu,this.direction,this.taille/mathalea.scale)
+    let A2=pointSurSegment(this.lieu,this.direction,-this.taille/mathalea.scale)
     let s=segment(A1,A2)
     return s.tikz()
   }
@@ -1000,8 +1000,8 @@ function CodageBissectrice(A, O, B, color = "black", mark = "×") {
      );
   };
   this.tikz = function () {
-    let a1=codeAngle(pointSurSegment(this.centre,this.depart,1.5/scale), O, this.demiangle,1.5/scale,this.mark, this.color,2,1);
-    let a2=codeAngle(pointSurSegment(this.centre,this.lieu,1.5/scale), O, this.demiangle,1.5/scale,this.mark, this.color,2,1);    
+    let a1=codeAngle(pointSurSegment(this.centre,this.depart,1.5/mathalea.scale), O, this.demiangle,1.5/mathalea.scale,this.mark, this.color,2,1);
+    let a2=codeAngle(pointSurSegment(this.centre,this.lieu,1.5/mathalea.scale), O, this.demiangle,1.5/mathalea.scale,this.mark, this.color,2,1);    
     return a1.tikz() + "\n" + a2.tikz() + "\n";
   };
 }
@@ -1972,7 +1972,7 @@ function NommePolygone(p, nom = "", k = 0.5) {
     let P,p=this.poly,d=this.dist
     let G = barycentre(p);
     for (let i = 0; i < p.listePoints.length; i++) {
-      P=pointSurSegment(G,p.listePoints[i],longueur(G,p.listePoints[i])+d/scale)
+      P=pointSurSegment(G,p.listePoints[i],longueur(G,p.listePoints[i])+d/mathalea.scale)
       code += "\n\t" + texteParPoint(p.listePoints[i].nom, P, "milieu").tikz()
     }
     return code;
@@ -3949,8 +3949,8 @@ function CodageAngleDroit(A, O, B, color = "black", d = 0.4) {
     return result.svg(coeff);
   }
   this.tikz=function(){
-  let a=pointSurSegment(this.sommet,this.depart, this.taille/scale);
-  let b=pointSurSegment(this.sommet,this.arrivee, this.taille/scale);
+  let a=pointSurSegment(this.sommet,this.depart, this.taille/mathalea.scale);
+  let b=pointSurSegment(this.sommet,this.arrivee, this.taille/mathalea.scale);
   let o = {};
   if (angleOriente(A, this.sommet, B) > 0) {
     o = rotation(this.sommet, a, -90);
@@ -3971,8 +3971,8 @@ this.svgml=function(coeff,amp){
   return polyline([a, o, b], color).svgml(coeff,amp);
 }
 this.tikzml=function(amp){
-let a=pointSurSegment(this.sommet,this.depart, this.taille/scale);
-let b=pointSurSegment(this.sommet,this.arrivee, this.taille/scale);
+let a=pointSurSegment(this.sommet,this.depart, this.taille/mathalea.scale);
+let b=pointSurSegment(this.sommet,this.arrivee, this.taille/mathalea.scale);
 let o = {};
 if (angleOriente(A, this.sommet, B) > 0) {
   o = rotation(this.sommet, a, -90);
@@ -4018,7 +4018,7 @@ function AfficheLongueurSegment(A, B, color = "black", d = 0.5) {
   this.tikz=function(){
     let O=milieu(this.extremite1,this.extremite2)
     let M = rotation(this.extremite1, O, -90);
-  let N = pointSurSegment(O, M, this.distance/scale);
+  let N = pointSurSegment(O, M, this.distance/mathalea.scale);
   let angle;
   let s = segment(this.extremite1, this.extremite2);
   s.isVisible = false;
@@ -4080,7 +4080,7 @@ function TexteSurSegment(texte, A, B, color = "black", d = 0.5) {
   this.tikz=function(){
     let O = milieu(this.extremite1, this.extremite2);
     let M = rotation(this.extremite1, O, -90);
-    let N = pointSurSegment(O, M, this.distance/scale);
+    let N = pointSurSegment(O, M, this.distance/mathalea.scale);
     let s = segment(this.extremite1, this.extremite2);
     s.isVisible = false;
     let angle;
@@ -4119,9 +4119,9 @@ export function AfficheMesureAngle(A, B, C, color = "black", distance = 1.5) {
   this.tikz=function(){
    // let d = bissectrice(A, B, C);
     // d.isVisible = false;
-    let M = pointSurSegment(d.extremite1, d.extremite2, this.distance/scale);
+    let M = pointSurSegment(d.extremite1, d.extremite2, this.distance/mathalea.scale);
     let mesureAngle = arrondi_virgule(angle(this.depart,this.sommet,this.arrivee), 0) + "°";
-    return "\n"+texteParPoint(mesureAngle, M, "milieu", color).tikz()+"\n"+arc(pointSurSegment(this.sommet, this.depart, this.distance-0.7/scale), B, angleOriente(this.depart,this.sommet,this.arrivee)).tikz();
+    return "\n"+texteParPoint(mesureAngle, M, "milieu", color).tikz()+"\n"+arc(pointSurSegment(this.sommet, this.depart, this.distance-0.7/mathalea.scale), B, angleOriente(this.depart,this.sommet,this.arrivee)).tikz();
   }
 }
 
@@ -4145,7 +4145,7 @@ function AfficheCoteSegment(
   // let longueur=s.longueur
   ObjetMathalea2D.call(this);
     this.positionCoteSVG=positionCote*20/mathalea.pixelsParCm
-    this.positionCoteTIKZ=positionCote/scale
+    this.positionCoteTIKZ=positionCote/mathalea.scale
     this.positionValeur=positionValeur
     this.seg=s
     this.cote=Cote
@@ -4376,9 +4376,9 @@ function CodeAngle(debut,centre,angle,taille=0.8,mark='',color='black',epaisseur
 
   this.tikz=function(){
     let P,depart,d,arcangle,mesure,code="",M
-    depart=pointSurSegment(this.centre,this.debut,this.taille/scale)
+    depart=pointSurSegment(this.centre,this.debut,this.taille/mathalea.scale)
     P=rotation(depart,this.centre,this.angle/2)
-    M=pointSurSegment(this.centre,P,taille+0.6/scale)
+    M=pointSurSegment(this.centre,P,taille+0.6/mathalea.scale)
     mesure= arrondi_virgule(Math.abs(angle),0) + "°";
     d=droite(this.centre,P)
     d.isVisible=false
@@ -4413,9 +4413,9 @@ function CodeAngle(debut,centre,angle,taille=0.8,mark='',color='black',epaisseur
   }
   this.tikzml=function(amp){
     let P,depart,d,arcangle,mesure,code="",M
-    depart=pointSurSegment(this.centre,this.debut,this.taille/scale)
+    depart=pointSurSegment(this.centre,this.debut,this.taille/mathalea.scale)
     P=rotation(depart,this.centre,this.angle/2)
-    M=pointSurSegment(this.centre,P,taille+0.6/scale)
+    M=pointSurSegment(this.centre,P,taille+0.6/mathalea.scale)
     mesure= arrondi_virgule(Math.abs(angle),0) + "°";
     d=droite(this.centre,P)
     d.isVisible=false
@@ -4525,7 +4525,7 @@ function DroiteGraduee(x=0,y=0,position='H',type='dd',longueurUnite=10,division=
   this.svgml = function (coeff,amp) {
     let code = "";
      for (let objet of objets) {
-      if (!mainlevee||typeof(objet.svgml)=='undefined') code += "\t" + objet.svg(coeff) + "\n";
+      if (!mathalea.mainlevee||typeof(objet.svgml)=='undefined') code += "\t" + objet.svg(coeff) + "\n";
       else code += "\t" + objet.svgml(coeff,amp) + "\n";
      }
      return code;
@@ -4533,7 +4533,7 @@ function DroiteGraduee(x=0,y=0,position='H',type='dd',longueurUnite=10,division=
    this.tikzml = function (amp) {
      let code = "";
      for (let objet of objets) {
-      if (!mainlevee||typeof(objet.tikzml)=='undefined') code += "\t" + objet.tikz() + "\n";
+      if (!mathalea.mainlevee||typeof(objet.tikzml)=='undefined') code += "\t" + objet.tikz() + "\n";
       else code += "\t" + objet.tikzml(amp) + "\n";
      }
      return code;
@@ -5327,7 +5327,7 @@ function Repere({
         calcul(ymin / yscale),
         calcul(xmax / xscale),
         calcul(ymax / yscale),
-        0.2/scale,
+        0.2/mathalea.scale,
         xstep,
         ystep,
         axesEpaisseur,
@@ -5341,7 +5341,7 @@ function Repere({
             graduationsxMax,
             xstep,
             graduationColor,
-            calcul(yabscisse / yscale) + positionLabelX/scale,
+            calcul(yabscisse / yscale) + positionLabelX/mathalea.scale,
             xscale
           ).tikz()
       }
@@ -5351,7 +5351,7 @@ function Repere({
             graduationsyMax,
             ystep,
             graduationColor,
-            calcul(xordonnee / xscale) + positionLabelY/scale,
+            calcul(xordonnee / xscale) + positionLabelY/mathalea.scale,
             yscale
           ).tikz()
       }
@@ -5362,7 +5362,7 @@ function Repere({
             -1,
             xstep,
             graduationColor,
-            calcul(yabscisse / yscale) + positionLabelX/scale,
+            calcul(yabscisse / yscale) + positionLabelX/mathalea.scale,
             xscale
           ).tikz()
       }
@@ -5372,7 +5372,7 @@ function Repere({
             -1,
             ystep,
             graduationColor,
-            calcul(xordonnee / xscale) + positionLabelY/scale,
+            calcul(xordonnee / xscale) + positionLabelY/mathalea.scale,
             yscale
           ).tikz()
       }
@@ -5382,7 +5382,7 @@ function Repere({
             graduationsxMax,
             xstep,
             graduationColor,
-            calcul(yabscisse / yscale) + positionLabelX/scale,
+            calcul(yabscisse / yscale) + positionLabelX/mathalea.scale,
             xscale
           ).tikz()
       }
@@ -5392,16 +5392,16 @@ function Repere({
             graduationsyMax,
             ystep,
             graduationColor,
-            calcul(xordonnee / xscale) + positionLabelY/scale,
+            calcul(xordonnee / xscale) + positionLabelY/mathalea.scale,
             yscale
           ).tikz()
       }
     }
     if (positionLegendeX === undefined) {
-      positionLegendeX = [xmax + 0.2/scale, yabscisse + 0.3/scale];
+      positionLegendeX = [xmax + 0.2/mathalea.scale, yabscisse + 0.3/mathalea.scale];
     }
     if (positionLegendeY === undefined) {
-      positionLegendeY = [xordonnee + 0.3/scale, ymax + 0.2/scale];
+      positionLegendeY = [xordonnee + 0.3/mathalea.scale, ymax + 0.2/mathalea.scale];
     }
     code+=texteParPosition(
         legendeX,
@@ -5949,7 +5949,7 @@ function LectureImage(x,y,xscale=1,yscale=1,color='red',text_abs="",text_ord="")
     Sy.styleExtremites='->'
     Sx.pointilles=true
     Sy.pointilles=true
-    return "\t\n"+Sx.tikz()+"\t\n"+Sy.tikz()+"\t\n"+texteParPosition(this.text_abs,x0,-1/scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/scale,y0,'milieu',this.color).tikz()
+    return "\t\n"+Sx.tikz()+"\t\n"+Sy.tikz()+"\t\n"+texteParPosition(this.text_abs,x0,-1/mathalea.scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/mathalea.scale,y0,'milieu',this.color).tikz()
   }
   this.svgml=function(coeff,amp){
     let x0=calcul(this.x/this.xscale)
@@ -5978,7 +5978,7 @@ function LectureImage(x,y,xscale=1,yscale=1,color='red',text_abs="",text_ord="")
     Sy.styleExtremites='->'
     Sx.pointilles=true
     Sy.pointilles=true
-    return "\t\n"+Sx.tikzml(amp)+"\t\n"+Sy.tikzml(amp)+"\t\n"+texteParPosition(this.text_abs,x0,-1/scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/scale,y0,'milieu',this.color).tikz()
+    return "\t\n"+Sx.tikzml(amp)+"\t\n"+Sy.tikzml(amp)+"\t\n"+texteParPosition(this.text_abs,x0,-1/mathalea.scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/mathalea.scale,y0,'milieu',this.color).tikz()
  
   }
 }
@@ -6026,7 +6026,7 @@ function LectureAntecedent(x,y,xscale,yscale,color,text_ord,text_abs){
     Sy.styleExtremites='->'
     Sx.pointilles=true
     Sy.pointilles=true
-    return "\t\n"+Sx.tikz()+"\t\n"+Sy.tikz()+"\t\n"+texteParPosition(this.text_abs,x0,-1/scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/scale,y0,'milieu',this.color).tikz()
+    return "\t\n"+Sx.tikz()+"\t\n"+Sy.tikz()+"\t\n"+texteParPosition(this.text_abs,x0,-1/mathalea.scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/mathalea.scale,y0,'milieu',this.color).tikz()
 
   }
   this.svgml=function(coeff,amp){
@@ -6055,7 +6055,7 @@ function LectureAntecedent(x,y,xscale,yscale,color,text_ord,text_abs){
     Sy.styleExtremites='->'
     Sx.pointilles=true
     Sy.pointilles=true
-    return "\t\n"+Sx.tikzml(amp)+"\t\n"+Sy.tikzml(amp)+"\t\n"+texteParPosition(this.text_abs,x0,-1/scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/scale,y0,'milieu',this.color).tikz()
+    return "\t\n"+Sx.tikzml(amp)+"\t\n"+Sy.tikzml(amp)+"\t\n"+texteParPosition(this.text_abs,x0,-1/mathalea.scale,'milieu',this.color).tikz()+"\t\n"+texteParPosition(this.text_ord,-1/mathalea.scale,y0,'milieu',this.color).tikz()
  }
 }
 export function lectureAntecedent(...args){
@@ -6419,10 +6419,10 @@ function CrochetD(A, color = "blue") {
     return code;
   };
   this.tikz = function () {
-    code = `\\draw[very thick,${this.color}] (${calcul(A.x + this.taille/scale)},${A.y+this.taille/scale})--(${
+    code = `\\draw[very thick,${this.color}] (${calcul(A.x + this.taille/mathalea.scale)},${A.y+this.taille/mathalea.scale})--(${
       A.x
-    },${A.y+this.taille/scale})--(${A.x},${A.y-this.taille/scale})--(${calcul(A.x + this.taille/scale)},${A.y-this.taille/scale});`;
-    code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/scale}) node[below] {$${A.nom}$};`;
+    },${A.y+this.taille/mathalea.scale})--(${A.x},${A.y-this.taille/mathalea.scale})--(${calcul(A.x + this.taille/mathalea.scale)},${A.y-this.taille/mathalea.scale});`;
+    code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/mathalea.scale}) node[below] {$${A.nom}$};`;
     return code;
   };
 }
@@ -6472,10 +6472,10 @@ function CrochetG(A, color = "blue") {
     return code;
   };
   this.tikz = function () {
-    code = `\\draw[very thick,${this.color}] (${calcul(A.x - this.taille/scale)},${A.y+this.taille/scale})--(${
+    code = `\\draw[very thick,${this.color}] (${calcul(A.x - this.taille/mathalea.scale)},${A.y+this.taille/mathalea.scale})--(${
       A.x
-    },${A.y+this.taille/scale})--(${A.x},${A.y-this.taille/scale})--(${calcul(A.x - this.taille/scale)},${A.y-this.taille/scale});`;
-    code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/scale}) node[below] {$${A.nom}$};`;
+    },${A.y+this.taille/mathalea.scale})--(${A.x},${A.y-this.taille/mathalea.scale})--(${calcul(A.x - this.taille/mathalea.scale)},${A.y-this.taille/mathalea.scale});`;
+    code += `\n\t\\draw[${this.color}] (${A.x},${A.y-this.taille/mathalea.scale}) node[below] {$${A.nom}$};`;
     return code;
   };
 }
@@ -6668,12 +6668,12 @@ function FractionParPosition({x=0,y=0,fraction=fraction(1,2),couleur='black'}){
 
   this.tikz = function(){
 
-    let code=segment(x,y,calcul(x+longueur/30/scale,2),y,couleur).tikz()
+    let code=segment(x,y,calcul(x+longueur/30/mathalea.scale,2),y,couleur).tikz()
     if (signe==-1) {
-      code+= segment(calcul(x-((longueur/30+0.75)/scale/2),2),y,calcul(x-((longueur/30+0.25)/scale/2),2),y,couleur).tikz()
+      code+= segment(calcul(x-((longueur/30+0.75)/mathalea.scale/2),2),y,calcul(x-((longueur/30+0.25)/mathalea.scale/2),2),y,couleur).tikz()
     }
-    code+=texteParPosition(nombre_avec_espace(num),calcul(x+longueur/60/scale,2),calcul(y+offset/30/scale,2),"milieu",couleur).tikz()
-    code+=texteParPosition(nombre_avec_espace(den),calcul(x+longueur/60/scale,2),calcul(y-offset/30/scale,2),"milieu",couleur).tikz()
+    code+=texteParPosition(nombre_avec_espace(num),calcul(x+longueur/60/mathalea.scale,2),calcul(y+offset/30/mathalea.scale,2),"milieu",couleur).tikz()
+    code+=texteParPosition(nombre_avec_espace(den),calcul(x+longueur/60/mathalea.scale,2),calcul(y-offset/30/mathalea.scale,2),"milieu",couleur).tikz()
      return code
   }
 }
@@ -6861,8 +6861,8 @@ export function creerLutin(...args) {
 export function avance(d, lutin=monLutin) { // A faire avec pointSurCercle pour tenir compte de l'orientation
   let xdepart = lutin.x;
   let ydepart = lutin.y;
-  lutin.x = calcul(lutin.x + d/unitesLutinParCm * Math.cos(Math.radians(lutin.orientation)));
-  lutin.y = calcul(lutin.y + d/unitesLutinParCm * Math.sin(Math.radians(lutin.orientation)));
+  lutin.x = calcul(lutin.x + d/mathalea.unitesLutinParCm * Math.cos(Math.radians(lutin.orientation)));
+  lutin.y = calcul(lutin.y + d/mathalea.unitesLutinParCm * Math.sin(Math.radians(lutin.orientation)));
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([xdepart, ydepart, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles,lutin.opacite]);
@@ -6892,8 +6892,8 @@ export function tournerD(a,lutin=monLutin){
 export function allerA(x,y,lutin=monLutin){
   let xdepart = lutin.x;
   let ydepart = lutin.y;
-  lutin.x = calcul(x/unitesLutinParCm);
-  lutin.y = calcul(y/unitesLutinParCm);
+  lutin.x = calcul(x/mathalea.unitesLutinParCm);
+  lutin.y = calcul(y/mathalea.unitesLutinParCm);
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([xdepart, ydepart, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles,lutin.opacite]);
@@ -6902,7 +6902,7 @@ export function allerA(x,y,lutin=monLutin){
 
 export function mettrexA(x,lutin=monLutin){
   let xdepart = lutin.x;
-  lutin.x = calcul(x/unitesLutinParCm);
+  lutin.x = calcul(x/mathalea.unitesLutinParCm);
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([xdepart, lutin.y, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles]);
@@ -6911,7 +6911,7 @@ export function mettrexA(x,lutin=monLutin){
 
 export function mettreyA(y,lutin=monLutin){
   let ydepart = lutin.y;
-  lutin.y = calcul(y/unitesLutinParCm);
+  lutin.y = calcul(y/mathalea.unitesLutinParCm);
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([lutin.x, ydepart, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles]);
@@ -6920,7 +6920,7 @@ export function mettreyA(y,lutin=monLutin){
 
 export function ajouterAx(x,lutin=monLutin){
   let xdepart = lutin.x;
-  lutin.x += calcul(x/unitesLutinParCm);
+  lutin.x += calcul(x/mathalea.unitesLutinParCm);
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([xdepart, lutin.y, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles]);
@@ -6929,7 +6929,7 @@ export function ajouterAx(x,lutin=monLutin){
 
 export function ajouterAy(y,lutin=monLutin){
   let ydepart = lutin.y;
-  lutin.y += calcul(y/unitesLutinParCm);
+  lutin.y += calcul(y/mathalea.unitesLutinParCm);
   lutin.historiquePositions.push([lutin.x, lutin.y]);
   if (lutin.crayonBaisse) {
     lutin.listeTraces.push([lutin.x, ydepart, lutin.x, lutin.y,lutin.color,lutin.epaisseur,lutin.pointilles]);
