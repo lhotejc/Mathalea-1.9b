@@ -9,6 +9,6 @@ import Transformations from '../6e/_Transformations.js'
 export default function Transformations_3e() {
   Transformations.call(this);
   this.sup = 4;
-  this.titre = `Trouver l'image d'un point par une transformation choisie aléatoirement`;
+  this.titre = "Trouver l'image d'un point par une transformation choisie aléatoirement";
   this.pas_de_version_LaTeX = true;
 }
