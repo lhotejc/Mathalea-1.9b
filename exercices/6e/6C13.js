@@ -1,6 +1,6 @@
 import Exercice from '../ClasseExercice.js';
 import {liste_de_question_to_contenu_sans_numero,randint,combinaison_listes,num_alpha} from "/modules/outils.js"
-import Choisir_expression_numerique from '../5e/Choisir_expression_numerique.js'
+import Choisir_expression_numerique from '../5e/_Choisir_expression_numerique.js'
 /**
  * Mettre en relation un calcul, une traduction en français, une expression, un résultat, pour les décliner dans différents exercices.
  * Exercice sur le vocabulaire : somme,différence, produit, quotient...
