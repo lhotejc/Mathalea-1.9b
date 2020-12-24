@@ -11266,6 +11266,44 @@ function Tableaux_et_quatrieme_proportionnelle() {
   this.exo = `4P10-2`;
   Eq_resolvantes_Thales.call(this);
 };
+/** */
+//4G40
+function Exercice_Trigo_longueurs_4e() {
+  Exercice_Trigo_longueurs.call(this);
+  this.sup = 1;
+  this.besoin_formulaire_numerique = false;
+  this.titre =
+    "Utiliser le cosinus pour calculer une longueur dans un triangle rectangle";
+}
+/** */
+// 4G41
+function Exercice_Trigo_angles_4e() {
+  this.sup = 1;
+  this.quatrieme = true;
+  this.titre =
+    "Utiliser le cosinus pour calculer la mesure d'un angle dans un triangle rectangle";
+  Exercice_Trigo_angles.call(this);
+}
+/** */
+// 4G40bis
+function Transformations_4e() {
+  Transformations.call(this);
+  this.sup = 3;
+  this.titre = `Trouver l'image d'un point par une symétrie axiale ou centrale ou par une translation`;
+  this.pas_de_version_LaTeX = true;
+}
+/** */
+// 4G31
+function Reciproque_Thales_4eme() {
+  Reciproque_Thales.call(this);
+  this.quatrieme = true;
+}
+/** */
+// 4G30
+function Thales2D_4e(params) {
+  Thales2D.call(this);
+  this.besoin_formulaire_numerique = false
+  this.titre = "Calculer des longueurs avec la propriété de Thalès";
 
-
+}
 /** */
