@@ -245,6 +245,12 @@ var liste_des_exercices_disponibles = {
   "4G20MG32": Exercice_Pythagore,
   "4G21": Reciproque_Pythagore,
   "4G22": Problemes_Pythagore,
+  "4G30": Thales2D_4e,
+  "4G30-1": Thales_4eme,
+  "4G31": Reciproque_Thales_4eme,
+  "4G40bis": Transformations_4e,
+  "4G40": Exercice_Trigo_longueurs_4e,
+  "4G41": Exercice_Trigo_angles_4e,
   "4G51": Representer_un_solide_4e,
   "beta3L11-5": identites_calculs,
   "beta3Algo1": Instruction_conditionelle,
@@ -10712,6 +10718,9 @@ function Exercice_Trigo_angles_4e() {
 }
 // 5G10
 function Symetrie_axiale_5e() {
+/** */
+// référence 6G24
+function Transformations_6e() {
   Transformations.call(this);
   this.sup = 1;
   this.titre = `Trouver l'image d'un point par une symétrie axiale`;
@@ -10738,6 +10747,9 @@ function Transformations_3e() {
   this.titre = `Trouver l'image d'un point par une transformation choisie aléatoirement`;
   this.pas_de_version_LaTeX = true;
 }
+/** */
+
+//6N13
 
 function Exercice_6N13() {
   this.sup = 1;
