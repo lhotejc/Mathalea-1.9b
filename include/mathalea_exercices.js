@@ -201,57 +201,7 @@ var liste_des_exercices_disponibles = {
   "5S14": Calculer_des_moyennes,
   "5S20": Placer_probabilites,
   "5S21": fonctions_probabilite1,
-  "4Algo1-0": Tracer_avec_scratch,
-  "4C10-0": Signe_produit_quotient_relatifs,
-  "4C10-1": Signe_produit_relatifs,
-  "4C10-2": Signe_quotient_relatifs,
-  "4C10-4": Exercice_quotients_relatifs,
-  "4C10-5": Exercice_tableau_multiplications_relatifs,
-  "4C11": Priorites_et_relatifs,
-  "4C22": Exercice_multiplier_fractions,
-  "4C22-1": Exercice_trouver_l_inverse,
-  "4C22-2": Exercice_diviser_fractions,
-  "4C23": Exercice_additionner_fraction_produit,
-  "4C25-0": Problemes_additifs_fractions,
-  "4C30": Puissances_de_dix,
-  "4C30-1": Puissances_encadrement,
-  "4C30-2": EcritureDecimalePuissanceDe10,
-  "4C30-3": EcritureDecimalePuissance,
-  "4C32": Notation_scientifique,
-  "4C32-1": Calculs_avec_puissances_de_dix,
-  "4C33-1": Puissances_d_un_relatif_1,
-  "4C33-3": Puissances_d_un_relatif_2,
-  "4L10-1": Reductions_pieges_classiques,
-  "4L13-0": Mettre_en_equation_sans_resoudre,
-  "4L13-1": Forme_litterale_introduire_une_lettre,
-  "4L14-0": Tester_si_un_nombre_est_solution_d_une_equation,
-  "4L14-1": Tester_si_un_nombre_est_solution_d_une_equation_deg1,
-  "4L14-2": Tester_si_un_nombre_est_solution_d_une_equation_deg2,
-  "4L15-0": Trouver_erreur_resol_eq_deg1,
-  "4L15-1": Equations_fractions,
-  "4C22-1": Exercice_trouver_l_inverse,
-  "4C22": Exercice_multiplier_fractions,
-  "4C22-2": Exercice_diviser_fractions,
-  "4C23": Exercice_additionner_fraction_produit,
   "beta4C30": Comparer_puissance10,
-  "4F12": Exploiter_representation_graphique,
-  "4P10": Problemes_grandeurs_composees,
-  "4P10-1": Graphiques_et_proportionnalite,
-  "4P10-2": Tableaux_et_quatrieme_proportionnelle,
-  "4G11" :Pavage_et_translation2d,
-  "4G20": Pythagore2D,
-  "4G20-1": Egalite_Pythagore2D, // Anciennement Egalite_Pythagore,
-  "4G20-2": Racine_caree_de_carres_parfaits,
-  "4G20MG32": Exercice_Pythagore,
-  "4G21": Reciproque_Pythagore,
-  "4G22": Problemes_Pythagore,
-  "4G30": Thales2D_4e,
-  "4G30-1": Thales_4eme,
-  "4G31": Reciproque_Thales_4eme,
-  "4G40bis": Transformations_4e,
-  "4G40": Exercice_Trigo_longueurs_4e,
-  "4G41": Exercice_Trigo_angles_4e,
-  "4G51": Representer_un_solide_4e,
   "beta3L11-5": identites_calculs,
   "beta3Algo1": Instruction_conditionelle,
   "betaTESTseb": Tests_du_Seb,
@@ -10717,7 +10667,6 @@ function Exercice_Trigo_angles_4e() {
   Exercice_Trigo_angles.call(this);
 }
 // 5G10
-function Symetrie_axiale_5e() {
 /** */
 // référence 6G24
 function Transformations_6e() {
@@ -14209,13 +14158,6 @@ function Representer_un_solide_5e() {
   Representer_un_solide.call(this);
 }
 
-// 4G51
-function Representer_un_solide_4e() {
-  this.sup = 6;
-  this.classe = 4;
-  Representer_un_solide.call(this);
-}
-
 /**
  * fonction servant à plusieurs exercice autour du cube et du pavé droit
  * références : 6G42 et 6G43
@@ -16625,5 +16567,4 @@ jQuery(document).ready(function () {
     });
   });
 });
-
 
