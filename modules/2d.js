@@ -21,11 +21,11 @@ import {egal,randint,choice,rangeMinMax,unSiPositifMoinsUnSinon,arrondi,arrondi_
 let numId = 0 // Créer un identifiant numérique unique par objet SVG
 
 var pixelsParCm = 20;
-// let unitesLutinParCm = 50;
-// let mainlevee=false
-// let amplitude=1
+let unitesLutinParCm = 50;
+let mainlevee=false
+let amplitude=1
 var fenetreMathalea2d = [-1,-10,29,10]
-// let scale=1
+let scale=1
 
 /*
  * Classe parente de tous les objets de MathALEA2D
@@ -1259,6 +1259,7 @@ function Vecteur(arg1, arg2, nom = "") {
     let B = point(A.x + this.x, A.y + this.y);
     let s = segment(A, B);
     s.styleExtremites = "|->";
+    return s
   };
 }
 export function vecteur(...args) {
@@ -4658,8 +4659,9 @@ export function droiteGraduee(...args) {
     }
   }
   // Les labels facultatifs
+  let t
   if (labelListe){
-    for (p of labelListe){
+    for (let p of labelListe){
       t=texteParPosition(p[1],x-labelDistance*absord[1]+(p[0]-Min)*absord[0]*Unite,y-labelDistance*absord[0]+(p[0]-Min)*absord[1]*Unite)
       objets.push(t)
     }
@@ -6243,7 +6245,7 @@ function CourbeInterpolee(
   xmax
 ) {
   ObjetMathalea2D.call(this);
-  mesCourbes = [];
+  let mesCourbes = [];
   for (let i = 0; i < tableau.length - 1; i++) {
     let x0 = tableau[i][0];
     let y0 = tableau[i][1];
@@ -6779,7 +6781,8 @@ export function angleradian(A, O, B) {
 */
 
 function ObjetLutin() {
-  mesObjets.push(this);
+  //let mesObjets
+  //mesObjets.push(this);
   this.x = 0;
   this.y = 0;
   this.xSVG = function (coeff) {

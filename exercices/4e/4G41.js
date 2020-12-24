@@ -1,4 +1,4 @@
-import Exercice_Trigo_angles_4e from '../3e/3G31.js'
+import Exercice_Trigo_angles from '../3e/3G31.js'
 /**
  * @auteur Jean-Claude Lhote
  * 3G31
@@ -9,7 +9,5 @@ import Exercice_Trigo_angles_4e from '../3e/3G31.js'
 export default function Exercice_Trigo_angles_4e() {
   Exercice_Trigo_angles.call(this);
   this.sup = 1;
-  this.quatrieme = true;
   this.titre ="Utiliser le cosinus pour calculer la mesure d'un angle dans un triangle rectangle";
-
 }

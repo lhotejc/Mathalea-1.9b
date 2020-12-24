@@ -1,4 +1,4 @@
-import Thales2D from './_Thales2d.js'
+import Thales2D from './_Thales2D.js'
 /**
  * Calcul de longueurs avec le théorème de Thalès
  * @Auteur Rémi Angot

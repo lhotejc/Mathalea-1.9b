@@ -19,9 +19,10 @@ export default function Exercice_Trigo_angles() {
   this.sup = 1; // 1 calcul avec Arccos
   sortie_html ? (this.spacing_corr = 3) : (this.spacing_corr = 1.5);
   this.liste_packages = "tkz-euclide";
+  this.type_exercice = "MG32";
 
   this.nouvelle_version = function (numero_de_l_exercice) {
-    this.type_exercice = "MG32";
+
     this.taille_div_MG32 = [700, 500];
     this.liste_questions = [];
     this.liste_corrections = []; // Liste de questions corrigées
