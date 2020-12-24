@@ -1,4 +1,4 @@
-import Constuire_par_Symetrie from '../6e/_Construire_par_symetrie.js';
+import Construire_par_Symetrie from '../6e/_Construire_par_symetrie.js';
 /**
  * @Auteur Jean-Claude Lhote
  * Fonction générale pour les exercices de construction de symétriques (centrale/axiale et points/triangles)
@@ -6,7 +6,7 @@ import Constuire_par_Symetrie from '../6e/_Construire_par_symetrie.js';
  * Permet une sortie html/pdf sur petits carreaux/gros carreaux/papier blanc
  */
 export default function Construire_par_Symetrie_axiale_5e() {
-	Constuire_par_Symetrie.call(this);
+	Construire_par_Symetrie.call(this);
 	this.titre = "Construire par symétrie centrale";
 	this.sup = 2;
 	this.sup2 = 1;
