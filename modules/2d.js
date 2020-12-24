@@ -4659,8 +4659,9 @@ export function droiteGraduee(...args) {
     }
   }
   // Les labels facultatifs
+  let t
   if (labelListe){
-    for (p of labelListe){
+    for (let p of labelListe){
       t=texteParPosition(p[1],x-labelDistance*absord[1]+(p[0]-Min)*absord[0]*Unite,y-labelDistance*absord[0]+(p[0]-Min)*absord[1]*Unite)
       objets.push(t)
     }

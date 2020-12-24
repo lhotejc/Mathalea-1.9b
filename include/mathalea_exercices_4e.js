@@ -97,3 +97,4 @@ function Comparer_puissance10() {
   this.besoin_formulaire_numerique = ["Niveau de difficulté", 6,
     "1 : puissances de 10 seules\n 2 : mantisses différentes et même exposant\n 3 : mêmes mantisses et exposants différents\n 4 : mantisses et exposants différents\n 5 : mantisses (négatives) et exposants différents\n 6 : tous types"];
 }
+/** */
