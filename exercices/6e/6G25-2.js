@@ -1,4 +1,4 @@
-import Pavages_et_transformations from './Pavages_et_transformations.js'
+import Pavages_et_transformations from './_Pavages_et_transformations.js'
 
 /**
  * Exercice en html seulement. Symétrie axiale dans un pavage.

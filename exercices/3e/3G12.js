@@ -4,7 +4,7 @@ import {pavage,tracePoint,labelPoint,segment,rotation,rotationAnimee,codeAngle,t
 /**
  * Publié le 16/12/2020
  * @Auteur Jean-Claude Lhote
- * Trouver l'image par symétrie centrale d'une figure dans un pavage
+ * Trouver l'image par sune rotation d'une figure dans un pavage
  * Ref 3G12
  */
 export default function Pavage_et_rotation2d() {

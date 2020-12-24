@@ -16,13 +16,12 @@ export default function Eq_resolvantes_Thales() {
 	};
 	this.sup = 1;
 	this.sup2 = false;
+	this.titre = "Equations résolvantes pour le théorème de Thalès"
 	//this.exo = '';	
 	if (this.exo == '4L15-1') {
 		this.titre = "Equations du type $\\dfrac{x}{a}=\\dfrac{b}{c}$";
 	} else if (this.exo == '4P10-2') {
 		this.titre = "Déterminer une quatrième proportionnelle dans un tableau";
-	} else {
-		this.titre = "Equations résolvantes pour le théorème de Thalès";
 	}
 	if (this.exo == '4P10-2') {
 		this.consigne = `Déterminer la quatrième proportionnelle dans les tableaux suivants.`;

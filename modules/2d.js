@@ -20,11 +20,11 @@ import {egal,randint,choice,rangeMinMax,unSiPositifMoinsUnSinon,arrondi,arrondi_
 
 let numId = 0 // Créer un identifiant numérique unique par objet SVG
 
-let pixelsParCm = 20;
+var pixelsParCm = 20;
 // let unitesLutinParCm = 50;
 // let mainlevee=false
 // let amplitude=1
-let fenetreMathalea2d = [-1,-10,29,10]
+var fenetreMathalea2d = [-1,-10,29,10]
 // let scale=1
 
 /*
@@ -4905,9 +4905,9 @@ function Grille(
   ObjetMathalea2D.call(this);
   this.color = color;
   this.opacite = opacite;
-  let objets = [],s;
-  for (let i = xmin; i <= xmax; i += step) {
-    s = segment(i, ymin, i, ymax);
+  let objets = [];
+  for (let i = arrondi(xmin,2); i <= arrondi(xmax,2); i = arrondi(calcul(i+step),2)) {
+    let s = segment(i, ymin, i, ymax);
     s.color = this.color;
     s.opacite = this.opacite;
     if (pointilles) {
@@ -4915,8 +4915,8 @@ function Grille(
     }
     objets.push(s);
   }
-  for (let i = ymin; i <= ymax; i += step) {
-    s = segment(xmin, i, xmax, i);
+  for (let i = arrondi(ymin,2); i <= arrondi(ymax+0.005,2); i = arrondi(calcul(i+step),2)) {
+    let s = segment(xmin, i, xmax, i);
     s.color = this.color;
     s.opacite = this.opacite;
     if (pointilles) {
@@ -4933,7 +4933,7 @@ function Grille(
     return code;
   };
   this.tikz = function () {
-    let code = "";
+   let  code = "";
     for (let objet of objets) {
       code += "\n\t" + objet.tikz();
     }
