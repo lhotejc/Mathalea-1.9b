@@ -11,7 +11,7 @@ import {liste_de_question_to_contenu,prenom, Trouver_solution_mathador} from "/m
 export default function Ecrire_une_expression_mathador() {
 	'use strict';
 	Exercice.call(this); // Héritage de la classe Exercice()
-	this.titre = "Traduire une succession d\'opérations par une expression";
+	this.titre = "Traduire une succession des opérations par une expression";
 	this.consigne = "";
 	this.nb_questions = 4;
 	this.nb_cols = 1;
