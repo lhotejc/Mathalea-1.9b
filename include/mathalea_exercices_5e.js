@@ -3376,5 +3376,21 @@ function Exercice_tableau_additions_relatifs() {
 		liste_de_question_to_contenu(this);
 	}
 }
+/** */
+// 5G10
+function Symetrie_axiale_5e() {
+	Transformations.call(this);
+	this.sup = 1;
+	this.titre = `Trouver l'image d'un point par une symétrie axiale`;
+	this.pas_de_version_LaTeX = true;
+  }
+  /** */
+  // 5G11
+  function Transformations_5e() {
+	Transformations.call(this);
+	this.sup = 2;
+	this.titre = `Trouver l'image d'un point par une symétrie axiale ou centrale`;
+	this.pas_de_version_LaTeX = true;
+  }
 
 /** */
