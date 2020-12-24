@@ -1,3 +1,36 @@
+/**
+ * référence 5G20
+ * @Auteur Lhote Jean-Claude
+ * 
+ */
+/**
+ * référence ?
+ */
+function Arrondir_une_valeur_5e() {
+	Arrondir_une_valeur.call(this);
+	this.sup = 2;
+	this.besoin_formulaire_numerique = ['Type de nombre', 2, `1 : Nombre décimal\n 2 : Fraction`];
+  }
+
+Pavage_et_demi_tour2d
+/**
+ * référence  5G51
+ */
+function Representer_un_solide_5e() {
+	this.sup = 4;
+	this.classe = 5;
+	Representer_un_solide.call(this);
+  }
+
+/**
+ * Vocabulaire des triangles
+ * 5G20-1
+ * @author Sébastien Lozano
+ */
+function Vocabulaire_des_triangles_5e() {
+	this.classe = 5;
+	Vocabulaire_des_triangles.call(this);
+  }
 
 /**
  * @Auteur Jean-Claude Lhote
@@ -45,6 +78,91 @@ function Calculer_une_expression_numerique() {
 	this.titre = "Calculer une expression numérique en détaillant les calculs"
 }
 
+/**
+ * Simplifier une fraction, le facteur commun est inférieur à une valeur donnée en paramètre qui est 11 par défaut
+ * @Auteur Rémi Angot
+ *  5N13
+ */
+function Exercice_fractions_simplifier(max = 11) {
+	Exercice.call(this); // Héritage de la classe Exercice()
+	this.sup = max; // Correspond au facteur commun
+	this.titre = "Simplification de fractions";
+	this.consigne = "Simplifier les fractions suivantes.";
+	this.spacing = 2;
+	this.spacing_corr = 2;
+  
+	this.nouvelle_version = function (numero_de_l_exercice) {
+	  this.liste_questions = []; // Liste de questions
+	  this.liste_corrections = []; // Liste de questions corrigées
+	  liste_fractions = [
+		[1, 2],
+		[1, 3],
+		[2, 3],
+		[1, 4],
+		[3, 4],
+		[1, 5],
+		[2, 5],
+		[3, 5],
+		[4, 5],
+		[1, 6],
+		[5, 6],
+		[1, 7],
+		[2, 7],
+		[3, 7],
+		[4, 7],
+		[5, 7],
+		[6, 7],
+		[1, 8],
+		[3, 8],
+		[5, 8],
+		[7, 8],
+		[1, 9],
+		[2, 9],
+		[4, 9],
+		[5, 9],
+		[7, 9],
+		[8, 9],
+		[1, 10],
+		[3, 10],
+		[7, 10],
+		[9, 10],
+	  ]; // Couples de nombres premiers entre eux
+	  for (
+		let i = 0, fraction, a, b, texte, texte_corr, cpt = 0;
+		i < this.nb_questions;
+		i++
+	  ) {
+		fraction = choice(liste_fractions); //
+		a = fraction[0];
+		b = fraction[1];
+		k = randint(2, this.sup);
+		enleve_element(liste_fractions, fraction); // Il n'y aura pas 2 fois la même réponse
+		texte =
+		  "$ " +
+		  tex_fraction(k * a, k * b) +
+		  " = " +
+		  tex_fraction("\\phantom{00000000000000}", "") +
+		  " = " +
+		  tex_fraction("\\phantom{0000}", "") +
+		  " $";
+		texte_corr =
+		  "$ " +
+		  tex_fraction(k * a, k * b) +
+		  " = " +
+		  tex_fraction(k + " \\times " + a, k + " \\times " + b) +
+		  " = " +
+		  tex_fraction(a, b) +
+		  " $";
+		this.liste_questions.push(texte);
+		this.liste_corrections.push(texte_corr);
+	  }
+	  liste_de_question_to_contenu(this); //Espacement de 2 em entre chaque questions.
+	};
+	this.besoin_formulaire_numerique = [
+	  "Valeur maximale du facteur commun",
+	  99999,
+	];
+  }
 
 
 

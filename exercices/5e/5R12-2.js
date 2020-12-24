@@ -5,7 +5,7 @@ import {liste_de_question_to_contenu_sans_numero,creer_couples,randint,shuffle,c
 /**
  * Lire les coordonnées d'un point du plan avec une précision allant de l'unité à 0,25.
  * @Auteur Jean-Claude Lhote
- * Références 5R12-2 6N33
+ * Références 5R12-2
  */
 export default function Reperage_point_du_plan() {
 	'use strict';
