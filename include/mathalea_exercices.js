@@ -10690,14 +10690,9 @@ function Reperage_point_du_quart_de_plan() {
   this.titre = "Déterminer les coordonnées (positives) d'un point";
   this.quart_de_plan = true;
 }
-// 3F21
-function Lecture_expression_fonctions_lineaires() {
-  Lecture_expression_fonctions_affines.call(this);
-  this.titre = "Déterminer une fonction linéaire";
-  this.lineaire = true;
-}
-// Référence 6C21
 
+/** */
+// Référence 6C21
 function Divisions_euclidiennes_niv2() {
   Divisions_euclidiennes.call(this);
   this.sup = 2;
@@ -10753,6 +10748,7 @@ function Exercice_6N13() {
   this.titre = "Utiliser les préfixes multiplicateurs (déca à kilo)";
   Exercice_conversions.call(this);
 }
+/** */
 // 6N24
 function Exercice_6N24() {
   Exercice_conversions.call(this);
@@ -10762,6 +10758,7 @@ function Exercice_6N24() {
   this.correction_avec_des_fractions = true;
   this.spacing_corr = 2;
 }
+/** */
 // Référence 6M12
 function Reglages_6M12() {
   Exercice_conversions_de_longueurs.call(this);
@@ -10769,22 +10766,26 @@ function Reglages_6M12() {
   this.nb_questions = 8;
 }
 
+/** */
 function Reglages_6M23() {
   Exercice_conversions_aires.call(this);
   this.sup = 3;
   this.nb_cols_corr = 1;
 }
+/** */
 // Référence 6M10
 function Reglages_6M10() {
   Exercice_perimetres_et_aires.call(this);
   this.sup = 1;
 }
+/** */
 // Référence 6M22
 function Reglages_6M22() {
   Exercice_perimetres_et_aires.call(this);
   this.sup = 2;
   this.titre = "Périmètres et aires de disques (à partir d'un texte).";
 }
+/** */
 
 function Reglages_6N34() {
   Exercice_conversions.call(this);
@@ -10792,25 +10793,6 @@ function Reglages_6N34() {
   this.titre = "Conversions avec tous les préfixes de milli à tera.";
 }
 
-// 4G31
-function Reciproque_Thales_4eme() {
-  Reciproque_Thales.call(this);
-  this.quatrieme = true;
-}
-
-// 4G30
-function Thales2D_4e(params) {
-  Thales2D.call(this);
-  this.besoin_formulaire_numerique = false
-  this.titre = "Calculer des longueurs avec la propriété de Thalès";
-
-}
-
-// 3G20
-function Thales2D_3e(params) {
-  Thales2D.call(this);
-  this.sup = 2;
-}
 
 /**
  * Vocabulaire des triangles

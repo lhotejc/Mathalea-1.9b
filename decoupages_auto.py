@@ -3,14 +3,23 @@
 
 import os
 import re # Pour la gestion des expressions régulières
-from collections import namedtuple # pour les tuples nommés utile ?
 
 # Récupèrer toutes les références des exos dans include/mathalea_exercices.js dans un tableau
 def getAllRefsClean():
-    # Ouvrir le fichier
+    # Ouvrir le fichier pour déterminer la ligne d'arrêt
+    allRefs = open('./include/mathalea_exercices.js','r')
+    partTemp = allRefs.readlines()[2:285]
+    cpt=0
+    for line in partTemp:
+        cpt+=1
+        if "TsvgjsKatex" in line:
+            break 
+    #Fermer le fichier
+    allRefs.close()
+    # Réouvrir le fichier pour garder ce qu'on veut
     allRefs = open('./include/mathalea_exercices.js','r')
     # Garder la partie du fichier avec les rérérences
-    part = allRefs.readlines()[2:374] 
+    part = allRefs.readlines()[2:cpt]    
     # Tableau pour les références néttoyées
     allRefsClean = []    
     temp = []   
@@ -19,9 +28,10 @@ def getAllRefsClean():
         temp.append(elt.rstrip(',\n'))
     # Garder la référence qui se trouve entre les " "
     for elt in temp:
-        allRefsClean.append(re.search('(\".+\")',elt).group().strip('\"'))
+        if "\"" in elt:
+            allRefsClean.append(re.search('(\".+\")',elt).group().strip('\"'))
     # Fermer le fichier        
-    allRefs.close()    
+    allRefs.close()   
     return allRefsClean
 
 # Récupérer seulement certaines références dans un tableau
@@ -31,10 +41,8 @@ def getAllRefsCleanNiv(niveaux):
     sortie = []
     # toutes les ref
     allRefsClean = getAllRefsClean()
-    for ref in allRefsClean:
-        #print(ref[0])
-        for niv in niveaux:
-            #print(niv)
+    for ref in allRefsClean:        
+        for niv in niveaux:            
             if ref[0] == niv or (ref[0]==niv[0] and ref[1]==niv[1]):
                 sortie.append(ref)
     return sortie
@@ -68,8 +76,7 @@ def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):
         if (len(tab)==2):            
             break
         if "/**" in line:
-            tab.append(compteur)
-    #print(tab)
+            tab.append(compteur)    
     code = content[tab[0]-1:tab[1]-1]
     file.close()
     # On va récupérer la ref du code
@@ -88,9 +95,6 @@ def getCodeRefEx(debut_du_scan,path_to_file,niv,nivAlready):
                 reference = ref
 
     return [code,tab[1]-1,reference]
-    # print(code)
-    # print(tab)
-
 
 # Récupérer toutes les lignes sur lesquelles on a /**
 # qui correspondent au début du code à récupérer
@@ -110,7 +114,9 @@ def getAllNbLineBeginCode(path_to_file):
 # Écrire le code dans un fichier si l'exo n'existe pas
 # le nom du fichier, le tableau contenant le code à écrire, le niveau
 def writeToFile(filename,code,niv):
-    path_to_write = "./exercices/"+niv+"_to_clean/"
+    if not os.path.exists("./exercices_to_clean/"):
+        os.mkdir("./exercices_to_clean/")
+    path_to_write = "./exercices_to_clean/"+niv+"_to_clean/"
     if not os.path.exists(path_to_write):
         os.mkdir(path_to_write)
     file = open(path_to_write+filename+".js","w")
@@ -126,16 +132,13 @@ def writeToFile(filename,code,niv):
 def firstFunctionReplace(path_to_file):
     readFile = open(path_to_file,"r")
     fileContent = readFile.readlines()
-    outFile = open(path_to_file,"w")
-    #print("ddd")
+    outFile = open(path_to_file,"w")    
     compteur=0
     ok = False
     for line in fileContent:
-        if "function" in line and ok == False:
-            #print(line)
+        if "function" in line and ok == False:            
             newLine = line.replace("function","export default function")
-            outFile.write(newLine)
-            #print(newLine)
+            outFile.write(newLine)            
             compteur+=1
             ok = True
         else:
@@ -154,26 +157,6 @@ def addEndSymb(path_to_file):
         appendFile.close()
 
 if __name__ == '__main__':
-    #print(getAllRefClean())
-    #print(getAllRefCleanNiv(['6']))
-    #print(getAllRefsAlreadyClean('Profs'))
-    # deb = 0
-    # print(getCodeRefEx(deb,"./include/mathalea_exercices.js"))
-    # print("=======================================================================")
-    # print("=======================================================================")
-    # debsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]
-    # print(getCodeRefEx(debsuiv,"./include/mathalea_exercices.js"))
-    # print("=======================================================================")
-    # print("=======================================================================")
-    # debsuivsuiv=getCodeRefEx(deb,"./include/mathalea_exercices.js")[1]+getCodeEx(debsuiv,"./include/mathalea_exercices.js")[1]
-    # print(getCodeRefEx(debsuivsuiv,"./include/mathalea_exercices.js"))
-    # print(getCodeRefEx(0,"./include/mathalea_exercices.js",['6'],'6e'))    
-    # print(getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e'))    
-    # print(getAllNbLineBeginCode("./include/mathalea_exercices.js"))
-    # writeToFile('test',['test\n','test\n','test\n'],'6e')
-    # exo = getCodeRefEx(710,"./include/mathalea_exercices.js",['6'],'6e')
-    # writeToFile(exo[2],exo[0],'6e')
-    # firstFunctionReplace("./exercices/6e_to_clean/6N30-2.js")
 ############################################################################################
 # Niveau 6eme et CM
 ############################################################################################
@@ -194,7 +177,7 @@ if __name__ == '__main__':
     # On ecrit maintenant tous les exos dans le dossier 6e_to_clean
     for exo in tab_exo6:
         writeToFile(exo[2],exo[0],'6e')
-        firstFunctionReplace("./exercices/6e_to_clean/"+exo[2]+".js")
+        firstFunctionReplace("./exercices_to_clean/6e_to_clean/"+exo[2]+".js")
 ############################################################################################
 # Niveau 5eme
 ############################################################################################
@@ -213,7 +196,7 @@ if __name__ == '__main__':
     # On ecrit maintenant tous les exos dans le dossier 5e_to_clean
     for exo in tab_exo5:
         writeToFile(exo[2],exo[0],'5e')
-        firstFunctionReplace("./exercices/5e_to_clean/"+exo[2]+".js")    
+        firstFunctionReplace("./exercices_to_clean/5e_to_clean/"+exo[2]+".js")    
     #print(getCodeRefEx(8520,"./include/mathalea_exercices_5e.js",['5'],'5e')[2])
 ############################################################################################
 # Niveau 4eme
@@ -233,7 +216,7 @@ if __name__ == '__main__':
     # On ecrit maintenant tous les exos dans le dossier 4e_to_clean
     for exo in tab_exo4:
         writeToFile(exo[2],exo[0],'4e')
-        firstFunctionReplace("./exercices/4e_to_clean/"+exo[2]+".js")    
+        firstFunctionReplace("./exercices_to_clean/4e_to_clean/"+exo[2]+".js")    
     #print(getCodeRefEx(12371,"./include/mathalea_exercices_4e.js",['4'],'4e')[2])
 ############################################################################################
 # Niveau 3eme déjà fini
@@ -253,7 +236,7 @@ if __name__ == '__main__':
     # On ecrit maintenant tous les exos dans le dossier 3e_to_clean
     for exo in tab_exo3:
         writeToFile(exo[2],exo[0],'3e')
-        firstFunctionReplace("./exercices/3e_to_clean/"+exo[2]+".js")    
+        firstFunctionReplace("./exercices_to_clean/3e_to_clean/"+exo[2]+".js")    
     #print(getCodeRefEx(2,"./include/mathalea_exercices_3e.js",['3'],'3e')[2])
 ############################################################################################
 # Niveau 2eme déjà fini
