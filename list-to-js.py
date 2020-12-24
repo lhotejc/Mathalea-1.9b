@@ -49,8 +49,8 @@ def main():
                 with open(dirpath+'/'+file, encoding="utf8", errors='ignore') as searchfile:
                     for line in searchfile:
                         if 'this.titre' in line:
-                            line = re.sub('this.titre\s*=\s*(\"|\')\s*','',line) # Enlève this.titre
-                            line = re.sub('\s*(\"|\')\s*\;\s*$','',line) # Guillemets et ; de la fin
+                            line = re.sub('this.titre\s*=\s*(\"|\'|`)\s*','',line) # Enlève this.titre
+                            line = re.sub('\s*(\"|\'|`)\s*\;\s*$','',line) # Guillemets et ; de la fin
                             line = re.sub('^\s*','',line) # Espaces du début
                             dictionnaireDesRef += '"'+os.path.splitext(file)[0]+'":{"url":"'+dirpath.replace('./','/')+'/'+file+'","titre":"'+line+'"},'
             

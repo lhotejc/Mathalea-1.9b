@@ -19,7 +19,7 @@ export default function Exercice_Trigo_longueurs() {
   this.sup = 1; // 1 utilisation du cosinus exclusivement 2 utilisation des 3 fonctions trigo
   sortie_html ? (this.spacing_corr = 3) : (this.spacing_corr = 1.5);
   this.liste_packages = "tkz-euclide";
-
+  this.type_exercice = "MG32";
   this.nouvelle_version = function (numero_de_l_exercice) {
     let lettre1, lettre2, texte, texte_corr;
     this.bouton_aide = modal_youtube(
@@ -27,7 +27,6 @@ export default function Exercice_Trigo_longueurs() {
       "DYW-BTMFzd4",
       "Trigonométrie (vidéo de digiSchool)"
     );
-    this.type_exercice = "MG32";
     this.taille_div_MG32 = [700, 500];
     this.liste_questions = [];
     this.liste_corrections = []; // Liste de questions corrigées

@@ -1,4 +1,4 @@
-import Transformations from '../6e/Transformations.js'
+import Transformations from '../6e/_Transformations.js'
 /**
  * Transformations : trouvers un point numéroté par une des transformations sauf rotation et homothetie
  * @Auteur Jean-Claude Lhote

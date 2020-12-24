@@ -8,6 +8,7 @@ import {liste_de_question_to_contenu,randint,choice,shuffle,combinaison_listes_s
 export default function Eq_resolvantes_Thales() {
 	'use strict';
 	Exercice.call(this); // Héritage de la classe Exercice()
+	this.titre = "Equations résolvantes pour le théorème de Thalès";
 	this.debug = false;
 	if (this.debug) {
 		this.nb_questions = 4;
@@ -15,14 +16,7 @@ export default function Eq_resolvantes_Thales() {
 		this.nb_questions = 2;
 	};
 	this.sup = 1;
-	this.sup2 = false;
-	this.titre = "Equations résolvantes pour le théorème de Thalès"
 	//this.exo = '';	
-	if (this.exo == '4L15-1') {
-		this.titre = "Equations du type $\\dfrac{x}{a}=\\dfrac{b}{c}$";
-	} else if (this.exo == '4P10-2') {
-		this.titre = "Déterminer une quatrième proportionnelle dans un tableau";
-	}
 	if (this.exo == '4P10-2') {
 		this.consigne = `Déterminer la quatrième proportionnelle dans les tableaux suivants.`;
 	} else {
