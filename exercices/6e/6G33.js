@@ -26,7 +26,7 @@ export default function Reconnaitre_quadrilatere_particulier() {
      {
       texte = '';
       texte_corr = '';
-      let A,B,C,D,O,ABCD,codage,codage1,codage2,codage3,sAC,sBD,marquesDemiDiagonales,marquesDemiDiagonales1,marquesDemiDiagonales2;
+      let A,B,C,D,O,ABCD,codage,codage1,codage2,codage3,sAC,sBD,marquesDemiDiagonales,marquesDemiDiagonales1,marquesDemiDiagonales2,marquesCotes;
       switch (liste_de_questions[i]) {
           case 'losange1':
               texte = "Quelle est la nature d'un quadrilatère ayant 4 côtés de même longueur ?";

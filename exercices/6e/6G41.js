@@ -16,6 +16,7 @@ export default function Representer_un_solide() {
   this.nb_cols_corr = 1;
   this.sup = 1;
   this.sup2 = 1;
+  this.classe=6;
   this.nouvelle_version = function () {
     let type_de_questions_disponibles;
 

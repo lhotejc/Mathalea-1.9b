@@ -20,13 +20,6 @@ import {egal,randint,choice,rangeMinMax,unSiPositifMoinsUnSinon,arrondi,arrondi_
 
 let numId = 0 // Créer un identifiant numérique unique par objet SVG
 
-var pixelsParCm = 20;
-let unitesLutinParCm = 50;
-let mainlevee=false
-let amplitude=1
-var fenetreMathalea2d = [-1,-10,29,10]
-let scale=1
-
 /*
  * Classe parente de tous les objets de MathALEA2D
  *
@@ -311,7 +304,7 @@ export function milieu(A, B, nom, positionLabel = "above") {
  * M = pointSurSegment(A,B) // M est un point au hasard sur [AB]
  * @Auteur Rémi Angot
  */
-export function pointSurSegment(A, B, l, nom, positionLabel = "above") {
+export function pointSurSegment(A, B, l, nom="", positionLabel = "above") {
   if (l === undefined || typeof l == "string") {
     l = calcul((longueur(A, B) * randint(15, 85)) / 100);
   }
@@ -497,6 +490,7 @@ export function barycentre(p, nom, positionLabel = "above") {
  * @Auteur Jean-Claude Lhote
  */
 function Droite(arg1, arg2, arg3, arg4) {
+  let a,b,c
   ObjetMathalea2D.call(this);
   if (arguments.length == 2) {
     this.nom=""
@@ -606,39 +600,39 @@ function Droite(arg1, arg2, arg3, arg4) {
   if (this.nom!='') {
     if (egal(this.b,0,0.1)) { // ax+c=0 x=-c/a est l'équation de la droite
       absNom=-this.c/this.a+0.8 // l'abscisse du label est décalé de 0.8
-      ordNom=fenetreMathalea2d[1]+1 // l'ordonnée du label est ymin +1
+      ordNom=mathalea.fenetreMathalea2d[1]+1 // l'ordonnée du label est ymin +1
     }
     else if (egal(this.a,0,0.1)){ //by+c=0 y=-c/b est l'équation de la droite
-      absNom=fenetreMathalea2d[0]+0.8 // l'abscisse du label est xmin +1
+      absNom=mathalea.fenetreMathalea2d[0]+0.8 // l'abscisse du label est xmin +1
       ordNom=-this.c/this.b+0.8 // l'ordonnée du label est décalée de 0.8 
     }
     else { // a et b sont différents de 0 ax+by+c=0 est l'équation
     // y=(-a.x-c)/b est l'aquation cartésienne et x=(-by-c)/a
-    let y0=(-this.a*(fenetreMathalea2d[0]+1)-this.c)/this.b
-    let y1=(-this.a*(fenetreMathalea2d[2]-1)-this.c)/this.b
-    let x0=(-this.b*(fenetreMathalea2d[1]+1)-this.c)/this.a
-    let x1=(-this.b*(fenetreMathalea2d[3]-1)-this.c)/this.a
-    if (y0>fenetreMathalea2d[1]&&y0<fenetreMathalea2d[3]) {
-      absNom=fenetreMathalea2d[0]+1
+    let y0=(-this.a*(mathalea.fenetreMathalea2d[0]+1)-this.c)/this.b
+    let y1=(-this.a*(mathalea.fenetreMathalea2d[2]-1)-this.c)/this.b
+    let x0=(-this.b*(mathalea.fenetreMathalea2d[1]+1)-this.c)/this.a
+    let x1=(-this.b*(mathalea.fenetreMathalea2d[3]-1)-this.c)/this.a
+    if (y0>mathalea.fenetreMathalea2d[1]&&y0<mathalea.fenetreMathalea2d[3]) {
+      absNom=mathalea.fenetreMathalea2d[0]+1
       ordNom=y0+this.pente
     }
     else {
-      if (y1>fenetreMathalea2d[1]&&y1<fenetreMathalea2d[3]) {
-        absNom=fenetreMathalea2d[2]-1
+      if (y1>mathalea.fenetreMathalea2d[1]&&y1<mathalea.fenetreMathalea2d[3]) {
+        absNom=mathalea.fenetreMathalea2d[2]-1
         ordNom=y1-this.pente
       }
       else {
-        if (x0>fenetreMathalea2d[0]&&x0<fenetreMathalea2d[2]) {
+        if (x0>mathalea.fenetreMathalea2d[0]&&x0<mathalea.fenetreMathalea2d[2]) {
           absNom=x0
-          ordNom=fenetreMathalea2d[1]+math.abs(this.pente)
+          ordNom=mathalea.fenetreMathalea2d[1]+math.abs(this.pente)
         }
         else {
-          if (x1>fenetreMathalea2d[0]&&x1<fenetreMathalea2d[2]) {
+          if (x1>mathalea.fenetreMathalea2d[0]&&x1<mathalea.fenetreMathalea2d[2]) {
             absNom=x1
-            ordNom=fenetreMathalea2d[3]+this.pente
+            ordNom=mathalea.fenetreMathalea2d[3]+this.pente
           }
           else {
-            absNom=(fenetreMathalea2d[0]+fenetreMathalea2d[2])/2
+            absNom=(mathalea.fenetreMathalea2d[0]+mathalea.fenetreMathalea2d[2])/2
             ordNom=pointSurDroite(this,absNom).y
           }
         }
@@ -1350,7 +1344,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
     if (this.styleExtremites.length > 1) {
       if (this.styleExtremites.substr(-1) == "|") {
         //si ça termine par | on le rajoute en B
-        let M = pointSurSegment(B, A, h/pixelsParCm);
+        let M = pointSurSegment(B, A, h/mathalea.pixelsParCm);
         let B1 = rotation(M, B, 90);
         let B2 = rotation(M, B, -90);
         code += `<line x1="${B1.xSVG(coeff)}" y1="${B1.ySVG(
@@ -1361,7 +1355,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       }
       if (this.styleExtremites.substr(-1) == ">") {
         //si ça termine par > on rajoute une flèche en B
-        let M = pointSurSegment(B, A, h/pixelsParCm);
+        let M = pointSurSegment(B, A, h/mathalea.pixelsParCm);
         let B1 = rotation(B, M, 90);
         let B2 = rotation(B, M, -90);
         code += `<line x1="${B.xSVG(coeff)}" y1="${B.ySVG(
@@ -1375,7 +1369,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       }
       if (this.styleExtremites.substr(-1) == "<") {
         //si ça termine par < on rajoute une flèche inversée en B
-        let M = pointSurSegment(B, A, -h/pixelsParCm);
+        let M = pointSurSegment(B, A, -h/mathalea.pixelsParCm);
         let B1 = rotation(B, M, 90);
         let B2 = rotation(B, M, -90);
         code += `<line x1="${B.xSVG(coeff)}" y1="${B.ySVG(
@@ -1391,7 +1385,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       }
       if (this.styleExtremites[0] == "<") {
         //si ça commence par < on rajoute une flèche en A
-        let M = pointSurSegment(A, B, h/pixelsParCm);
+        let M = pointSurSegment(A, B, h/mathalea.pixelsParCm);
         let A1 = rotation(A, M, 90);
         let A2 = rotation(A, M, -90);
         code += `<line x1="${A.xSVG(coeff)}" y1="${A.ySVG(
@@ -1407,7 +1401,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       }
       if (this.styleExtremites[0] == ">") {
         //si ça commence par > on rajoute une flèche inversée en A
-        let M = pointSurSegment(A, B, -h/pixelsParCm);
+        let M = pointSurSegment(A, B, -h/mathalea.pixelsParCm);
         let A1 = rotation(A, M, 90);
         let A2 = rotation(A, M, -90);
         code += `<line x1="${A.xSVG(coeff)}" y1="${A.ySVG(
@@ -1423,7 +1417,7 @@ function Segment(arg1, arg2, arg3, arg4, color) {
       }
       if (this.styleExtremites[0] == "|") {
         //si ça commence par | on le rajoute en A
-        let N = pointSurSegment(A, B, h/pixelsParCm);
+        let N = pointSurSegment(A, B, h/mathalea.pixelsParCm);
         let A1 = rotation(N, A, 90);
         let A2 = rotation(N, A, -90);
         code += `<line x1="${A1.xSVG(coeff)}" y1="${A1.ySVG(
@@ -3005,7 +2999,7 @@ function CibleRonde({x=0,y=0,rang=3,num,taille=0.3}) {
 
   centre =point(this.x,this.y,this.y)
   azimut=point(this.x+this.rang*this.taille,this.y)
-  azimut2=pointSurSegment(centre,azimut,longueur(centre,azimut)+0.3)
+  let azimut2=pointSurSegment(centre,azimut,longueur(centre,azimut)+0.3)
   for (let i=0;i<8;i++) {
     rayon=segment(centre,rotation(azimut,centre,45*i))
     rayon.color=this.color
@@ -4115,21 +4109,22 @@ export function AfficheMesureAngle(A, B, C, color = "black", distance = 1.5) {
   this.distance=distance
 
   this.svg=function(coeff){
-    let d = bissectrice(A, B, C);
-    d.isVisible = false;
+    // let d = bissectrice(A, B, C);
+    // d.isVisible = false;
     let M = pointSurSegment(this.sommet, this.depart, this.distance)
     let N = rotation(pointSurSegment(this.sommet,M , this.distance+10/coeff),this.sommet,angleOriente(this.depart,this.sommet,this.arrivee)/2);
     let mesureAngle = arrondi_virgule(angle(this.depart,this.sommet,this.arrivee), 0) + "°";
     return "\n"+texteParPoint(mesureAngle,N , "milieu", color).svg(coeff)+"\n"+arc(M, B, angleOriente(this.depart,this.sommet,this.arrivee)).svg(coeff);
   }
   this.tikz=function(){
-    let d = bissectrice(A, B, C);
-    d.isVisible = false;
+   // let d = bissectrice(A, B, C);
+    // d.isVisible = false;
     let M = pointSurSegment(d.extremite1, d.extremite2, this.distance/scale);
     let mesureAngle = arrondi_virgule(angle(this.depart,this.sommet,this.arrivee), 0) + "°";
     return "\n"+texteParPoint(mesureAngle, M, "milieu", color).tikz()+"\n"+arc(pointSurSegment(this.sommet, this.depart, this.distance-0.7/scale), B, angleOriente(this.depart,this.sommet,this.arrivee)).tikz();
   }
 }
+
 export function afficheMesureAngle(...args){
   return new AfficheMesureAngle(...args)
 }
@@ -4149,7 +4144,7 @@ function AfficheCoteSegment(
 
   // let longueur=s.longueur
   ObjetMathalea2D.call(this);
-    this.positionCoteSVG=positionCote*20/pixelsParCm
+    this.positionCoteSVG=positionCote*20/mathalea.pixelsParCm
     this.positionCoteTIKZ=positionCote/scale
     this.positionValeur=positionValeur
     this.seg=s
@@ -4345,7 +4340,7 @@ function CodeAngle(debut,centre,angle,taille=0.8,mark='',color='black',epaisseur
   
   this.svg=function(coeff){
     let P,depart,d,arcangle,mesure,code="",M,objets=[];
-    depart=pointSurSegment(this.centre,this.debut,this.taille*20/pixelsParCm)
+    depart=pointSurSegment(this.centre,this.debut,this.taille*20/mathalea.pixelsParCm)
     P=rotation(depart,this.centre,this.angle/2)
     M=pointSurSegment(this.centre,P,taille+0.6*20/coeff)
     d=droite(this.centre,P)
@@ -4400,7 +4395,7 @@ function CodeAngle(debut,centre,angle,taille=0.8,mark='',color='black',epaisseur
 
   this.svgml = function(coeff,amp){
     let P,depart,d,arcangle,mesure,code="",M
-    depart=pointSurSegment(this.centre,this.debut,this.taille*20/pixelsParCm)
+    depart=pointSurSegment(this.centre,this.debut,this.taille*20/mathalea.pixelsParCm)
     P=rotation(depart,this.centre,this.angle/2)
     M=pointSurSegment(this.centre,P,taille+0.6*20/coeff)
     mesure= arrondi_virgule(Math.abs(angle),0) + "°";
@@ -4581,7 +4576,7 @@ export function droiteGraduee(...args) {
   thickTerDist=0.01,thickTer=false, // Les caractéristiques des graduations tertiaires. Pas de couleur, on joue sur l'opacité
   pointListe = false,pointCouleur='blue',pointTaille=4,pointStyle='+',pointOpacite=0.8,pointEpaisseur=2, // Liste de points et caractéristiques des points de ces points
   labelsPrincipaux=true,labelsSecondaires=false,step1=1,step2=1,
-  labelDistance = (axeHauteur+10)/pixelsParCm,
+  labelDistance = (axeHauteur+10)/mathalea.pixelsParCm,
   labelListe = false,
   Legende = "",
   LegendePosition = calcul((Max-Min)*Unite+1.5)
@@ -4612,7 +4607,7 @@ export function droiteGraduee(...args) {
   }
   objets.push(S);
   let factor
-  let r=10/pixelsParCm
+  let r=10/mathalea.pixelsParCm
   if (thickTer) factor=calcul(1/thickTerDist)
   else if (thickSec) factor=calcul(1/thickSecDist)
   else factor=calcul(1/thickDistance)
@@ -6961,7 +6956,7 @@ function AfficherCrayon(A){
   this.x = A.x;
   this.y = A.y;
   this.svg=function(){
-    let code = `<g id="${this.id}" stroke="#000000" fill="none" transform="translate(${(this.x-.2)*pixelsParCm},${-60-(this.y-.2)*pixelsParCm}) scale(.1) ">
+    let code = `<g id="${this.id}" stroke="#000000" fill="none" transform="translate(${(this.x-.2)*mathalea.pixelsParCm},${-60-(this.y-.2)*mathalea.pixelsParCm}) scale(.1) ">
    <path id="rect2990" d="m70.064 422.35 374.27-374.26 107.58 107.58-374.26 374.27-129.56 21.97z" stroke-width="30"/>
    <path id="path3771" d="m70.569 417.81 110.61 110.61" stroke-width="25"/>
    <path id="path3777" d="m491.47 108.37-366.69 366.68" stroke-width="25"/>

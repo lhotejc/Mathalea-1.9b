@@ -19,7 +19,7 @@ export default function Construire_symetrique_point_6e() {
   this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
-    let result = [0, 0], texte_corr = "", nbpoints = parseInt(this.sup)
+    let result = [0, 0], texte_corr = "", nbpoints = parseInt(this.sup),nontrouve,assezloin,cible
     let celluleAlea = function (rang) {
       let lettre = lettre_depuis_chiffre(randint(1, rang))
       let chiffre = Number(randint(1, rang)).toString()
@@ -31,7 +31,7 @@ export default function Construire_symetrique_point_6e() {
     let A = translation(point(0, 0), homothetie(d.directeur, point(0, 0), -0.5))
     let B = translation(point(0, 0), homothetie(d.directeur, point(0, 0), 0.5))
     let marks = ['/', '//', '///', 'x', 'o', 'S', 'V']
-    let noms = choisit_lettres_differentes(nbpoints, 'Q', majuscule = true)
+    let noms = choisit_lettres_differentes(nbpoints, 'Q',  true)
     this.consigne = `Construire le symétrique des points $${noms[0]}$`
     for (let i = 1; i < nbpoints - 1; i++) {
       this.consigne += `, $${noms[i]}$`
@@ -92,7 +92,7 @@ export default function Construire_symetrique_point_6e() {
       yMax = Math.max(yMax, N[i].y + 3, M[i].y + 3)
     }
 
-    fenetreMathalea2d = [xMin, yMin, xMax, yMax]
+    mathalea.fenetreMathalea2d = [xMin, yMin, xMax, yMax]
 
     this.liste_questions.push(mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_enonce))
     this.liste_corrections.push(texte_corr + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_correction))

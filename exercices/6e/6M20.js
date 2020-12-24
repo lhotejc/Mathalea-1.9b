@@ -22,7 +22,7 @@ export default function Aire_de_triangles() {
   this.nb_questions = 1;
   this.nb_questions_modifiable = false;
   this.type_exercice = "MG32";
-  this.taille_div_MG32 = [500, 450];
+  this.taille_div_MG32 = [500, 470];
 
   this.nouvelle_version = function (numero_de_l_exercice) {
     this.liste_corrections = []; // Liste de questions corrigées

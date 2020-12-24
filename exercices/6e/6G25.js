@@ -15,7 +15,6 @@ export default function Construire_mediatrices_6e() {
   this.nb_questions_modifiable = false
   this.nb_cols = 1;
   this.nb_cols_corr = 1;
-  this.sup = 3;
   this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
@@ -34,7 +33,7 @@ export default function Construire_mediatrices_6e() {
       return lettre + chiffre
     }
     // On prépare la figure...
-    let noms = choisit_lettres_differentes(4, 'QI', majuscule = true)
+    let noms = choisit_lettres_differentes(4, 'QI',true)
     texte = `Construire la médiatrice $(d_1)$ du segment $[${noms[0]}${noms[1]}]$ et la médiatrice $(d_2)$ du segment $[${noms[2]}${noms[3]}]$.<br>`
     texte += `Prolonger les droites $(d_1)$ et $(d_2)$ pour obtenir leur point d'intersection.<br>`
     let marks = ['/', '//', '///', 'x', 'o', 'S', 'V']
@@ -85,14 +84,11 @@ export default function Construire_mediatrices_6e() {
     xMax = Math.max(A1.x + 1, A2.x + 1, B1.x + 1, B2.x + 1, I.x + 4)
     yMax = Math.max(A1.y + 1, A2.y + 1, B1.y + 1, B2.y + 1, I.y + 4)
 
-    fenetreMathalea2d = [xMin, yMin, xMax, yMax]
+    mathalea.fenetreMathalea2d = [xMin, yMin, xMax, yMax]
 
     this.liste_questions.push(texte + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_enonce))
     this.liste_corrections.push(texte_corr + mathalea2d({ xmin: xMin, ymin: yMin, xmax: xMax, ymax: yMax, pixelsParCm: 20, scale: 0.7 }, objets_correction))
     liste_de_question_to_contenu(this)
-
-    //  let nonchoisi,coords=[],x,y,objets_enonce=[],objets_correction=[],nomd,label_pos
-
   }
 }
 

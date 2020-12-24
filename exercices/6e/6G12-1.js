@@ -70,7 +70,7 @@ export default function Parallele_et_Perpendiculaires() {
     ) {
       objets_enonce.splice(0)
       objets_correction.splice(0)
-      if (this.sup2 == 2)
+      if (this.sup == 2)
         k = 0.8;
       else
         k = 0.5;
@@ -293,9 +293,9 @@ export default function Parallele_et_Perpendiculaires() {
 
           break
       }
-      if (this.sup2 < 3) g = grille(Xmin, Ymin, Xmax, Ymax, "gray", 0.7);
+      if (this.sup < 3) g = grille(Xmin, Ymin, Xmax, Ymax, "gray", 0.7);
       else g = "";
-      if (this.sup2 == 2) {
+      if (this.sup == 2) {
         sc = 0.8;
         carreaux = seyes(Xmin, Ymin, Xmax, Ymax);
       } else {

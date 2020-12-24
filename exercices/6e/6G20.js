@@ -19,7 +19,7 @@ export default function Nommer_et_coder_des_polygones() {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
     let Xmin, Xmax, Ymin, Ymax, ppc, sc, g, carreaux
-    ppc = 20
+    ppc = 40
     if (sortie_html) {
       sc = 0.5
     } else {
@@ -35,7 +35,7 @@ export default function Nommer_et_coder_des_polygones() {
       i < this.nb_questions && cpt < 50;
 
     ) {
-      pixelsParCm = 40;
+      mathalea.pixelsParCm = 40;
       let pol, polcode, polsom, polnom
       function choisir_polygone(n) { // n compris entre 1 et 8 (1 à 4 pour un triangle, 5 à 8 pour une quadrilatère)
         let A, B, C, D
@@ -197,7 +197,7 @@ export default function Nommer_et_coder_des_polygones() {
       cpt++;
     }
     liste_de_question_to_contenu(this);
-    pixelsParCm = 20
+    mathalea.pixelsParCm = 20
   };
   this.besoin_formulaire_numerique = [
     "Type de cahier",

@@ -113,7 +113,7 @@ export default function Symetrie_axiale_conservation1() {
     }
     objets_enonce.length = 0
     objets_correction.lenght = 0
-    for (let i = 0, texte, texte_corr, choix, cpt = 0; i < this.nb_questions && cpt < 50;) {
+    for (let i = 0, texte, texte_corr,s1,s2,choix, cpt = 0; i < this.nb_questions && cpt < 50;) {
 
       switch (liste_type_de_questions[i]) {
         case "Segment":
