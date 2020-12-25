@@ -22,7 +22,7 @@ export default function Fraction_d_un_nombre() {
   this.nouvelle_version = function () {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
-    liste_fractions = [
+    let liste_fractions = [
       [1, 2],
       [1, 3],
       [2, 3],
