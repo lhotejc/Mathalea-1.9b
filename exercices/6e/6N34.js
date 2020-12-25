@@ -1,12 +1,15 @@
-import Reperage_point_du_plan from '../5e/5R12-2.js'
+import Exercice_conversions from './_Exerciceconversions.js'
 /**
- * Lire les coordonnées d'un point du quart de plan positif avec une précision allant de l'unité à 0,25.
- * @Auteur Jean-Claude Lhote
- * référence 6N33
+ * @Auteur Rémi Angot
+ * référence 6N34
  */
-export default function Reperage_point_du_quart_de_plan() {
-  Reperage_point_du_plan.call(this);
-  this.titre = "Déterminer les coordonnées (positives) d'un point";
-  this.quart_de_plan = true;
+
+export default function Reglages_6N34() {
+  Exercice_conversions.call(this);
+  this.sup = 5;
+  this.titre = "Conversions avec tous les préfixes de milli à tera.";
 }
+
+
+
 

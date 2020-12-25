@@ -14,12 +14,13 @@ export default function Construire_un_triangle() {
   this.nb_cols = 1;
   this.nb_cols_corr = 1;
   this.sup = false;
+  this.classe=6
   this.nouvelle_version = function () {
     this.liste_questions = []
     this.liste_corrections = []
     let type_de_questions_disponibles, A, B, C, CC, lAB, lBC, lAC, cA, cB, T, TT, dBC, dAB, objets_enonce, objets_correction, params_enonce, params_correction, nom, sommets
     if (this.classe == 6) type_de_questions_disponibles = [1, 2]
-    else type_de_questions_disponibles = [1, 2, 3, 4, 5, 6]
+    else type_de_questions_disponibles = [1, 2, 3]
     let liste_type_de_questions = combinaison_listes(type_de_questions_disponibles, this.nb_questions)
     for (let i = 0, texte, texte_corr, cpt = 0; i < this.nb_questions && cpt < 50;) {
       objets_enonce = []
