@@ -8,6 +8,7 @@ import LireUneAbscisseAvecZoom from '../6e/6N23-3.js'
  */
 export default function lireUneAbscisseAvecZoomCM() {
   LireUneAbscisseAvecZoom.call(this);
+  this.titre="Lire abscisse décimale avec zoom";
   this.niveau = 'CM';
   this.sup = 1;
 }

@@ -1,9 +1,4 @@
 var liste_des_exercices_disponibles = {
-  "c3C10-1": Tables_de_multiplications,
-  "c3C10-4": Exercice_tables_d_additions_cycle3,
-  "c3C10-2" : Exercice_labyrinthe_multiplesCM,
-  "c3C11": Division_cycle3,
-  "c3N10": Ecrire_entiers_cycle3,
   //"6C99" : separation6C,
   //"6C99" : separation6C,
   "beta6G24": Test_main_levee,
