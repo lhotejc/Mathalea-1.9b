@@ -7,6 +7,6 @@ import Exercice_conversions from './_Exercice_conversions.js';
 export default function Exercice_6N13() {
   Exercice_conversions.call(this);
   this.sup = 1;
-  this.titre = "Utiliser les préfixes multiplicateurs (déca à kilo)";
+  this.titre = "Conversions de longueurs, masses, contenance, prix ou unités informatiques";
 
 }
