@@ -2,7 +2,7 @@ import Ecrire_une_expression_numerique from './_Ecrire_une_expression_numerique.
 
 /**
  * @Auteur Jean-Claude Lhote
- * Référence 5L13-3
+ * Référence 5L14-3
  */
 export default function Traduire_une_phrase_par_une_expression_litterale_et_calculer() {
 	Ecrire_une_expression_numerique.call(this)

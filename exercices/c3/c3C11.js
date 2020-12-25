@@ -6,8 +6,8 @@ import Divisions_euclidiennes from '../6e/6C11.js'
  *
  * @Auteur Jean-Claude Lhote
  */
-export default function Divisions_euclidiennesCM() {
+export default function Division_cycle3() {
     Divisions_euclidiennes.call(this);
   this.titre="Divisions euclidiennes";
-  this.sup = 1;
+  this.sup = 0;
 }

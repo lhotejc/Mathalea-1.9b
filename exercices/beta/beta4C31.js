@@ -1,15 +1,4 @@
 /**
- * 
- * référence ?
- */
-
-function Arrondir_une_valeur_4e() {
-  this.sup = 3;
-  Arrondir_une_valeur.call(this);
-  this.besoin_formulaire_numerique = ['Type de nombre', 3, `1 : Nombre décimal\n 2 : Fraction\n 3 : Racine carrée`];
-}
-
-/**
  * * Comparer des puissances de 10.
  *
  * Paramétrages possibles :
@@ -24,7 +13,6 @@ function Arrondir_une_valeur_4e() {
  * date : 15/11/2020
  * 4C30-4
  */
-
 function Comparer_puissance10() {
   Exercice.call(this); // Héritage de la classe Exercice()
   this.sup = 1; // Avec ou sans relatifs
@@ -108,4 +96,3 @@ function Comparer_puissance10() {
   this.besoin_formulaire_numerique = ["Niveau de difficulté", 6,
     "1 : puissances de 10 seules\n 2 : mantisses différentes et même exposant\n 3 : mêmes mantisses et exposants différents\n 4 : mantisses et exposants différents\n 5 : mantisses (négatives) et exposants différents\n 6 : tous types"];
 }
-/** */

@@ -16,7 +16,7 @@ import {liste_de_question_to_contenu,randint,enleve_element,choice,range,combina
 * * ax^2+y^2
 * * ax^2+bx+c
 * @Auteur Rémi Angot
-* 5L13-2
+* 5L14-2
 */
 export default function Exercice_substituer(difficulte = 1) {
 	Exercice.call(this); // Héritage de la classe Exercice()
