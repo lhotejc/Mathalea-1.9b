@@ -178,61 +178,6 @@ export function ecrireNombre2D(x,y,n){
 	}
 	return nombre2D
 }
-/*
-Pour l'instant, je commente... Faut que je réfléchisse et que je prenne mon temps (que je n'ai pas actuellement)
-On verra ça plus tard. La nuit porte conseil.
-function ecrireAdditionPosee(x,y,...args){
-	let nString=[],n=[]
-	for (k=0;k<args.length;k++) {
-		nString.push(tex_nombre(args[k]))
-		n.push(args[k])
-	}
-	let nb_chiffres_pe=Math.log10(Math.floor(Math.max(n)))
-
-	for (let k=0;k<args.length;k++){
-
-	}
-}
-*/
-class NombreDecimal {
-	constructor(nombre){
-		if (nombre<0) {
-			this.signe=`-`
-			nombre=calcul(-nombre)
-		}
-		else this.signe=`+`
-		this.exposant=Math.floor(Math.log10(nombre))
-		nombre=nombre/10**this.exposant
-		this.mantisse=[]
-		for (let k=0;k<16;k++) {
-			if (egal(Math.ceil(nombre)-nombre,0,0.00001)) {
-				this.mantisse.push(Math.ceil(nombre))
-				nombre=(this.mantisse[k]-nombre)*10
-			}
-			else {
-				this.mantisse.push(Math.floor(nombre))
-				nombre=(nombre-this.mantisse[k])*10
-			}
-			if (egal(nombre,0,0.001)) break
-		}
-		
-	}
-	get valeur() {
-		return this.recompose()
-	}
-	recompose() {
-		let val=0
-		for (let i=0;i<10;i++)
-			val+=this.mantisse[i]*10**(-i)
-		val=val*10**this.exposant
-		if (this.signe==`+`) return val
-		else return calcul(-val)
-	}
-
-}
-export function decimal(n) {
-	return new NombreDecimal(n)
-}
 
 /**
 * Créé tous les couples possibles avec un élément de E1 et un élément de E2.
