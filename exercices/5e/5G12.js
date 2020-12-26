@@ -13,7 +13,7 @@ import {tracePoint,labelPoint,codageMilieu,segment,rotation,rotationAnimee,texte
 export default function Pavage_et_demi_tour2d() {
 	"use strict";
 	Exercice.call(this); // Héritage de la classe Exercice()
-	this.titre = "Symétrie centrale dans un pavage";
+	this.titre = "Trouver l'image d'une figure par symétrie centrale dans un pavage";
 	this.consigne = "";
 	this.nb_questions = 3;
 	this.nb_questions_modifiable = true;

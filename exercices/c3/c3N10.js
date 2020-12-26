@@ -5,9 +5,10 @@ import Ecrire_nombres_entiers from '../6e/6N10.js'
  * @Auteur Jean-Claude Lhote
  * Référence 6N10
  */
-export default function Ecrire_nombres_entiersCM() {
+export default function Ecrire_entiers_cycle3() {
     Ecrire_nombres_entiers.call(this);
   this.titre= "Écrire un nombre en chiffres ou en lettres";
-  this.sup2=1;
+  this.sup2=0;
   this.sup = 1;
 }
+

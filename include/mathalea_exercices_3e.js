@@ -1,2 +1,0 @@
-"JC napapu se retenir"
-/** */

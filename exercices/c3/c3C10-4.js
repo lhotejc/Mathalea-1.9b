@@ -6,8 +6,7 @@ import Exercice_tables_d_additions from '../6e/6C10-4.js'
  *
  * @Auteur Jean-Claude Lhote
  */
-export default function Tables_additionCM() {
-    Exercice_tables_d_additions.call(this);
+export default function Tables_additions_cycle3() {
+    Exercice_tables_d_additions.call(this,10);
   this.titre="Tables d'addition";
-  this.sup = 10;
 }

@@ -1,15 +1,11 @@
 import Construire_par_Symetrie from '../6e/_Construire_par_symetrie.js';
 /**
+ * Référence 6G11-2
  * @Auteur Jean-Claude Lhote
- * Fonction générale pour les exercices de construction de symétriques (centrale/axiale et points/triangles)
- * références  6G24-1, 6G24-2, 5G10-1, 5G10-2, 5G11-1 et 5G11-2
- * Permet une sortie html/pdf sur petits carreaux/gros carreaux/papier blanc
  */
-
-export default function Construire_par_Symetrie_axiale_5e() {
+export default function Symetrie_centrale_point() {
 	Construire_par_Symetrie.call(this);
-	this.titre = "Construire par symétrie axiale";
-	this.sup = 1;
-	this.sup2 = 1;
-	this.figure = false
+	this.titre = "Construire le symétrique d'un point par symétrie centrale";
+	this.figure = true;
+	this.sup = 2;
 }
