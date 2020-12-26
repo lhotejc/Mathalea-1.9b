@@ -126,7 +126,6 @@ export default function CalculsDeDerives() {
 
 
       if (this.liste_valeurs.indexOf(expression) == -1) {
-        // Si la question n'a jamais été posée, on en crée une autre
         this.liste_valeurs.push(expression);
         this.liste_questions.push(texte);
         this.liste_corrections.push(texte_corr);

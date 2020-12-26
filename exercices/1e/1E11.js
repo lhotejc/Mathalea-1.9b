@@ -147,7 +147,6 @@ export default function Resoudre_equation_degre_2() {
       }
 
       if (this.liste_questions.indexOf(texte) == -1) {
-        // Si la question n'a jamais été posée, on en créé une autre
         this.liste_questions.push(texte);
         this.liste_corrections.push(texte_corr);
         i++;

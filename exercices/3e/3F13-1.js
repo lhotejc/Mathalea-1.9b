@@ -71,5 +71,4 @@ export default function Antecedent_et_image_graphique() {
 		}
 
 	};
-	//this.besoin_formulaire_numerique = ['Niveau de difficulté',3];
 }
