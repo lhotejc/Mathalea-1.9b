@@ -7,11 +7,23 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
     let lop1 = sop1.length
     let lop2 = sop2.length
 
-    let cacherboutdedividende = function (dividende, boutocculte) { //fonction qui ne laisse visible que la partie utilisée du dividende partie occultée en blanc sur blanc
+    let cacherboutdedividende = function (dividende, boutocculte,souligne) { //fonction qui ne laisse visible que la partie utilisée du dividende partie occultée en blanc sur blanc
         let chainedividende;
+        let soulignedebut,soulignefin
+        if (souligne) {
+            soulignedebut=`\\underline{`
+            soulignefin=`}`
+        }
+        else {
+            soulignedebut=``
+            soulignefin=``
+        }
         chainedividende = Number(dividende).toString();
         if ((boutocculte > 0) && (boutocculte < chainedividende.length)) {
-            chainedividende = chainedividende.substr(0, chainedividende.length - boutocculte) + "<font color=#FFFFFF>" + chainedividende.substr(chainedividende.length - boutocculte) + "</font>";
+            chainedividende = `$${soulignedebut}${chainedividende.substr(0, chainedividende.length - boutocculte)}${soulignefin}$<font color=#FFFFFF>$${chainedividende.substr(chainedividende.length - boutocculte)}$</font>`;
+        }
+        else {
+            chainedividende=`$${soulignedebut}${chainedividende}${soulignefin}$`
         }
         return chainedividende;
     }
@@ -47,12 +59,12 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         lignes = "";
         index = dividende.length;
         for (let i = 0; i < longueurquotiententier; i++) {
-            lignes += "-" + "<font color=#FFFFFF>_</font>" + "<u>" + cacherboutdedividende(quotients[i], troncatures[i]) + "</u><br>" + cacherboutdedividende(restes[i], troncatures[i + 1]) + "<br>";
+            lignes += `$-$<font color=#FFFFFF>_</font>${cacherboutdedividende(quotients[i], troncatures[i],true)}<br>${cacherboutdedividende(restes[i], troncatures[i + 1])}<br>`;
             index = (restes[i] + '').length;
         }
         stringquotiententier = quotiententier + '';
-        code = `<table border=0 cellspacing=0 cellpadding=2 class="res" style="line-height:1.2em"><tr><td align=right>${dividende}</td><td align=left style=border-bottom-style:solid;border-bottom-width:2px;border-left-style:solid;border-left-width:2px;>${diviseur}</td></tr>`;
-        code += `<tr><td align=right >${lignes}</td><td align=left valign=top style=border-left-style:solid;border-left-width:2px;border-left-color: black;>${stringquotiententier}</td></tr></table>`;
+        code = `<table border=0 cellspacing=0 cellpadding=2 class="res" style="line-height:1.2em"><tr><td align=right>$${dividende}$</td><td align=left style=border-bottom-style:solid;border-bottom-width:2px;border-left-style:solid;border-left-width:2px;>${diviseur}</td></tr>`;
+        code += `<tr><td align=right >${lignes}</td><td align=left valign=top style=border-left-style:solid;border-left-width:2px;border-left-color: black;>$${stringquotiententier}$</td></tr></table>`;
         return code
     }
 
