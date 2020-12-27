@@ -246,7 +246,7 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>Terminale (${nombre_d_exercices_disponibles_T})</div><div class="content">`;
       liste_html_des_exercices += `</div>`;
-      liste_html_des_liste_html_des_exercicesexercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
+      liste_html_des_exercices += `<div class="title"><i class="dropdown icon"></i>CRPE (${nombre_d_exercices_disponibles_PE})</div><div class="content">`;
       liste_html_des_exercices += liste_html_des_exercices_PE;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `</div>`;

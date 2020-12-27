@@ -7042,7 +7042,9 @@ export function codeSvg(fenetreMathalea2d, pixelsParCm, mainlevee, ...objets) {
         try {
           if (objet[i].isVisible) {
             if (!mainlevee||typeof(objet[i].svgml)=='undefined') code += "\t" + objet[i].svg(pixelsParCm) + "\n";
-            else code += "\t" + objet[i].svgml(pixelsParCm,amplitude) + "\n";
+            else {
+              code += "\t" + objet[i].svgml(pixelsParCm,mathalea.amplitude) + "\n";
+            }
           }
         } catch (error) {}
       }
@@ -7095,7 +7097,7 @@ export function codeTikz(fenetreMathalea2d, scale, mainlevee,  ...objets) {
         try {
           if (objet[i].isVisible) {
            if (!mainlevee||typeof(objet[i].tikzml)=='undefined') code += "\t" + objet[i].tikz() + "\n";
-           else code += "\t" + objet[i].tikzml(amplitude) + "\n";
+           else code += "\t" + objet[i].tikzml(mathalea.amplitude) + "\n";
           }
         } catch (error) {}
       }
@@ -7103,7 +7105,7 @@ export function codeTikz(fenetreMathalea2d, scale, mainlevee,  ...objets) {
     try {
       if (objet.isVisible) {
         if (!mainlevee||typeof(objet.tikzml)=='undefined') code += "\t" + objet.tikz() + "\n";
-        else code += "\t" + objet.tikzml(amplitude) + "\n";
+        else code += "\t" + objet.tikzml(mathalea.amplitude) + "\n";
       }
     } catch (error) {}
   }

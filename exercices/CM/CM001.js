@@ -1,4 +1,4 @@
-import Tables_de_multiplications from './_Tables_de_multiplications.js';
+import Tables_de_multiplications from '/exercices/6e/_Tables_de_multiplications.js';
 
 /**
  * Tables de multiplications classiques, à trou ou un mélange des deux.
@@ -10,5 +10,4 @@ import Tables_de_multiplications from './_Tables_de_multiplications.js';
 export default function Tables_parametres(tables_par_defaut = "2-3-4-5-6-7-8-9"){
     this.titre = "Tables de multiplication";
     Tables_de_multiplications.call(this,tables_par_defaut)
-    this.sup2 = 2;
 }
