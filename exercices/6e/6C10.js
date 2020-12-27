@@ -66,7 +66,7 @@ export default function Additions_soustractions_multiplications_posees() {
           texte = `$${tex_nombre(x)}-${y}$`;
           !sortie_html
             ? (texte_corr = `$\\opsub{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}+${y}=${tex_nombre(x + y)}$`);
+            : (texte_corr = `$${tex_nombre(x)}-${y}=${tex_nombre(x - y)}$`);
           break;
         case 3: // 1abc-def
           a = randint(1, 9);

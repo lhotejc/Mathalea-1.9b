@@ -37,6 +37,7 @@ function ObjetMathalea2D() {
   this.id = numId;
   numId++;
 //   mesObjets.push(this);
+  mathalea.objets2D.push(this)
 }
 
 /*
@@ -7026,9 +7027,9 @@ function TranslationInstrument(instrument,A,B,begin=0,id){
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
-/*
-function codeSvg(...objets) { // fonction inutile ici mais pour respecter la numérotation des lignes
-  let code = "";              // à virer dés que 2d.js sera conforme à mathalea2d.js
+
+export function codeSvg(fenetreMathalea2d, pixelsParCm, mainlevee, ...objets) { 
+  let code = "";              
   let fenetrexmin = fenetreMathalea2d[0]
   let fenetreymin = fenetreMathalea2d[3]*-(1) 
   let fenetrexmax = fenetreMathalea2d[2]
@@ -7055,15 +7056,16 @@ function codeSvg(...objets) { // fonction inutile ici mais pour respecter la num
   }
   code += `</svg>`;
   return code;
-}*/
+}
 
 /**
  * codeTikz(segment(A,B),polygone(D,E,F),labelPoints(A,B))
  *
  * @Auteur Rémi Angot
  */
-/*
-function codeTikz(...objets) {
+
+
+export function codeTikz(fenetreMathalea2d, scale, mainlevee,  ...objets) {
   let code = "";
   let fenetrexmin = fenetreMathalea2d[0]
   let fenetreymin = fenetreMathalea2d[3]*-(1) 
@@ -7108,7 +7110,7 @@ function codeTikz(...objets) {
   code += `\\end{tikzpicture}\n`;
   return code;
 }
-*/
+
 
 
 
