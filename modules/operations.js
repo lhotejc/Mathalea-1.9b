@@ -51,9 +51,8 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             index = (restes[i] + '').length;
         }
         stringquotiententier = quotiententier + '';
-        code = "<table border=0 cellspacing=0 cellpadding=2 class='res'><tr><td align=right>" + dividende + "</td><td align=left style=border-bottom-style:solid;border-bottom-width:2px;border-left-style:solid;border-left-width:2px;>" + diviseur + "</td></tr>";
-        code += "<tr><td align=right >" + lignes + "</td><td align=left valign=top style=border-left-style:solid;border-left-width:2px;border-left-color: black;>" + stringquotiententier + "</td></tr>";
-        code += "</table>";
+        code = `<table border=0 cellspacing=0 cellpadding=2 class="res" style="line-height:1.2em"><tr><td align=right>${dividende}</td><td align=left style=border-bottom-style:solid;border-bottom-width:2px;border-left-style:solid;border-left-width:2px;>${diviseur}</td></tr>`;
+        code += `<tr><td align=right >${lignes}</td><td align=left valign=top style=border-left-style:solid;border-left-width:2px;border-left-color: black;>${stringquotiententier}</td></tr></table>`;
         return code
     }
 
