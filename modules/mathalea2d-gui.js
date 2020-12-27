@@ -107,7 +107,7 @@ window.onload = function () {
     divSvg.innerHTML = codeSvgcomplet;
     myCodeMirrorSvg.setValue(codeSvgcomplet);
     mathalea.objets2D = mesObjetsCopie.slice(); // on réinitialise mesObjets à l'état où il était avant que codeSvg n'ajoute des objets
-    myCodeMirrorTikz.setValue(codeTikz(mathalea.fenetreMathalea2d, scale, mathalea.mainlevee, mathalea.objets2D));
+    myCodeMirrorTikz.setValue(codeTikz(mathalea.fenetreMathalea2d, mathalea.scale, mathalea.mainlevee, mathalea.objets2D));
 
     renderMathInElement(document.body, {
       delimiters: [
