@@ -50,9 +50,7 @@ export default function Additions_soustractions_multiplications_posees() {
             randint(1, 9);
           b = randint(5, 9) * 100 + randint(7, 9) * 10 + randint(1, 9);
           texte = `$${tex_nombre(a)}+${b}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opadd{${a}}{${b}}$`)
-            : (texte_corr = `$${tex_nombre(a)}+${b}=${tex_nombre(a + b)}$`);
+          texte_corr = Operation({operande1:a,operande2:b,type:'addition'})
           break;
         case 2: // abc0-efg
           a = randint(1, 9);

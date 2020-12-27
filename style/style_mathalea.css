@@ -1,5 +1,9 @@
 .katex { font-size: 1em !important; } 
-
+/* Style pour les addtions et les soustractions */
+.operationBox {
+  width: 8em;
+  border: 1px;
+}
 /* Timer pour le calcul chronométré*/
 
 #timer, #numero_question {
