@@ -27,16 +27,16 @@ export default function Additions_soustractions_multiplications_posees() {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
     let type_de_questions
-    let type_de_questions_disponibles = [1, 2, 3, 4, 5];
+    let type_de_questions_disponibles = [6,1, 2, 3, 4, 5];
     let liste_type_de_questions = combinaison_listes_sans_changer_ordre(
       type_de_questions_disponibles,
       this.nb_questions
     ); // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
     if (this.nb_questions == 3) {
-      liste_type_de_questions = [1, 2, 5];
+      liste_type_de_questions = [6,1, 2, 5];
     }
     if (this.nb_questions == 4) {
-      liste_type_de_questions = [1, 2, 4, 5];
+      liste_type_de_questions = [6,1, 2, 4, 5];
     }
 
     for (let i = 0, texte, texte_corr, cpt = 0, a, b, c, d, e, f, g, x, y; i < this.nb_questions && cpt < 50;) {
@@ -111,6 +111,11 @@ export default function Additions_soustractions_multiplications_posees() {
               x * y
             )}$`);
           break;
+          case 6 : // a divisé par b
+          a=randint(10000,100000)
+          b=randint(11,200)
+          texte=`$${a}\\div${b}$`
+          texte_corr = Operation({operande1:a,operande2:b,type:'division'})
       }
 
       if (this.liste_questions.indexOf(texte) == -1) {
