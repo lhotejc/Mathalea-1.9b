@@ -1,6 +1,6 @@
 import Operation from '/modules/operations.js';
 import Exercice from '../ClasseExercice.js';
-import {liste_de_question_to_contenu,randint,combinaison_listes_sans_changer_ordre,tex_nombre} from "/modules/outils.js"
+import {liste_de_question_to_contenu,randint,combinaison_listes,tex_nombre} from "/modules/outils.js"
 
 /**
  * Additions, soustractions et multiplications posées de nombres entiers
@@ -13,9 +13,9 @@ import {liste_de_question_to_contenu,randint,combinaison_listes_sans_changer_ord
  * @Auteur Rémi Angot
  * Référence 6C10
  */
-export default function Additions_soustractions_multiplications_posees() {
+export default function Additions_soustractions_multiplications_divisions_posees() {
   Exercice.call(this); // Héritage de la classe Exercice()
-  this.titre = "Additions, soustractions et multiplications posées de nombres entiers";
+  this.titre = "Additions, soustractions, multiplications et divisions posées de nombres entiers";
   this.consigne = "Poser et effectuer les calculs suivants.";
   this.spacing = 2;
   sortie_html ? (this.spacing_corr = 2) : (this.spacing_corr = 1); //Important sinon les opérations posées ne sont pas jolies
@@ -27,18 +27,14 @@ export default function Additions_soustractions_multiplications_posees() {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
     let type_de_questions
-    let type_de_questions_disponibles = [6,1, 2, 3, 4, 5];
-    let liste_type_de_questions = combinaison_listes_sans_changer_ordre(
+    let type_de_questions_disponibles = [1, 2, 3, 4, 5,6];
+    let liste_type_de_questions = combinaison_listes(
       type_de_questions_disponibles,
       this.nb_questions
     ); // Tous les types de questions sont posées mais l'ordre diffère à chaque "cycle"
-    if (this.nb_questions == 3) {
-      liste_type_de_questions = [6,1, 2, 5];
+    if (this.nb_questions <= 3) {
+      liste_type_de_questions = [1, 2, 5];
     }
-    if (this.nb_questions == 4) {
-      liste_type_de_questions = [6,1, 2, 4, 5];
-    }
-
     for (let i = 0, texte, texte_corr, cpt = 0, a, b, c, d, e, f, g, x, y; i < this.nb_questions && cpt < 50;) {
       type_de_questions = liste_type_de_questions[i];
       switch (type_de_questions) {
@@ -111,11 +107,16 @@ export default function Additions_soustractions_multiplications_posees() {
               x * y
             )}$`);
           break;
-          case 6 : // a divisé par b
-          a=randint(10000,100000)
-          b=randint(11,200)
-          texte=`$${a}\\div${b}$`
-          texte_corr = Operation({operande1:a,operande2:b,type:'division'})
+          case 6 : // x = y* c+d
+          a = randint(5, 9);
+          b = randint(5, 9);
+          c = randint(5, 9);
+          d=randint(0,c-1)
+          y=a*10+b
+          d = randint(0, y-1);
+          x=y*c+d
+          texte=`$${x}\\div${c}$`
+          texte_corr = Operation({operande1:x,operande2:c,type:'division'})
       }
 
       if (this.liste_questions.indexOf(texte) == -1) {
