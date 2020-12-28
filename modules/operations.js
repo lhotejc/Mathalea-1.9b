@@ -14,7 +14,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         }
         return resultat
     }
-    let retirerleszerosdevant = function(chaine){
+    let cacherleszerosdevant = function(chaine){
         let blancs=""
         while (chaine[0]=='0') {
             chaine=chaine.substr(1)
@@ -86,10 +86,10 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         return code
     }
     let AdditionPoseeHtml = function(operande1,operande2){
-        let code = "", lmax
+        let code = ""
         let sop1 = Number(operande1).toString()
         let sop2 = Number(operande2).toString()
-        let sresultat, lresultat, resultat
+        let sresultat,resultat,lresultat
         let lop1 = sop1.length
         let lop2 = sop2.length
         let longueuroperandes=Math.max(lop1,lop2)
@@ -118,52 +118,83 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         retenues=cacherleszeros(retenues)
         resultat = operande1 + operande2
         sresultat = Number(resultat).toString()
-        for (let i =0;i<longueuroperandes+1-sresultat.length;i++){
+        lresultat=sresultat.length
+        for (let i =0;i<longueuroperandes+1-lresultat;i++){
             sresultat=`0${sresultat}`
         }
-        console.log(retenues,retirerleszerosdevant(sop1),retirerleszerosdevant(sop2),sresultat)
         code = `<div id="addition" class="operationBox" style="position: static;">`
         code +=`<div id="retenues" style="position: absolute; top :0px; color: red"; padding: 10px>${retenues}</div>`
         code +=`<div id="operation" style="position: absolute; top: 1.2em; padding:0px; line-height: 0.8em">`
-        code+=`${retirerleszerosdevant(sop1)}<br>+${retirerleszerosdevant(sop2)}<br>${retirerleszerosdevant(sresultat)}`
+        code+=`${cacherleszerosdevant(sop1)}<br>+${cacherleszerosdevant(sop2)}<br>${cacherleszerosdevant(sresultat)}`
         code+=`<div id="barre" style="position: absolute; top: 1.9em;"><hr width=${(longueuroperandes)*10}></div>`
         code+=`</div><br><br><br><br></div>`;
         return code
     }
+    let SoustractionPoseeHtml = function(operande1,operande2){
+        let code = "",sop1,sop2
+        if (operande1<operande2) {
+            sop2 = Number(operande1).toString()
+            sop1 = Number(operande2).toString()
+        }
+        else {
+            sop1 = Number(operande1).toString()
+            sop2 = Number(operande2).toString()
+        }
+        let sresultat,resultat,lresultat
+        let lop1 = sop1.length
+        let lop2 = sop2.length
+        let longueuroperandes=Math.max(lop1,lop2)
+        let retenues="0"
+        if (lop1>lop2){ // si op1 a plus de chiffres qu'op2 on complète op2 avec des zéros.
+            for(let j=0;j<lop1-lop2;j++){
+                sop2=`0`+sop2
+            }
+        }
+        // les deux operande ont le même nomre de chiffres
+        for (let i=longueuroperandes-1;i>0;i--){ // on construit la chaine des retenues.
+            if (parseInt(sop1[i])<(parseInt(sop2[i])+parseInt(retenues.charAt(0)))) {
+                retenues=`1${retenues}`
+            }
+            else {
+                retenues=`0${retenues}`
+            }
+        }
+        retenues=`0${retenues}`
+        sop1=`0${sop1}`
+        retenues=cacherleszeros(retenues)
+        resultat = operande1 - operande2
+        sresultat = Number(resultat).toString()
+        lresultat=sresultat.length
+        for (let i =0;i<longueuroperandes+1-lresultat;i++){
+            sresultat=`0${sresultat}`
+        }
+        code = `<div id="soustraction" class="operationBox" style="position: static;">`
+        code +=`<div id="retenuesh" style="position: absolute; left:0.5em; top: 15px; color: red" padding: 0px>${retenues}</div>`
+        code+=`<div id="retenuesb" style="position: absolute; top: 2.6em; color: blue" padding:0px line-height: 0.8em>${retenues}</div>`
+        code +=`<div id="operation" style="position: absolute; top: 1.2em; padding:0px; line-height: 0.8em">`
+        code+=`${cacherleszerosdevant(sop1)}<br>-${cacherleszerosdevant(sop2)}<br><br>${cacherleszerosdevant(sresultat)}`
+        code+=`<div id="barre" style="position: absolute; top: 2.5em;"><hr width=${(longueuroperandes)*10}></div>`
+        code+=`</div><br><br><br><br></div>`;
+        return code
+    }
+
+
     switch (type) {
         case 'addition':
-            
             if (sortie_html) {
-            /*    code += `<div id="operation" style ="position: static;"><br><hr style="display: block;
-             margin-top: 1em; margin-bottom: 0.5em; width: ${(lmax + 1) * 10}px; position:absolute; top=45px"><br>`
-                code += `<div id="op1" style ="position:absolute; top:0px; left: ${10 * (lmax + 1 - lop1)}px;">`
-                for (let i = 0; i < lop1; i++) {
-
-                    code += `<div id="op1-${i}" style ="position:absolute; left: ${i * 10}px;">$${sop1[i]}$</div>`
-                }
-                code += `</div>`
-                code += `<div id="op2" style ="position:absolute; top:15px;">`
-                code += `<div id="plus" style ="position:absolute;">$+$</div>`
-                for (let i = 0; i < lop2; i++) {
-                    code += `<div id="op2-${i}" style ="position:absolute; left: ${(lmax - lop2 + i + 1) * 10}px;">$${sop2[i]}$</div>`
-                }
-                code += `</div>`
-
-                code += `<div id="resultat" style ="position:absolute; top:40px; left: ${10 * (lmax + 1 - lresultat)}px;">`
-                for (let i = 0; i < lresultat; i++) {
-                    code += `<div id="resultat-${i}" style ="position:absolute; left: ${i * 10}px;">$${sresultat[i]}$</div>`
-                }
-                code += `</div>`
-                code += `</div>`
-                */
                code=AdditionPoseeHtml(operande1,operande2)
             }
             else {
-                code += `$\\opadd{${a}}{${b}}$`
+                code += `$\\opadd{${operande1}}{${operande2}}$`
             }
             break
         case 'soustraction':
-
+            if (sortie_html) {
+                code=SoustractionPoseeHtml(operande1,operande2)
+             }
+             else {
+                 code += `$\\opsub{${operande1}}{${operande2}}$`
+             }           
             break
         case 'multiplication':
 

@@ -3,6 +3,9 @@
 .operationBox {
   width: 8em;
   border: 1px;
+  letter-spacing: 0.3em;
+  /*box-shadow: 8px;
+  background-color: #9090e6;*/
 }
 /* Timer pour le calcul chronométré*/
 

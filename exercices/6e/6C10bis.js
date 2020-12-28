@@ -59,9 +59,7 @@ export default function Additions_soustractions_multiplications_divisions_posees
           x = a * 1000 + b * 100 + c * 10;
           y = e * 100 + f * 10 + g;
           texte = `$${tex_nombre(x)}-${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opsub{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}-${y}=${tex_nombre(x - y)}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'soustraction'})
           break;
         case 3: // 1abc-def
           a = randint(1, 9);
@@ -73,9 +71,7 @@ export default function Additions_soustractions_multiplications_divisions_posees
           x = 1000 + a * 100 + b * 10 + c;
           y = d * 100 + e * 10 + f;
           texte = `$${tex_nombre(x)}-${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opsub{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}-${y}=${tex_nombre(x - y)}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'soustraction'})
           break;
         case 4: // abc*d0e tables de 2 à 5
           a = randint(2, 5);
