@@ -135,7 +135,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         for (let i =0;i<longueuroperandes+1-lresultat;i++){
             sresultat=`0${sresultat}`
         }
-        code += `<div id="addition" class="operationBox" style="position: static;">`
+        code += `<div id="addition" class="additionBox" style="position: static;">`
         code +=`<div id="retenues" class="retenuesBox" style="position: relative; left:1.2em; top:-0.5em; color:red">${retenues}</div>`
         code +=`<div id="terme1" style="position: relative; top:-0.5em" line-height: 0.8em>${cacherleszerosdevant(sop1)}</div>`
         code +=`<div id="terme2" style="position: relative; top:-0.8em" line-height: 0.8em>+${cacherleszerosdevant(sop2)}</div>`
@@ -184,7 +184,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
         for (let i =0;i<longueuroperandes+1-lresultat;i++){
             sresultat=`0${sresultat}`
         }
-        code += `<div id="soustraction" class="operationBox" style="position: relative">`
+        code += `<div id="soustraction" class="additionBox" style="position: relative">`
         code +=`<div id="retenuesh" class="retenuesBox" style="position: relative; left:1.2em; top:-0.5em; color:red">${retenues}</div>`
         code +=`<div id="terme1" style="position: relative; top:-0.5em" line-height: 0.8em>${cacherleszerosdevant(sop1)}</div>`
         code +=`<div id="terme2" style="position: relative; left:-0.3em; top:-0.8em" line-height: 0.8em>$-$${cacherleszerosdevant(sop2)}</div>`
@@ -219,13 +219,8 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             }
             for (let j=0;j<sop1.length;j++){
                 strprod=parseInt(sop1[lop1-j-1]*parseInt(sop2[lop2-i-1]))+parseInt(retenues[i][0])
-                if (strprod>9) {
-                    retenues[i]=`${Number(strprod).toString()[0]}${retenues[i]}`
-                }
-                else {
-                    retenues[i]=`0${retenues[i]}`
-                }
-                produits[i]=`${Number(strprod).toString()[1]}${produits[i]}`
+                retenues[i]=`${Number(Math.floor(strprod/10)).toString()}${retenues[i]}`
+                produits[i]=`${Number(strprod%10).toString()}${produits[i]}`
             }
             produits[i]=`${retenues[i][0]}${produits[i]}`
         }
@@ -272,7 +267,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             sresultat=`0${sresultat}`
         }
 
-        code += `<div id="multiplication" class="operationBox" style="position:relative;">`
+        code += `<div id="multiplication" class="multiplicationBox" style="position:relative;">`
         code +=`<div id="facteur1" style="position:relative;" >${cacherleszerosdevant(sop1)}</div>`
         code +=`<div id="facteur2" style="position:relative;top:-0.3em">×${cacherleszerosdevant(sop2)}</div>`
         code+=`<div id="barrem1" style="position: relative;top:-0.9em"><hr width=${(longueurtotale+2)*10} align=left></div>`

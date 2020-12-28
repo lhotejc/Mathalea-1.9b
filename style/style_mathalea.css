@@ -1,12 +1,20 @@
 .katex { font-size: 1em !important; } 
 /* Style pour les addtions et les soustractions */
-.operationBox {
+.multiplicationBox {
   width: 8em;
   height:7em;
   line-height:0.8em;
   letter-spacing: 0.3em;
  /*background-color: #9090e6;*/
 }
+.additionBox {
+  width: 8em;
+  height:4em;
+  line-height:0.8em;
+  letter-spacing: 0.3em;
+ /*background-color: #9090e6;*/
+}
+
 .retenuesBox {
   width: 20em;
   border:1px;
