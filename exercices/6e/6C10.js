@@ -11,6 +11,7 @@ import {liste_de_question_to_contenu,randint,combinaison_listes_sans_changer_ord
  * * abc*d0e tables de 2 à 5
  * * abc*de tables de 5 à 9
  * @Auteur Rémi Angot
+ * Support des opérations posées en html par Jean-Claude Lhote.
  * Référence 6C10
  */
 export default function Additions_soustractions_multiplications_posees() {
@@ -86,11 +87,7 @@ export default function Additions_soustractions_multiplications_posees() {
           x = 100 * a + 10 * b + c;
           y = d * 100 + e;
           texte = `$${tex_nombre(x)}\\times${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opmul{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}\\times${y}=${tex_nombre(
-              x * y
-            )}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'multiplication'})
           break;
         case 5: // abc*de tables de 5 à 9
           a = randint(5, 9);
@@ -101,11 +98,7 @@ export default function Additions_soustractions_multiplications_posees() {
           x = 100 * a + 10 * b + c;
           y = 10 * d + e;
           texte = `$${x}\\times${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opmul{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}\\times${y}=${tex_nombre(
-              x * y
-            )}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'multiplication'})
           break;
       }
 

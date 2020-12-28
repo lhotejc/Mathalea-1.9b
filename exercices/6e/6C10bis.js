@@ -11,6 +11,7 @@ import {liste_de_question_to_contenu,randint,combinaison_listes,tex_nombre} from
  * * abc*d0e tables de 2 à 5
  * * abc*de tables de 5 à 9
  * @Auteur Rémi Angot
+ * fork de Jean-Claude Lhote avec apport des opérations posées
  * Référence 6C10
  */
 export default function Additions_soustractions_multiplications_divisions_posees() {
