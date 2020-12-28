@@ -4,8 +4,13 @@
   width: 8em;
   border: 1px;
   letter-spacing: 0.3em;
-  /*box-shadow: 8px;
-  background-color: #9090e6;*/
+ /*background-color: #9090e6;*/
+}
+.retenuesBox {
+  width: 20em;
+  border:10px;
+  letter-spacing: 1.1em;
+  font-size: 50%;
 }
 /* Timer pour le calcul chronométré*/
 

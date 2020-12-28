@@ -123,7 +123,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             sresultat=`0${sresultat}`
         }
         code = `<div id="addition" class="operationBox" style="position: static;">`
-        code +=`<div id="retenues" style="position: absolute; top :0px; color: red"; padding: 10px>${retenues}</div>`
+        code +=`<div id="retenues" class="retenuesBox" style="position: absolute; left:1.9em; top :1em; color: red"; padding: 10px>${retenues}</div>`
         code +=`<div id="operation" style="position: absolute; top: 1.2em; padding:0px; line-height: 0.8em">`
         code+=`${cacherleszerosdevant(sop1)}<br>+${cacherleszerosdevant(sop2)}<br>${cacherleszerosdevant(sresultat)}`
         code+=`<div id="barre" style="position: absolute; top: 1.9em;"><hr width=${(longueuroperandes)*10}></div>`
@@ -169,8 +169,8 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             sresultat=`0${sresultat}`
         }
         code = `<div id="soustraction" class="operationBox" style="position: static;">`
-        code +=`<div id="retenuesh" style="position: absolute; left:0.5em; top: 15px; color: red" padding: 0px>${retenues}</div>`
-        code+=`<div id="retenuesb" style="position: absolute; top: 2.6em; color: blue" padding:0px line-height: 0.8em>${retenues}</div>`
+        code +=`<div id="retenuesh" class="retenuesBox" style="position: absolute; left:1.2em; top: 2em; color: red" padding: 0px>${retenues}</div>`
+        code+=`<div id="retenuesb" class="retenuesBox" style="position: absolute; top: 6em; color: blue" padding:0px line-height: 0.8em>${retenues}</div>`
         code +=`<div id="operation" style="position: absolute; top: 1.2em; padding:0px; line-height: 0.8em">`
         code+=`${cacherleszerosdevant(sop1)}<br>-${cacherleszerosdevant(sop2)}<br><br>${cacherleszerosdevant(sresultat)}`
         code+=`<div id="barre" style="position: absolute; top: 2.5em;"><hr width=${(longueuroperandes)*10}></div>`
