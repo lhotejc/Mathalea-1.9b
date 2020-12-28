@@ -2,15 +2,24 @@
 /* Style pour les addtions et les soustractions */
 .operationBox {
   width: 8em;
-  border: 1px;
+  height:7em;
+  line-height:0.8em;
   letter-spacing: 0.3em;
  /*background-color: #9090e6;*/
 }
 .retenuesBox {
   width: 20em;
-  border:10px;
+  border:1px;
   letter-spacing: 1.1em;
   font-size: 50%;
+}
+.retenuesBarrees {
+  width: 20em;
+  border: 1px;
+  text-decoration: line-through;
+  letter-spacing: 1.1em;
+  font-size: 50%;
+
 }
 /* Timer pour le calcul chronométré*/
 

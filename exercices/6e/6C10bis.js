@@ -38,7 +38,7 @@ export default function Additions_soustractions_multiplications_divisions_posees
     for (let i = 0, texte, texte_corr, cpt = 0, a, b, c, d, e, f, g, x, y; i < this.nb_questions && cpt < 50;) {
       type_de_questions = liste_type_de_questions[i];
       switch (type_de_questions) {
-        case 1: // abcd +efg
+        case 1: // abcde + fgh
           a =
             randint(1, 9) * 10000 +
             randint(5, 9) * 1000 +
@@ -82,11 +82,7 @@ export default function Additions_soustractions_multiplications_divisions_posees
           x = 100 * a + 10 * b + c;
           y = d * 100 + e;
           texte = `$${tex_nombre(x)}\\times${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opmul{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}\\times${y}=${tex_nombre(
-              x * y
-            )}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'multiplication'})
           break;
         case 5: // abc*de tables de 5 à 9
           a = randint(5, 9);
@@ -97,11 +93,7 @@ export default function Additions_soustractions_multiplications_divisions_posees
           x = 100 * a + 10 * b + c;
           y = 10 * d + e;
           texte = `$${x}\\times${y}$`;
-          !sortie_html
-            ? (texte_corr = `$\\opmul{${x}}{${y}}$`)
-            : (texte_corr = `$${tex_nombre(x)}\\times${y}=${tex_nombre(
-              x * y
-            )}$`);
+          texte_corr = Operation({operande1:x,operande2:y,type:'multiplication'})
           break;
           case 6 : // x = y* c+d
           a = randint(5, 9);
