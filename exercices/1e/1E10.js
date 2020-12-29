@@ -17,8 +17,6 @@ export default function Calcul_discriminant() {
   if (sortie_html) {
     this.spacing_corr = 2;
   }
-  //this.correction_detaillee_disponible = true;
-  //sortie_html ? correction_detaillee = true : correction_detaillee = false ;
   this.nouvelle_version = function (numero_de_l_exercice) {
     this.liste_questions = []; // Liste de questions
     this.liste_corrections = []; // Liste de questions corrigées
@@ -64,7 +62,6 @@ export default function Calcul_discriminant() {
           }
           texte_corr = `$\\Delta = ${ecriture_parenthese_si_negatif(b)}^2-4\\times${ecriture_parenthese_si_negatif(a)}\\times${ecriture_parenthese_si_negatif(c)}=${b * b - 4 * a * c}$`;
           texte_corr += `<br>$\\Delta=0$ donc l'équation admet une unique solution.`;
-          //texte_corr += `<br>$\\mathcal{S}={${x1}}$`
           break;
         case "2solutions": // k(x-x1)^2
           a_nb_points_intersection = "a deux points d'intersection";
@@ -90,7 +87,6 @@ export default function Calcul_discriminant() {
           }
           texte_corr = `$\\Delta = ${ecriture_parenthese_si_negatif(b)}^2-4\\times${ecriture_parenthese_si_negatif(a)}\\times${ecriture_parenthese_si_negatif(c)}=${b * b - 4 * a * c}$`;
           texte_corr += `<br>$\\Delta>0$ donc l'équation admet deux solutions.`;
-          //texte_corr += `<br>$\\mathcal{S}=\\emptyset$`
           break;
         default:
           break;
@@ -113,7 +109,6 @@ export default function Calcul_discriminant() {
         texte_corr += modal_texte_long(numero_de_l_exercice, 'Complément graphique', correction_complementaire, label_bouton = "Complément graphique", icone = "info circle");
       }
       if (this.liste_questions.indexOf(texte) == -1) {
-        // Si la question n'a jamais été posée, on en créé une autre
         this.liste_questions.push(texte);
         this.liste_corrections.push(texte_corr);
         i++;
@@ -122,5 +117,4 @@ export default function Calcul_discriminant() {
     }
     liste_de_question_to_contenu(this);
   };
-  //this.besoin_formulaire_numerique = ['Niveau de difficulté',3];
 }
