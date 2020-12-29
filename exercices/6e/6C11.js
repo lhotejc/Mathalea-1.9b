@@ -1,5 +1,6 @@
 import Exercice from '../ClasseExercice.js';
 import {liste_de_question_to_contenu,randint,choice,combinaison_listes,tex_nombre} from "/modules/outils.js"
+import Operation from '/modules/operations.js';
 /**
  * Poser et effectuer les divisions euclidiennes suivantes puis donner l'égalité fondamentale correspondante.
  *
@@ -78,17 +79,9 @@ export default function Divisions_euclidiennes() {
       a = b * q + r;
       texte = `$${tex_nombre(a)}\\div${b}$`;
       if (r == 0) {
-        sortie_html
-          ? (texte_corr = `$${tex_nombre(a)}\\div${b}=${q}$`)
-          : (texte_corr = `$\\opidiv[voperation=top]{${a}}{${b}}$\\\\\\\\$${tex_nombre(
-            a
-          )}\\div${b}=${q}$`);
+        texte_corr = `${Operation({operande1:a,operande2:b,type:'division'})}$${tex_nombre(a)}\\div${b}=${q}$`;
       } else {
-        sortie_html
-          ? (texte_corr = `$${tex_nombre(a)}=${b}\\times${q}+${r}$`)
-          : (texte_corr = `$\\opidiv[voperation=top]{${a}}{${b}}$\\\\\\\\$${tex_nombre(
-            a
-          )}=${b}\\times${q}+${r}$`);
+        texte_corr = `${Operation({operande1:a,operande2:b,type:'division'})}$${tex_nombre(a)}=${b}\\times${q}+${r}$`;
       }
 
       if (this.liste_questions.indexOf(texte) == -1) {

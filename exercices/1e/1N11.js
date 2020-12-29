@@ -105,9 +105,5 @@ export default function Terme_d_une_suite_definie_par_recurrence() {
       cpt++; // Sinon on incrémente le compteur d'essai pour avoir une question nouvelle
     }
     liste_de_question_to_contenu(this); // La liste de question et la liste de la correction
-
-    // sont transformés en chaine de caractère (avec une liste HTML ou LaTeX suivant le contexte)
   };
-  //this.besoin_formulaire_numerique = ['Niveau de difficulté',3];
-  // On aurait pu ajouter un formulaire pour régler le niveau de difficulté à l'aide de l'attribut this.sup
 }

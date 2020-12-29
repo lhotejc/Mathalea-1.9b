@@ -84,7 +84,6 @@ import {repere,courbe,mathalea2d,} from "/modules/2d.js"
         }
             texte+=`dont la parabole a pour sommet le point de coordonnées $(${x1};${f(x1)})$ et passe par le point de coordonnées $(${x2};${f(x2)})$ ?<br>`;
             texte_corr=`D'après les coordonnées $(${x1};${f(x1)})$ du sommet, $\\mathscr{${f_name[i]}}$ a pour forme canonique : $\\mathscr{${f_name[i]}}(x)=a(x${ecriture_algebrique(-x1)})^2${ecriture_algebrique(f(x1))}$.<br>`
-    //       texte_corr+=`$=${Algebrite.eval('ax^2'+ecriture_algebrique(-2*x1)+'ax'+ecriture_algebrique(x1**2)+'a'+ecriture_algebrique(f(x1)))}$<br>`
             texte_corr+=`De plus $\\mathscr{${f_name[i]}}(${x2})=${f(x2)}$`
             if (this.correction_detaillee) {
               texte_corr+=` donc $a(${x2}${ecriture_algebrique(-x1)})^2${ecriture_algebrique(f(x1))}=${f(x2)}$ `
@@ -138,12 +137,6 @@ import {repere,courbe,mathalea2d,} from "/modules/2d.js"
   
         if (Ymax-Ymin<10) Yscale=2
         else Yscale =Math.max(1,calcul(Math.round(Math.ceil((Ymax-Ymin)/10)/5)*5))*2
-  /*      if (Ymin>=0) Ymin=-Yscale
-          else Ymin=-premierMultipleSuperieur(Yscale,-Ymin)
-        if (Ymax<=0) Ymax=Yscale
-           else Ymax=premierMultipleSuperieur(Yscale,Ymax)
-  */    
-  
         r = repere({
           xmin: -10,
           ymin: Ymin-Yscale,
@@ -159,7 +152,6 @@ import {repere,courbe,mathalea2d,} from "/modules/2d.js"
         F = x => a*x**2+b*x+c;
         texte+=mathalea2d({xmin:-10, xmax:11,ymin:svgYmin,ymax:svgYmax+2,pixelsParCm:pixelsParCm,scale:.6},courbe(F,-10,10,'blue',1.5,r),r)
         if (this.liste_questions.indexOf(texte) == -1) {
-          // Si la question n'a jamais été posée, on en créé une autre
           this.liste_questions.push(texte);
           this.liste_corrections.push(texte_corr);
           i++;
