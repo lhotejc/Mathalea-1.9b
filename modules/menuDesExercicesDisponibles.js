@@ -250,7 +250,13 @@ let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
       liste_html_des_exercices += liste_html_des_exercices_PE;
       liste_html_des_exercices += `</div>`;
       liste_html_des_exercices += `</div>`;
-    } else {
+    } else if (window.location.href.indexOf("outils") > 0) {
+      liste_html_des_exercices += `<div class="ui accordion"><div class="active title"><i class="dropdown icon"></i>Outils pour le professeur (${nombre_d_exercices_disponibles_prof})</div><div class="active content">`;
+      liste_html_des_exercices += liste_html_des_exercices_prof;
+      liste_html_des_exercices += `</div>`;
+      liste_html_des_exercices += `</div>`;
+    }
+    else {
       liste_html_des_exercices += `<div class="ui accordion"><div class="title"><i class="dropdown icon"></i>Cours Moyen (${nombre_d_exercices_disponibles_c3})</div><div class="content">`;
       liste_html_des_exercices += liste_html_des_exercices_c3;
       liste_html_des_exercices += `</div>`;
