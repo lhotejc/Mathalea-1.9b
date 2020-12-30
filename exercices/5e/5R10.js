@@ -31,7 +31,7 @@ export default function Terme_inconnu_de_somme() {
       b = arrondi(randint(2*decimal, this.sup2*decimal)/decimal,1);
       texte = `$${tex_nombre(a)} + \\ldots\\ldots = ${tex_nombre(b)}$`;
       texte_corr = `$${tex_nombre(a)} + ${ecriture_parenthese_si_moins(tex_nombrec( b-a))} = ${tex_nombre(b)}$`;
-      texte_corr +=`. En effet : $${tex_nombre(b)}-${tex_nombre(a)}=${ecriture_parenthese_si_moins(tex_nombrec( b-a))}$`
+      texte_corr +=`. En effet : $${tex_nombre(b)}-${tex_nombre(a)}=${tex_nombrec( b-a)}$`
       if (est_diaporama) {
         texte = texte.replace("= \\dotfill", "");
       }
