@@ -9,7 +9,7 @@ import {liste_de_question_to_contenu,randint,combinaison_listes,mise_en_evidence
  *
  * Par défaut c'est un mélange d'additions, soustractions avec et sans trou avec des nombres jusqu'à 20.
  * @Auteur Rémi Angot
- * Référence 6D12
+ * Référence CM000
  */
 export default function Tables_additions_soustractions() {
   "use strict";

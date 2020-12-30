@@ -215,8 +215,9 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             produits.push("")
             for (let k=0;k<i;k++){
                 retenues[i]=`${retenues[i]}0`
-                produits[i]=`${produits[i]}.`
+                produits[i]=`${produits[i]}°`
             }
+            if (sop2[lop2-i-1]!='0'){
             for (let j=0;j<sop1.length;j++){
                 strprod=parseInt(sop1[lop1-j-1]*parseInt(sop2[lop2-i-1]))+parseInt(retenues[i][0])
                 retenues[i]=`${Number(Math.floor(strprod/10)).toString()}${retenues[i]}`
@@ -224,6 +225,14 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             }
             produits[i]=`${retenues[i][0]}${produits[i]}`
         }
+        else {
+            for (let j=0;j<sop1.length;j++){
+                retenues[i]=`0${retenues[i]}`
+                produits[i]=`°${produits[i]}`
+            }
+        }
+        }
+
         for (let i=lop2;i<longueurtotale;i++){
             sop2=`0${sop2}`
         }
@@ -248,7 +257,7 @@ export default function Operation({ operande1 = 1, operande2 = 2, type = 'additi
             sommes.push(0)
             sommes[i]+=parseInt(retenues[lop2][0])
             for (let j=0;j<lop2;j++){
-                if (produits[j][lresultat-i]!='0'&&produits[j][lresultat-i]!='.'){
+                if (produits[j][lresultat-i]!='0'&&produits[j][lresultat-i]!='°'){
                     sommes[i]+=parseInt(produits[j][lresultat-i])
                 }
             }
