@@ -10,6 +10,7 @@ import {liste_de_question_to_contenu,randint,ecriture_parenthese_si_moins,tex_no
 export default function Terme_inconnu_de_somme() {
   "use strict";
   Exercice.call(this); // Héritage de la classe Exercice()
+  this.nb_questions=5;
   this.sup = 1;
   this.sup3 = 1;
   this.sup2 = 20; // additions|additions à trous|soustractions|soustractions à trous|mélange sans trou|mélange avec trou
