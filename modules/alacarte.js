@@ -13,7 +13,7 @@ import { menuDesExercicesDisponibles, dictionnaireDesExercices } from "/modules/
 
 
 
-let code_LaTeX, code_LaTeX_corr, tableau_de_demandes;
+let code_LaTeX, code_LaTeX_corr, tableau_de_demandes, objet_contenu={}, objet_contenu_correction={};
 let tableau_url_tex = [['items/MATHS.6.G14_ProgrammeConstruction', 'MATHS.6.G14_.tex', 'MATHS.6.G14_-cor.tex'], ['items/MATHS.6.M20_Aire_triangles', 'MATHS.6.M20v2.tex', 'MATHS.6.M20v2-cor.tex'], ['items/MATHS.6.M20_Aire_triangles', 'MATHS.6.M20_.tex', 'MATHS.6.M20_-cor.tex'], ['items/MATHS.6.G11_Perpendiculaire', 'MATHS.6.G11_.tex', 'MATHS.6.G11_-cor.tex'], ['items/MATHS.6.G23_Rapporteur', 'MATHS.6.G23.tex', 'MATHS.6.G23-cor.tex'], ['items/MATHS.6.M23_PerimetreAiresDisques', 'MATHS.6.M23.tex', 'MATHS.6.M23-cor.tex'], ['items/MATHS.6.N22_CalculsFractions', 'MATHS.6.N22_.tex', 'MATHS.6.N22_-cor.tex'], ['items/MATHS.6.G10_VocabulaireNotations', 'MATHS.6.G10_.tex', 'MATHS.6.G10_-cor.tex'], ['items/MATHS.6.R10_ProprietesParallelesPerpendiculaires', 'MATHS.6.R10_.tex', 'MATHS.6.R10_-cor.tex'], ['items/MATHS.6.N23_NombresDecimaux', 'MATHS.6.N23_.tex', 'MATHS.6.N23_-cor.tex'], ['items/MATHS.6.C11_DivisionsEuclidiennes', 'MATHS.6.C11_v1.tex', 'MATHS.6.C11_v1-cor.tex'], ['items/MATHS.6.N21_AbscissesFractionnaires', 'MATHS.6.N21_.tex', 'MATHS.6.N21_-cor.tex'], ['items/MATHS.6.R12_ProprietesDefinitionsMediatrice', 'MATHS.6.R12.tex', 'MATHS.6.R12-cor.tex'], ['items/MATHS.6.G13_CarresRectangles', 'MATHS.6.G13_.tex', 'MATHS.6.G13_-cor.tex'], ['items/MATHS.6.C12_ProblemesNiveau1', 'MATHS.6.C12_v1.tex', 'MATHS.6.C12_v1-cor.tex'], ['items/MATHS.6.G12_Paralleles', 'MATHS.6.G12_.tex', 'MATHS.6.G12_-cor.tex'], ['items/MATHS.6.R11_SchemaProprietesParallelesPerpendiculaires', 'MATHS.6.R11_v1.tex', 'MATHS.6.R11_v1-cor.tex'], ['items/MATHS.6.M21_Aire_assemblage', 'MATHS.6.M21.tex', 'MATHS.6.M21-cor.tex'], ['items/MATHS.6.M24_Portions_disque', 'MATHS.6.M24.tex', 'MATHS.6.M24-cor.tex'], ['items/MATHS.6.N20_FractionsEtEntiers', 'MATHS.6.N20_v1.tex', 'MATHS.6.N20_v1-cor.tex'], ['items/MATHS.6.C10_AddSousMulEntiers', 'MATHS.6.C10_v1.tex', 'MATHS.6.C10_v1-cor.tex'], ['items/MATHS.6.C22_Problemes2', 'MATHS.6.C22.tex', 'MATHS.6.C22-cor.tex']]
 let besoin_des_axes_gradues=false;
 let message_d_erreur = "";
@@ -113,6 +113,8 @@ function item_to_contenu(txt){
 	// Pour faire la correspondance entre SACoche et MathALEA, on supprime 'MATHS' et tous les points dans les noms des id
 			let url = dictionnaireDesExercices[idExerciceMathALEA]["url"];
 			let exercice_aleatoire;
+			let code_LaTeX = "";
+			let code_LaTeX_corr = "";
 			import(url)
                 .catch(() => {
 					code_LaTeX += `\n\n%%% Pas d'exercice disponible pour ${e}.\n\n`
@@ -141,6 +143,7 @@ function item_to_contenu(txt){
 						} else { // si c'est un tableau
 						exercice_aleatoire.liste_packages.forEach(liste_packages.add,liste_packages)
 						} 
+						return [code_LaTeX, code_LaTeX_corr]
 					}
 				})
 			
@@ -203,44 +206,36 @@ form_supprimer_reference.addEventListener('change', function(e) { // Dès que le
 		tableau_de_demandes = textarea_to_array(textarea_id_items);
 		console.log(tableau_de_demandes)
 
-		tableau_de_demandes.forEach(function(ligne){
+		tableau_de_demandes.forEach(function(ligne,numero_de_ligne){
 			ligne.forEach(function(e,i){
 				let rang_premier_item=0
 				if ($('#style1:checked').val()){
 					rang_premier_item = 2
 					if (i==0){
-						promises.push(
-							_ => {code_LaTeX +=entete_eleve(ligne[0],ligne[1]);
-							code_LaTeX_corr +=entete_eleve(ligne[0],ligne[1])}
-						)
+						objet_contenu[e][i] = entete_eleve(ligne[0],ligne[1]);
+						objet_contenu_correction[e][i] = entete_eleve(ligne[0],ligne[1])
+						// code_LaTeX +=entete_eleve(ligne[0],ligne[1]);
+						// code_LaTeX_corr +=entete_eleve(ligne[0],ligne[1])
 					}
 				}
 				if ($('#style2:checked').val()){
 					rang_premier_item = 1
 					if (i==0){
-						promises.push(
-							_ =>{
-								code_LaTeX +=entete_eleve(ligne[0])
-								code_LaTeX_corr +=entete_eleve(ligne[0])
-							}
-						)
+						objet_contenu[numero_de_ligne] = entete_eleve(ligne[0])
+						objet_contenu_correction[numero_de_ligne] = entete_eleve(ligne[0])
 					}
 				}
 				if ($('#style3:checked').val()){
 					rang_premier_item = 0
 					if (i==0){
-						promises.push(
-							_ =>{
-								code_LaTeX +=entete_eleve()
-								code_LaTeX_corr +=entete_eleve()
-							}
-						)
+						objet_contenu[e][i] = entete_eleve()
+						objet_contenu_correction[e][i] = entete_eleve()
 					}
 				}
 
 				if (i>=rang_premier_item) {
 					if (e.replace(/ /g, '').length>2){
-						promises.push(item_to_contenu(e))
+						promises.push(objet_contenu[e][i] = [item_to_contenu(e)[0],item_to_contenu(e)[1]])
 					}
 				}
 					
