@@ -23,6 +23,28 @@ export function liste_html_des_exercices_d_un_niveau(liste_de_themes){ // liste_
   return liste;
 }
 
+let liste_des_exercices_disponibles = tridictionnaire(dictionnaireDesExercices);
+
+
+export function liste_html_des_exercices_d_un_theme(theme){
+  let liste = '';
+  let dictionnaire = filtreDictionnaire(liste_des_exercices_disponibles,theme);
+  for (let id in dictionnaire) {
+    liste +=
+      `<span class="id_exercice">${id}</span> - <a class="lien_id_exercice" numero="${id}">${dictionnaire[id].titre}</a></br>\n`;
+  }
+  return liste;
+}
+
+export function liste_html_des_exercices_d_un_niveau(liste_de_themes){ // liste_de_themes = [['6N1','6N1 - Numérations et fractions niveau 1'] , [' ',' '] ]
+  let liste = '';
+  for (let theme of liste_de_themes){
+    liste += `<h3>${theme[1]}</h3>`;
+    liste += liste_html_des_exercices_d_un_theme(theme[0]);
+  }
+  return liste;
+}
+
 
 export function menuDesExercicesDisponibles(){
 
